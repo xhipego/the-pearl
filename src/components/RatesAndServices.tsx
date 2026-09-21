@@ -169,7 +169,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                 Indulge in a journey of deep relaxation and intimate connection.
               </p>
               <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light mb-6">
-                We offer professional massage combined with exquisite, sensual body-to-body slides. Experience our unique <strong>‘Girlfriend Experience,’</strong> designed for genuine connection, allowed kissing, tactile exploration, and sensual hand relief within the session. All services are focused on relaxation and sensual enjoyment.
+                We offer professional massage combined with exquisite, sensual body-to-body slides and our signature <strong>‘Girlfriend Experience.’</strong> Designed for authentic warmth, deep relaxation, and unhurried sensory unwinding. To preserve guest discretion and tailor to personal preferences, full personalized inclusions and details are confirmed privately over phone or text.
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-[#1B2B42] font-medium">
@@ -177,13 +177,13 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                   ✨ Body-to-Body Slides
                 </div>
                 <div className="p-2.5 rounded-lg bg-[#F5EFEB] border border-[#D4AF37]/30 text-center">
-                  💋 Allowed Kissing
+                  🕯️ Warm Botanical Oils
                 </div>
                 <div className="p-2.5 rounded-lg bg-[#F5EFEB] border border-[#D4AF37]/30 text-center">
-                  🤲 Tactile Exploration
+                  🌿 Sensory Bodywork
                 </div>
                 <div className="p-2.5 rounded-lg bg-[#F5EFEB] border border-[#D4AF37]/30 text-center">
-                  💫 Sensual Hand Relief
+                  💬 Inquire via Text / Call
                 </div>
               </div>
             </div>
@@ -202,6 +202,33 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Discreet Notice: Full Details via Phone / WhatsApp */}
+        <div className="mb-14 bg-[#1B2B42] text-white rounded-2xl p-6 sm:p-7 border border-[#D4AF37]/50 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
+          <div className="text-center sm:text-left">
+            <div className="inline-flex items-center gap-1.5 text-xs text-[#D4AF37] font-semibold uppercase tracking-wider mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Discreet Consultation &amp; Bespoke Inclusions</span>
+            </div>
+            <h4 className="font-serif text-lg sm:text-xl text-[#F3E5AB] font-bold">
+              Confidential Details via Direct Call or WhatsApp
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl font-light leading-relaxed">
+              To uphold complete discretion and tailor every session to your exact personal desires, full package inclusions, special requests, and hostess availability are shared directly via phone or text message.
+            </p>
+          </div>
+          <a
+            href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
+              'Hi The Pearl, I would like to inquire about full experience details and hostess availability.'
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold tracking-wider uppercase transition-all shadow-md hover:scale-105"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>Chat Confidentially</span>
+          </a>
         </div>
 
         {/* 3 Add-on Packages matching the exact flyer (Bachelor Parties, Doubles Sessions, Pool Sessions) */}

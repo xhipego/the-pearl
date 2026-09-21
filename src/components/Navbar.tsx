@@ -190,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="pt-3 flex flex-col gap-2.5 border-t border-white/10 mt-1">
               <div className="flex items-center gap-2 text-xs text-slate-300 pb-1">
                 <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-                <span>100% Discreet &amp; Safe • Welgelegen, Polokwane</span>
+                <span>100% Discreet &amp; Safe • Welgelen, Polokwane</span>
               </div>
               <a
                 href={`tel:${CONTACT_INFO.phone1}`}

@@ -275,7 +275,7 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           'Authentic real venue photo',
           'Private, peaceful wellness atmosphere',
           'Custom curated client view',
-          '112 General Beyers St, Polokwane',
+          '112 Genl Beyers Street, Welgelen, Polokwane',
         ],
       };
     });

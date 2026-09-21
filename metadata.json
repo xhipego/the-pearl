@@ -1,6 +1,6 @@
 {
   "name": "The Pearl Wellness Spa",
-  "description": "Luxury wellness spa in Polokwane offering professional massages, sensual touch experiences, and private wellness sessions in Welgelegen.",
+  "description": "Luxury wellness spa in Polokwane offering professional massages, sensual touch experiences, and private wellness sessions in Welgelen.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

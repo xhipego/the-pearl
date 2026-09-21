@@ -38,7 +38,7 @@ Date: ${preferredDate}
 Time: ${preferredTime}
 Session Duration: ${duration}${addOnsPart}
 
-Please confirm availability and private arrival details at 112 General Beyers, Welgelegen, Polokwane.`;
+Please confirm availability and private arrival details at 112 Genl Beyers Street, Welgelen, Polokwane.`;
 
     window.open(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(msg)}`, '_blank');
     onClose();
@@ -64,7 +64,7 @@ Please confirm availability and private arrival details at 112 General Beyers, W
           Reserve Your Private Session
         </h3>
         <p className="text-xs text-gray-500 mb-5">
-          Fast confirmation directly with our Welgelegen reception desk via WhatsApp.
+          Fast confirmation directly with our Welgelen reception desk via WhatsApp.
         </p>
 
         <form onSubmit={handleBookingSubmit} className="space-y-4 text-xs">

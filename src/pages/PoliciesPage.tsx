@@ -43,7 +43,7 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({ onNavigate, onOpenBo
               How does the arrival procedure work?
             </h4>
             <p className="text-xs text-gray-600 leading-relaxed font-light">
-              Upon booking, you receive precise discreet GPS directions to 112 General Beyers Street, Welgelegen. Our private entrance is unmarked. Pull into the secure driveway gate where our host welcomes you directly into your private suite.
+              Upon booking, you receive precise discreet GPS directions to 112 Genl Beyers Street, Welgelen. Our private entrance is unmarked. Pull into the secure driveway gate where our host welcomes you directly into your private suite.
             </p>
           </div>
 

@@ -64,7 +64,7 @@ export const PolicySection: React.FC = () => {
                   100% Confidentiality &amp; Discretion
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                  Your identity and visits remain strictly private. Our location in Welgelegen features discreet, private off-street parking and unmarked entry points for total peace of mind.
+                  Your identity and visits remain strictly private. Our location in Welgelen features discreet, private off-street parking and unmarked entry points for total peace of mind.
                 </p>
               </div>
             </div>
@@ -96,7 +96,7 @@ export const PolicySection: React.FC = () => {
                   Gentlemanly Conduct &amp; Respect
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                  Our therapists provide tender, affectionate care, allowed sweet kisses, tactile exploration, and sensual hand relief. Polite, respectful, and sober behavior is required at all times.
+                  Our therapists provide tender, affectionate care, personalized pampering, and unhurried sensory unwinding. Polite, respectful, and sober behavior is required at all times.
                 </p>
               </div>
             </div>
@@ -112,7 +112,7 @@ export const PolicySection: React.FC = () => {
                   Advance Bookings Essential
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                  To guarantee your preferred hostess and avoid waiting times, advance reservations via WhatsApp or phone are required before arriving at the Welgelegen premises.
+                  To guarantee your preferred hostess and avoid waiting times, advance reservations via WhatsApp or phone are required before arriving at the Welgelen premises.
                 </p>
               </div>
             </div>

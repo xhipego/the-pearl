@@ -111,7 +111,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <div className="space-y-2 text-slate-300">
               <p className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>112 General Beyers Street, Welgelegen, Polokwane</span>
+                <span>112 Genl Beyers Street, Welgelen, Polokwane</span>
               </p>
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
@@ -147,7 +147,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <p className="flex items-center gap-3">
             <span>Website: {CONTACT_INFO.website}</span>
             <span>&bull;</span>
-            <span>Welgelegen, Polokwane</span>
+            <span>Welgelen, Polokwane</span>
           </p>
         </div>
       </div>

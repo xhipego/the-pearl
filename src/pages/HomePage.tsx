@@ -47,7 +47,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="h-[1px] flex-1 bg-[#D4AF37]/40" />
           </div>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light">
-            Situated in the quiet, upscale suburb of Welgelegen, Polokwane, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> is a bespoke adult wellness haven modeled after South Africa&apos;s most prestigious executive retreats. Experience therapeutic tension release, sensual touch, and total peace of mind.
+            Situated in the quiet, upscale suburb of Welgelen, Polokwane, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> is a bespoke adult wellness haven modeled after South Africa&apos;s most prestigious executive retreats. Experience therapeutic tension release, sensual touch, and total peace of mind.
           </p>
         </div>
 
@@ -183,16 +183,16 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             {/* Quick Rates Snapshot Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full lg:w-auto">
-              {SPA_RATES.slice(0, 3).map((rate, idx) => (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto shrink-0">
+              {SPA_RATES.map((rate, idx) => (
                 <div
                   key={idx}
                   onClick={() => onNavigate('rates')}
-                  className="bg-white/5 border border-white/10 hover:border-[#D4AF37]/80 rounded-xl p-4 text-center cursor-pointer transition-all hover:scale-105"
+                  className="bg-white/5 border border-white/10 hover:border-[#D4AF37]/80 rounded-xl p-3.5 sm:p-4 text-center cursor-pointer transition-all hover:scale-105 min-w-[110px]"
                 >
                   <p className="text-[11px] text-slate-300 font-medium tracking-wider uppercase">{rate.duration}</p>
                   <p className="font-serif text-xl sm:text-2xl font-bold text-[#F3E5AB] my-1">R{rate.price}</p>
-                  <p className="text-[10px] text-slate-400 truncate">{rate.label}</p>
+                  <p className="text-[10px] text-slate-400 truncate max-w-[120px] mx-auto">{rate.label}</p>
                 </div>
               ))}
             </div>
@@ -213,7 +213,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               View Today&apos;s Hostesses on WhatsApp
             </h2>
             <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-              To protect the privacy of our ladies and ensure you receive real-time availability for today&apos;s sessions, hostess profiles and verified photographs are shared directly through our Welgelegen reception concierge.
+              To protect the privacy of our ladies and ensure you receive real-time availability for today&apos;s sessions, hostess profiles and verified photographs are shared directly through our Welgelen reception concierge.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <a
@@ -244,13 +244,13 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#C5A059] mb-2">
               <MapPin className="w-3.5 h-3.5" />
-              <span>Welgelegen, Polokwane</span>
+              <span>Welgelen, Polokwane</span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1B2B42] mb-3">
               Discrete, Private &amp; Open Daily (10:00 – 20:00)
             </h2>
             <p className="text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
-              Located at 112 General Beyers Street, Welgelegen. Secure, unmarked private entrance with dedicated off-street parking. Contact our discreet concierge to reserve your sanctuary session.
+              Located at 112 Genl Beyers Street, Welgelen. Secure, unmarked private entrance with dedicated off-street parking. Contact our discreet concierge to reserve your sanctuary session.
             </p>
           </div>
 

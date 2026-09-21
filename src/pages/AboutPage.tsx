@@ -48,7 +48,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
             </h2>
             <div className="h-[2px] w-20 bg-[#D4AF37]" />
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light">
-              Situated in the quiet, prestigious suburb of Welgelegen, Polokwane, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> was established to provide discerning gentlemen with an authentic, high-end alternative to generic massage parlors.
+              Situated in the quiet, prestigious suburb of Welgelen, Polokwane, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> was established to provide discerning gentlemen with an authentic, high-end alternative to generic massage parlors.
             </p>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light">
               Modeled after the opulent aesthetic and executive privacy standards of South Africa’s premier adult venues, our sanctuary is designed from the ground up for full sensory indulgence: unhurried sessions, temperature-controlled private suites, deeply intuitive touch, and unwavering confidentiality.
@@ -112,7 +112,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
               </div>
               <h4 className="font-serif text-lg font-bold text-[#1B2B42] mb-2">Absolute Discretion</h4>
               <p className="text-xs text-gray-600 leading-relaxed font-light">
-                Unmarked venue in a quiet Welgelegen residential street with secure behind-gate parking and strictly confidential client records.
+                Unmarked venue in a quiet Welgelen residential street with secure behind-gate parking and strictly confidential client records.
               </p>
             </div>
 
@@ -215,7 +215,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
               onClick={() => onNavigate('rates')}
               className="w-full sm:w-auto px-7 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 shadow-lg cursor-pointer transition-all"
             >
-              View Services &amp; Rates (From R500)
+              Experiences from R500
             </button>
             <a
               href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(

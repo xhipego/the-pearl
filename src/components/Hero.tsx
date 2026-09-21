@@ -120,7 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
           </span>
           <span className="hidden sm:inline text-[#D4AF37]">&bull;</span>
           <span className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-[#D4AF37]" /> Welgelegen, Polokwane
+            <MapPin className="w-4 h-4 text-[#D4AF37]" /> Welgelen, Polokwane
           </span>
           <span className="hidden sm:inline text-[#D4AF37]">&bull;</span>
           <span className="flex items-center gap-1.5">
@@ -135,7 +135,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
             id="hero-cta-rates"
             className="w-full sm:w-auto px-8 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 border border-[#F3E5AB] cursor-pointer"
           >
-            View Experiences &amp; Rates (From R500)
+            Experiences from R500
           </button>
 
           <a

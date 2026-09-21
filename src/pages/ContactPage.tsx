@@ -17,7 +17,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       {/* Page Banner Header */}
       <PageBanner
         title="Contact &amp; Location"
-        subtitle="Discreetly Situated in Welgelegen, Polokwane • Open Daily 10:00 – 20:00"
+        subtitle="Discreetly Situated in Welgelen, Polokwane • Open Daily 10:00 – 20:00"
         badge="Concierge &bull; Private Map &bull; Bookings"
         onNavigate={onNavigate}
         currentPageName="Contact & Location"

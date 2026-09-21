@@ -64,7 +64,7 @@ Please confirm availability and private arrival instructions.`;
             Contact &amp; Bookings
           </h2>
           <p className="font-serif italic text-lg sm:text-xl text-[#C5A059] mt-2 mb-4">
-            Private Suites in Welgelegen, Polokwane
+            Private Suites in Welgelen, Polokwane
           </p>
           <div className="flex items-center justify-center gap-3 w-48 mx-auto my-3">
             <div className="h-[1px] flex-1 bg-[#D4AF37]/50" />
@@ -95,7 +95,7 @@ Please confirm availability and private arrival instructions.`;
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">Address</span>
                     <span className="font-semibold text-[#1B2B42]">{CONTACT_INFO.address}</span>
-                    <span className="text-xs text-gray-500 block">Welgelegen, Polokwane, Limpopo</span>
+                    <span className="text-xs text-gray-500 block">Welgelen, Polokwane, Limpopo</span>
                   </div>
                 </div>
 
@@ -219,7 +219,7 @@ Please confirm availability and private arrival instructions.`;
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider">Booking Request Dispatched</h4>
                     <p className="text-xs mt-0.5">
-                      Your booking details have been formatted for WhatsApp. Our receptionist in Welgelegen is reviewing your slot now!
+                      Your booking details have been formatted for WhatsApp. Our receptionist in Welgelen is reviewing your slot now!
                     </p>
                   </div>
                 </div>

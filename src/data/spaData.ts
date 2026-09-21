@@ -10,9 +10,9 @@ export const SPA_RATES: RateItem[] = [
     features: [
       'Full body warm essential oil rub',
       'Targeted tension relief',
-      'Sensual touch & tactile exploration',
-      'Sensual hand relief finale',
+      'Sensory touch & relaxation',
       'Discreet private suite & shower',
+      'Full package details shared via phone / text',
     ],
   },
   {
@@ -23,9 +23,9 @@ export const SPA_RATES: RateItem[] = [
     features: [
       'Extended therapeutic back & shoulder work',
       'Sensual body-to-body slide introduction',
-      'Intimate connection & allowed kissing',
-      'Sensual hand relief within session',
+      'Intimate connection & sensory pampering',
       'Complimentary refreshments',
+      'Full package details shared via phone / text',
     ],
   },
   {
@@ -37,9 +37,9 @@ export const SPA_RATES: RateItem[] = [
     features: [
       'Complete Girlfriend Experience (GFE)',
       'Exquisite full-body sensual slides',
-      'Allowed kissing & mutual tactile discovery',
-      'Slow, unhurried sensual hand relief',
+      'Warm essential oils & deep pampering',
       'Full private shower & luxury bath robe',
+      'Full package details shared via phone / text',
     ],
   },
   {
@@ -51,7 +51,7 @@ export const SPA_RATES: RateItem[] = [
       'The definitive decadent indulgence',
       'Deep full-body relaxation & slow slides',
       'Tantric breathing & deep intimacy',
-      'Multiple rounds of soothing relief',
+      'Extended unhurried sensual pampering',
       'Extended private suite lingering time',
     ],
   },
@@ -64,12 +64,12 @@ export const SIGNATURE_PACKAGES: PackageItem[] = [
     badge: 'Guest Favorite',
     highlight: true,
     description:
-      'Professional massage combined with exquisite, sensual body-to-body slides. Experience our unique Girlfriend Experience (GFE) designed for genuine connection, allowed kissing, tactile exploration, and sensual hand relief within the session. All services are focused on relaxation and sensual enjoyment.',
+      'Professional massage combined with exquisite, sensual body-to-body slides and our signature Girlfriend Experience (GFE). Designed for authentic warmth, deep relaxation, and unhurried sensory unwinding. Exact personalized inclusions and preferences are shared confidentially over phone or WhatsApp text.',
     features: [
       'Warm oil body-to-body gliding',
       'Authentic Girlfriend Experience (GFE)',
-      'Allowed kissing & intimate embrace',
-      'Tactile exploration & sensual hand relief',
+      'Intimate embrace & sensory pampering',
+      'Private inquiries welcomed via phone or text',
       'Strictly hygienic, confidential, and safe',
     ],
   },
@@ -151,12 +151,12 @@ export const CONTACT_INFO = {
   whatsappNumber: '27739955927',
   whatsappUrl: 'https://wa.me/27739955927',
   email: 'thepearlwellnessspa@gmail.com',
-  address: '112 General Beyers Street, Welgelegen, Polokwane',
+  address: '112 Genl Beyers Street, Welgelen, Polokwane',
   city: 'Polokwane',
-  suburb: 'Welgelegen',
+  suburb: 'Welgelen',
   province: 'Limpopo',
   website: 'www.thepearlspa.co.za',
-  googleMapsUrl: 'https://maps.google.com/?q=112+General+Beyers+Street,+Welgelegen,+Polokwane',
+  googleMapsUrl: 'https://maps.google.com/?q=112+Genl+Beyers+Street,+Welgelen,+Polokwane',
   operatingHours: 'Monday – Sunday: 10:00 AM – 20:00 PM (Discreet Bookings Daily)',
 };
 
@@ -169,7 +169,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     badge: 'Front Portico',
     videoLabel: 'View 1 • Grand Entrance',
     description:
-      'Stepping stone garden pathway, manicured green hedges, white boundary walls, and classical twisted column portico at 112 General Beyers St.',
+      'Stepping stone garden pathway, manicured green hedges, white boundary walls, and classical twisted column portico at 112 Genl Beyers Street.',
     highlights: [
       'Stepping stone garden walkway & manicured hedges',
       'Classical twisted spiral column portico',
