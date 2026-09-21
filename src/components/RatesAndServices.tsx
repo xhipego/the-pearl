@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, Clock, Check, MessageCircle, Waves, Users, Wine, Heart, Calculator } from 'lucide-react';
 import { SPA_RATES, SIGNATURE_PACKAGES, CONTACT_INFO } from '../data/spaData';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
+import { VENUE_IMAGES } from '../data/venueImages';
 
 interface RatesAndServicesProps {
   onSelectBooking: (duration: string, addOn?: string) => void;
@@ -307,7 +308,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
               <div>
                 <div className="relative h-36 -mx-6 -mt-6 mb-4 overflow-hidden">
                   <img
-                    src={getPhoto('pool', '/images/venue_pool_lapa.jpg')}
+                    src={getPhoto('pool', VENUE_IMAGES.pool)}
                     alt="Private Swimming Pool & Thatched Cabana at The Pearl"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover filter brightness-[0.85] hover:scale-105 transition-transform duration-500"

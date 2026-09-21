@@ -241,7 +241,7 @@ Please confirm availability and private arrival instructions.`;
                         onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
                         className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none"
                       />
-                      <User className="w-4 h-4 text-[#C5A059] absolute left-3 top-3" />
+                      <User className="w-4 h-4 text-[#C5A059] absolute left-3 top-3 pointer-events-none" />
                     </div>
                   </div>
 
@@ -258,7 +258,7 @@ Please confirm availability and private arrival instructions.`;
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none"
                       />
-                      <Phone className="w-4 h-4 text-[#C5A059] absolute left-3 top-3" />
+                      <Phone className="w-4 h-4 text-[#C5A059] absolute left-3 top-3 pointer-events-none" />
                     </div>
                   </div>
                 </div>
@@ -266,35 +266,31 @@ Please confirm availability and private arrival instructions.`;
                 {/* Date & Time */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#1B2B42] mb-1.5">
-                      Preferred Date
+                    <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#1B2B42] mb-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>Preferred Date</span>
                     </label>
-                    <div className="relative">
-                      <input
-                        type="date"
-                        required
-                        value={formData.preferredDate}
-                        onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none"
-                      />
-                      <Calendar className="w-4 h-4 text-[#C5A059] absolute left-3 top-3" />
-                    </div>
+                    <input
+                      type="date"
+                      required
+                      value={formData.preferredDate}
+                      onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
+                      className="w-full block px-3.5 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none min-h-[44px]"
+                    />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#1B2B42] mb-1.5">
-                      Preferred Arrival Time
+                    <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#1B2B42] mb-1.5">
+                      <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>Preferred Arrival Time</span>
                     </label>
-                    <div className="relative">
-                      <input
-                        type="time"
-                        required
-                        value={formData.preferredTime}
-                        onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none"
-                      />
-                      <Clock className="w-4 h-4 text-[#C5A059] absolute left-3 top-3" />
-                    </div>
+                    <input
+                      type="time"
+                      required
+                      value={formData.preferredTime}
+                      onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
+                      className="w-full block px-3.5 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none min-h-[44px]"
+                    />
                   </div>
                 </div>
 

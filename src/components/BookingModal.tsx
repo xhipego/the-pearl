@@ -104,35 +104,31 @@ Please confirm availability and private arrival details at 112 General Beyers, W
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold uppercase tracking-wider text-[#1B2B42] mb-1">
-                Date
+              <label className="flex items-center gap-1.5 font-semibold uppercase tracking-wider text-[#1B2B42] mb-1">
+                <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
+                <span>Date</span>
               </label>
-              <div className="relative">
-                <input
-                  type="date"
-                  required
-                  value={preferredDate}
-                  onChange={(e) => setPreferredDate(e.target.value)}
-                  className="w-full pl-8 pr-2 py-2 rounded-lg border border-[#D4AF37]/40 bg-white text-[#1B2B42] outline-none"
-                />
-                <Calendar className="w-3.5 h-3.5 text-[#C5A059] absolute left-2.5 top-2.5" />
-              </div>
+              <input
+                type="date"
+                required
+                value={preferredDate}
+                onChange={(e) => setPreferredDate(e.target.value)}
+                className="w-full block px-3 py-2 rounded-lg border border-[#D4AF37]/40 bg-white text-[#1B2B42] outline-none min-h-[40px]"
+              />
             </div>
 
             <div>
-              <label className="block font-semibold uppercase tracking-wider text-[#1B2B42] mb-1">
-                Time
+              <label className="flex items-center gap-1.5 font-semibold uppercase tracking-wider text-[#1B2B42] mb-1">
+                <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
+                <span>Time</span>
               </label>
-              <div className="relative">
-                <input
-                  type="time"
-                  required
-                  value={preferredTime}
-                  onChange={(e) => setPreferredTime(e.target.value)}
-                  className="w-full pl-8 pr-2 py-2 rounded-lg border border-[#D4AF37]/40 bg-white text-[#1B2B42] outline-none"
-                />
-                <Clock className="w-3.5 h-3.5 text-[#C5A059] absolute left-2.5 top-2.5" />
-              </div>
+              <input
+                type="time"
+                required
+                value={preferredTime}
+                onChange={(e) => setPreferredTime(e.target.value)}
+                className="w-full block px-3 py-2 rounded-lg border border-[#D4AF37]/40 bg-white text-[#1B2B42] outline-none min-h-[40px]"
+              />
             </div>
           </div>
 

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
+import { VENUE_IMAGES } from '../data/venueImages';
 
 interface AboutPageProps {
   onNavigate: (page: PageId) => void;
@@ -68,7 +69,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-2xl overflow-hidden border border-[#D4AF37]/40 shadow-2xl">
               <img
-                src={getPhoto('champagne', '/images/venue_champagne_suite.jpg')}
+                src={getPhoto('champagne', VENUE_IMAGES.champagne)}
                 alt="The Pearl Champagne Suite Ambiance"
                 referrerPolicy="no-referrer"
                 className="w-full h-[440px] object-cover filter brightness-[0.95] hover:scale-105 transition-transform duration-700"
@@ -162,7 +163,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="rounded-2xl overflow-hidden border border-white/10 group">
               <img
-                src={getPhoto('lounge', '/images/venue_grand_lounge.jpg')}
+                src={getPhoto('lounge', VENUE_IMAGES.lounge)}
                 alt="Vaulted Cathedral Lounge"
                 referrerPolicy="no-referrer"
                 className="w-full h-56 object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-500"
@@ -175,7 +176,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
 
             <div className="rounded-2xl overflow-hidden border border-white/10 group">
               <img
-                src={getPhoto('pool', '/images/venue_pool_lapa.jpg')}
+                src={getPhoto('pool', VENUE_IMAGES.pool)}
                 alt="Cabana & Pool"
                 referrerPolicy="no-referrer"
                 className="w-full h-56 object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-500"
@@ -188,7 +189,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
 
             <div className="rounded-2xl overflow-hidden border border-white/10 group">
               <img
-                src={getPhoto('atrium', '/images/venue_atrium_entrance.jpg')}
+                src={getPhoto('atrium', VENUE_IMAGES.atrium)}
                 alt="Lounge Atrium"
                 referrerPolicy="no-referrer"
                 className="w-full h-56 object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-500"
