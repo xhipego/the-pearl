@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #111827;
+    background-color: #FDFBF7;
+    background-image: 
+      radial-gradient(at 15% 20%, rgba(212, 175, 55, 0.04) 0px, transparent 50%),
+      radial-gradient(at 85% 80%, rgba(27, 43, 66, 0.04) 0px, transparent 50%);
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Pearl sphere subtle radial gradient effect */
+.pearl-sphere {
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f4e8dc 30%, #dfcbb7 65%, #a68c74 100%);
+  box-shadow: 
+    0 10px 25px -5px rgba(27, 43, 66, 0.2),
+    inset -4px -6px 12px rgba(166, 140, 116, 0.4),
+    inset 4px 6px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Luxury card with silk sheen & gold wireframe border */
+.luxury-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 251, 247, 0.9) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 4px 20px -2px rgba(27, 43, 66, 0.06), 0 2px 6px -1px rgba(212, 175, 55, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 12px 30px -4px rgba(27, 43, 66, 0.12), 0 4px 12px -2px rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Gold vintage ornamental divider matching the flyer */
+.vintage-gold-frame {
+  border: 1px solid #D4AF37;
+  position: relative;
+}
+
+/* Cinematic Moving Views Pan & Zoom Animations for Background Carousel */
+@keyframes kenburns-drift-1 {
+  0% { transform: scale(1.0) translate(0%, 0%); }
+  50% { transform: scale(1.07) translate(-1.8%, -1%); }
+  100% { transform: scale(1.12) translate(-2.8%, -1.4%); }
+}
+
+@keyframes kenburns-drift-2 {
+  0% { transform: scale(1.12) translate(1.5%, 1%); }
+  50% { transform: scale(1.06) translate(0.2%, 0.4%); }
+  100% { transform: scale(1.02) translate(-1.2%, -0.6%); }
+}
+
+@keyframes kenburns-drift-3 {
+  0% { transform: scale(1.03) translate(-1%, 1.2%); }
+  50% { transform: scale(1.08) translate(1%, -0.5%); }
+  100% { transform: scale(1.13) translate(2.2%, 0.2%); }
+}
+
+.animate-kenburns-1 {
+  animation: kenburns-drift-1 12s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-kenburns-2 {
+  animation: kenburns-drift-2 14s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+.animate-kenburns-3 {
+  animation: kenburns-drift-3 13s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-progress {
+  animation: progress-fill 6s linear forwards;
+}
+
