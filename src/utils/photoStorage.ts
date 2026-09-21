@@ -112,3 +112,22 @@ export async function clearVenuePhotos(): Promise<void> {
     // ignore
   }
 }
+
+export async function deleteVenuePhoto(slotId: string): Promise<void> {
+  try {
+    const db = await openDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      tx.objectStore(STORE_NAME).delete(slotId);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => resolve();
+    });
+  } catch {
+    // fallback
+  }
+  try {
+    localStorage.removeItem(`venue_photo_${slotId}`);
+  } catch {
+    // ignore
+  }
+}

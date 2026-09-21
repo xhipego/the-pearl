@@ -67,7 +67,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 About The Pearl
               </h3>
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                Discover our luxury venue, private en-suite suites, heated pool, and unwavering commitment to client discretion.
+                Discover our luxury venue, private en-suite suites, sparkling swimming pool &amp; thatched lapa, and unwavering commitment to client discretion.
               </p>
             </div>
             <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#C5A059] group-hover:text-[#1B2B42] transition-colors">

@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
   MessageCircle,
-  Sparkles,
   Shield,
   ChevronDown,
   MapPin,
   Clock,
-  Play,
-  Pause,
-  ChevronLeft,
-  ChevronRight,
-  Eye,
 } from 'lucide-react';
 import { CONTACT_INFO, VENUE_SNIPPETS } from '../data/spaData';
 import { PearlLogo } from './PearlLogo';
@@ -24,27 +18,20 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
   const [currentSnippetIndex, setCurrentSnippetIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const { getPhoto } = useVenuePhotos();
+  const { getPhoto, movingSnippets } = useVenuePhotos();
 
-  const activeSnippet = VENUE_SNIPPETS[currentSnippetIndex] || VENUE_SNIPPETS[0];
+  const snippets = movingSnippets && movingSnippets.length > 0 ? movingSnippets : VENUE_SNIPPETS;
+  const safeSnippetIndex = currentSnippetIndex % snippets.length;
+  const activeSnippet = snippets[safeSnippetIndex] || snippets[0];
 
-  // Auto-cycle through venue snippets every 6 seconds if playing
+  // Auto-cycle through venue snippets smoothly every 6.5 seconds in the background
   useEffect(() => {
-    if (!isPlaying) return;
+    if (snippets.length <= 1) return;
     const interval = setInterval(() => {
-      setCurrentSnippetIndex((prev) => (prev + 1) % VENUE_SNIPPETS.length);
+      setCurrentSnippetIndex((prev) => (prev + 1) % snippets.length);
     }, 6500);
     return () => clearInterval(interval);
-  }, [isPlaying]);
-
-  const handlePrev = () => {
-    setCurrentSnippetIndex((prev) => (prev - 1 + VENUE_SNIPPETS.length) % VENUE_SNIPPETS.length);
-  };
-
-  const handleNext = () => {
-    setCurrentSnippetIndex((prev) => (prev + 1) % VENUE_SNIPPETS.length);
-  };
+  }, [snippets.length]);
 
   return (
     <section
@@ -53,8 +40,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
     >
       {/* Background Moving Views Carousel with continuous cinematic Ken Burns animation */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {VENUE_SNIPPETS.map((snippet, idx) => {
-          const isCurrent = idx === currentSnippetIndex;
+        {snippets.map((snippet, idx) => {
+          const isCurrent = idx === safeSnippetIndex;
           const animClass =
             idx % 3 === 0
               ? 'animate-kenburns-1'
@@ -74,8 +61,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
                 src={activeImgSrc}
                 alt={snippet.title}
                 referrerPolicy="no-referrer"
-                className={`w-full h-full object-cover object-center filter brightness-[0.62] contrast-[1.06] ${
-                  isCurrent && isPlaying ? animClass : isCurrent ? 'scale-105' : 'scale-100'
+                className={`w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.05] ${
+                  isCurrent ? animClass : 'scale-100'
                 }`}
               />
             </div>
@@ -91,24 +78,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
       <div className="absolute top-28 left-8 w-12 h-12 rounded-full pearl-sphere opacity-40 blur-[1px] hidden md:block animate-pulse z-20" />
       <div className="absolute bottom-36 right-10 w-16 h-16 rounded-full pearl-sphere opacity-50 blur-[1px] hidden md:block z-20" />
 
-      {/* Top Real-Time Moving View Indicator */}
-      <div className="relative z-30 max-w-5xl mx-auto w-full pt-4 flex items-center justify-between gap-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1B2B42]/85 border border-[#D4AF37]/50 text-[#D4AF37] text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold backdrop-blur-md shadow-md">
-          <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-          <span>
-            Moving View {currentSnippetIndex + 1} of {VENUE_SNIPPETS.length}:{' '}
-            <strong className="text-white font-medium">{activeSnippet.badge}</strong>
-          </span>
-        </div>
 
-        <button
-          onClick={() => onNavigate?.('rates')}
-          className="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-[#D4AF37] transition-colors bg-white/5 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-sm cursor-pointer"
-        >
-          <Eye className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span>View Rates (From R500)</span>
-        </button>
-      </div>
 
       {/* Central Content Container */}
       <div className="relative z-30 max-w-4xl mx-auto text-center flex flex-col items-center my-auto py-6">
@@ -183,102 +153,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
         </div>
       </div>
 
-      {/* Bottom Venue Snippet Navigation Strip (Inspired directly by QoH Pretoria) */}
-      <div className="relative z-30 max-w-5xl mx-auto w-full pt-2">
-        <div className="bg-[#1B2B42]/80 backdrop-blur-md rounded-2xl border border-[#D4AF37]/40 p-3 shadow-2xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-            {/* Left: Current Active Snippet Description */}
-            <div className="flex items-center gap-3 w-full md:w-auto">
-              <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-[#D4AF37]/60 hidden sm:block">
-                <img
-                  src={activeSnippet.image}
-                  alt={activeSnippet.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="text-left">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37]">
-                    Active Venue Background
-                  </span>
-                  <span className="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-slate-300">
-                    {activeSnippet.videoLabel}
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm font-semibold text-white truncate max-w-xs sm:max-w-md">
-                  {activeSnippet.title}
-                </p>
-              </div>
-            </div>
-
-            {/* Center/Right: Snippet Selector Pills with Progress Bars */}
-            <div className="flex items-center gap-2 w-full md:w-auto justify-center sm:justify-end overflow-x-auto pb-1 sm:pb-0">
-              {VENUE_SNIPPETS.map((snippet, idx) => {
-                const isActive = idx === currentSnippetIndex;
-                return (
-                  <button
-                    key={snippet.id}
-                    id={`hero-view-pill-${snippet.id}`}
-                    onClick={() => {
-                      setCurrentSnippetIndex(idx);
-                    }}
-                    className={`relative px-3 py-1.5 rounded-lg text-[11px] font-semibold tracking-wider transition-all whitespace-nowrap overflow-hidden cursor-pointer ${
-                      isActive
-                        ? 'bg-[#D4AF37] text-[#1B2B42] font-bold shadow-md scale-105'
-                        : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    <span>0{idx + 1} {snippet.badge.split(' ')[0]}</span>
-                    {/* Animated Progress Bar when active and playing */}
-                    {isActive && isPlaying && (
-                      <span className="absolute bottom-0 left-0 h-0.5 bg-[#1B2B42] w-full animate-progress" />
-                    )}
-                  </button>
-                );
-              })}
-
-              {/* Pause/Play Controls */}
-              <div className="flex items-center gap-1 pl-2 border-l border-white/10">
-                <button
-                  id="hero-view-prev-btn"
-                  onClick={handlePrev}
-                  className="p-1 rounded-md text-slate-300 hover:text-[#D4AF37] hover:bg-white/5 transition-colors cursor-pointer"
-                  aria-label="Previous Snippet"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  id="hero-view-play-btn"
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="p-1 rounded-md text-slate-300 hover:text-[#D4AF37] hover:bg-white/5 transition-colors cursor-pointer"
-                  aria-label={isPlaying ? 'Pause Background Tour' : 'Play Background Tour'}
-                >
-                  {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-                </button>
-                <button
-                  id="hero-view-next-btn"
-                  onClick={handleNext}
-                  className="p-1 rounded-md text-slate-300 hover:text-[#D4AF37] hover:bg-white/5 transition-colors cursor-pointer"
-                  aria-label="Next Snippet"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation indicator */}
-        <div className="flex justify-center mt-3">
-          <button
-            onClick={() => onNavigate?.('about')}
-            className="text-[#D4AF37]/80 hover:text-[#D4AF37] transition-colors flex items-center gap-1.5 text-[10px] tracking-widest uppercase font-medium cursor-pointer"
-          >
-            <span>Explore The Pearl Experience</span>
-            <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
-          </button>
-        </div>
+      {/* Subtle Luxury Scroll Indicator */}
+      <div className="relative z-30 flex justify-center pb-2 pt-4">
+        <button
+          onClick={() => onNavigate?.('about')}
+          className="text-[#D4AF37]/80 hover:text-[#D4AF37] transition-colors flex flex-col items-center gap-1.5 text-[10px] tracking-[0.2em] uppercase font-medium cursor-pointer group"
+        >
+          <span className="group-hover:tracking-[0.24em] transition-all">Explore The Experience</span>
+          <ChevronDown className="w-4 h-4 text-[#D4AF37] animate-bounce" />
+        </button>
       </div>
     </section>
   );

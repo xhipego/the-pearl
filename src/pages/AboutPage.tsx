@@ -181,7 +181,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
                 className="w-full h-56 object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="p-4 bg-white/5 backdrop-blur-sm">
-                <h5 className="font-serif font-bold text-sm text-[#F3E5AB]">Heated Pool &amp; Thatched Lapa</h5>
+                <h5 className="font-serif font-bold text-sm text-[#F3E5AB]">Sparkling Pool &amp; Thatched Lapa</h5>
                 <p className="text-[11px] text-slate-300 font-light mt-1">Outdoor private plunge pool and relaxing thatched lounge.</p>
               </div>
             </div>

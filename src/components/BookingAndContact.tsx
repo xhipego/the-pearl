@@ -327,7 +327,7 @@ Please confirm availability and private arrival instructions.`;
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     {[
                       'Doubles Session (2 Ladies)',
-                      'Heated Pool Dip (+R500/hr)',
+                      'Private Pool Dip (+R500/hr)',
                       'Bachelor Party Package',
                     ].map((addon) => (
                       <button

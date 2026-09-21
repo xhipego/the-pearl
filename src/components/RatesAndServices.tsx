@@ -308,7 +308,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                 <div className="relative h-36 -mx-6 -mt-6 mb-4 overflow-hidden">
                   <img
                     src={getPhoto('pool', '/images/venue_pool_lapa.jpg')}
-                    alt="Private Heated Pool & Thatched Cabana at The Pearl"
+                    alt="Private Swimming Pool & Thatched Cabana at The Pearl"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover filter brightness-[0.85] hover:scale-105 transition-transform duration-500"
                   />
@@ -328,7 +328,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                   R500 / hr per lady
                 </div>
                 <p className="text-xs text-gray-600 leading-relaxed mb-4">
-                  Enhance your experience with a refreshing dip. Enjoy private poolside drinks and warm water touch with your chosen therapist in our secluded, heated outdoor pool.
+                  Enhance your experience with a refreshing dip. Enjoy private poolside drinks and cool water touch with your chosen therapist in our secluded outdoor swimming pool and thatched cabana.
                 </p>
               </div>
               <a
@@ -416,7 +416,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                     onChange={(e) => setIncludePool(e.target.checked)}
                     className="accent-[#1B2B42] w-4 h-4 rounded"
                   />
-                  <span className="font-medium text-[#1B2B42]">Heated Pool Session (+R500/hr)</span>
+                  <span className="font-medium text-[#1B2B42]">Private Pool Session (+R500/hr)</span>
                 </label>
               </div>
             </div>
