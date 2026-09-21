@@ -3,14 +3,12 @@ import { PearlLogo } from './PearlLogo';
 import { CONTACT_INFO } from '../data/spaData';
 import { Phone, MessageCircle, MapPin, Mail, Shield } from 'lucide-react';
 import { PageId } from './Navbar';
-import { useVenuePhotos } from '../context/VenuePhotoContext';
 
 interface FooterProps {
   onNavigate?: (page: PageId) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const { setIsModalOpen } = useVenuePhotos();
   const handleNav = (page: PageId, e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
@@ -144,14 +142,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-3">
           <p>
-            <span
-              onClick={() => setIsModalOpen(true)}
-              className="cursor-default select-none hover:text-slate-300 transition-colors"
-              title="The Pearl Wellness Spa"
-            >
-              &copy;
-            </span>{' '}
-            {new Date().getFullYear()} {CONTACT_INFO.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {CONTACT_INFO.name}. All rights reserved.
           </p>
           <p className="flex items-center gap-3">
             <span>Website: {CONTACT_INFO.website}</span>

@@ -1,0 +1,22 @@
+{
+  "enabledSlotIds": [
+    "entrance",
+    "atrium",
+    "pool",
+    "lounge",
+    "champagne",
+    "sapphire",
+    "mahogany"
+  ],
+  "customSlots": [],
+  "slotOrder": [
+    "entrance",
+    "atrium",
+    "pool",
+    "lounge",
+    "champagne",
+    "sapphire",
+    "mahogany"
+  ],
+  "lastBakedAt": null
+}

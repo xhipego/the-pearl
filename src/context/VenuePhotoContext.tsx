@@ -3,6 +3,7 @@ import { getAllVenuePhotos, saveVenuePhoto, clearVenuePhotos, deleteVenuePhoto }
 import { VENUE_PHOTO_SLOTS, VenuePhotoSlot } from '../data/venuePhotoSlots';
 import { VENUE_SNIPPETS } from '../data/spaData';
 import { VenueSnippet } from '../types';
+import savedVenueConfig from '../data/savedVenueConfig.json';
 
 const STORAGE_ENABLED_KEY = 'the_pearl_enabled_slots_v1';
 const STORAGE_CUSTOM_SLOTS_KEY = 'the_pearl_custom_slots_v1';
@@ -27,6 +28,10 @@ export interface VenuePhotoContextType {
   movingSnippets: VenueSnippet[];
   hasCustomPhotos: boolean;
   activeMovingCount: number;
+  bakePhotosToProject: () => Promise<{ success: boolean; message: string; savedCount?: number }>;
+  isBaking: boolean;
+  bakeResult: { success: boolean | null; message: string } | null;
+  lastBakedAt: string | null;
 }
 
 const VenuePhotoContext = createContext<VenuePhotoContextType | undefined>(undefined);
@@ -35,18 +40,24 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [photos, setPhotos] = useState<Record<string, string>>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [isBaking, setIsBaking] = useState<boolean>(false);
+  const [bakeResult, setBakeResult] = useState<{ success: boolean | null; message: string } | null>(null);
+  const [lastBakedAt, setLastBakedAt] = useState<string | null>(
+    (savedVenueConfig as any).lastBakedAt || null
+  );
 
-  // Custom slots added dynamically by user
+  // Custom slots added dynamically by user - fallback to saved baked config
   const [customSlots, setCustomSlots] = useState<VenuePhotoSlot[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_CUSTOM_SLOTS_KEY);
-      return saved ? JSON.parse(saved) : [];
+      if (saved) return JSON.parse(saved);
     } catch {
-      return [];
+      // ignore
     }
+    return ((savedVenueConfig as any).customSlots as VenuePhotoSlot[]) || [];
   });
 
-  // Ordered list of slot IDs
+  // Ordered list of slot IDs - fallback to saved baked config
   const [slotOrder, setSlotOrder] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_SLOT_ORDER_KEY);
@@ -54,10 +65,10 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     } catch {
       // ignore
     }
-    return VENUE_PHOTO_SLOTS.map((s) => s.id);
+    return ((savedVenueConfig as any).slotOrder as string[]) || VENUE_PHOTO_SLOTS.map((s) => s.id);
   });
 
-  // Enabled slots for the moving carousel
+  // Enabled slots for the moving carousel - fallback to saved baked config
   const [enabledSlotIds, setEnabledSlotIds] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_ENABLED_KEY);
@@ -65,7 +76,7 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     } catch {
       // ignore
     }
-    return VENUE_PHOTO_SLOTS.map((s) => s.id);
+    return ((savedVenueConfig as any).enabledSlotIds as string[]) || VENUE_PHOTO_SLOTS.map((s) => s.id);
   });
 
   useEffect(() => {
@@ -266,6 +277,38 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     });
   }, [allSlots, enabledSlotIds, photos]);
 
+  // Bake photos directly to project files on the server (for permanent deployment)
+  const bakePhotosToProject = async (): Promise<{ success: boolean; message: string; savedCount?: number }> => {
+    setIsBaking(true);
+    try {
+      const res = await fetch('/api/save-synced-photos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          photos,
+          enabledSlotIds,
+          customSlots,
+          slotOrder,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setBakeResult({ success: true, message: data.message });
+        setLastBakedAt(new Date().toISOString());
+        setIsBaking(false);
+        return { success: true, message: data.message, savedCount: data.savedCount };
+      } else {
+        throw new Error(data.error || 'Failed to bake photos into project');
+      }
+    } catch (err: any) {
+      const msg = err?.message || 'Unable to connect to server to bake photos.';
+      setBakeResult({ success: false, message: msg });
+      setIsBaking(false);
+      return { success: false, message: msg };
+    }
+  };
+
   const hasCustomPhotos = Object.keys(photos).length > 0 || customSlots.length > 0;
 
   return (
@@ -289,6 +332,10 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         movingSnippets,
         hasCustomPhotos,
         activeMovingCount: movingSnippets.length,
+        bakePhotosToProject,
+        isBaking,
+        bakeResult,
+        lastBakedAt,
       }}
     >
       {children}

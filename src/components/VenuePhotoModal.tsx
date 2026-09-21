@@ -16,6 +16,9 @@ import {
   Layers,
   RefreshCw,
   Sliders,
+  CloudUpload,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 
 export const VenuePhotoModal: React.FC = () => {
@@ -34,6 +37,10 @@ export const VenuePhotoModal: React.FC = () => {
     addCustomPhoto,
     removeCustomPhoto,
     activeMovingCount,
+    bakePhotosToProject,
+    isBaking,
+    bakeResult,
+    lastBakedAt,
   } = useVenuePhotos();
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -176,6 +183,14 @@ export const VenuePhotoModal: React.FC = () => {
     showToast('All photos are now active in the moving views tour!');
   };
 
+  const handleBakePhotos = async () => {
+    const res = await bakePhotosToProject();
+    if (res.success) {
+      setSuccessMessage(res.message || 'Photos baked into project files successfully! You can now deploy.');
+      setTimeout(() => setSuccessMessage(null), 6000);
+    }
+  };
+
   return (
     <div
       id="venue-photo-modal-overlay"
@@ -222,6 +237,70 @@ export const VenuePhotoModal: React.FC = () => {
 
         {/* Modal Body */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1">
+          {/* Permanent Deployment Card */}
+          <div className="p-4 rounded-xl bg-gradient-to-r from-[#1B2B42] to-[#121E2F] border-2 border-[#D4AF37] shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center shrink-0 mt-0.5">
+                {isBaking ? (
+                  <Loader2 className="w-5 h-5 text-[#D4AF37] animate-spin" />
+                ) : bakeResult?.success ? (
+                  <CheckCircle2 className="w-5 h-5 text-[#25D366]" />
+                ) : (
+                  <CloudUpload className="w-5 h-5 text-[#D4AF37]" />
+                )}
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-[#F3E5AB]">
+                    Deploy Synced Photos to Live Website
+                  </h4>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] font-bold">
+                    For Deployment
+                  </span>
+                </div>
+                <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">
+                  Clicking this saves your synced photos directly into the website's project folder (<code className="text-[#F3E5AB] font-mono">public/images/</code>). Once saved, your photos and enabled views will appear permanently on the live deployed website for all visitors on any device!
+                </p>
+                {lastBakedAt && (
+                  <p className="text-[11px] text-green-400 mt-1.5 flex items-center gap-1.5 font-medium">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Saved into project files ({new Date(lastBakedAt).toLocaleString()}). Ready to deploy!</span>
+                  </p>
+                )}
+                {bakeResult && !bakeResult.success && (
+                  <p className="text-[11px] text-red-300 mt-1.5 flex items-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{bakeResult.message}</span>
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <button
+              id="modal-bake-photos-btn"
+              onClick={handleBakePhotos}
+              disabled={isBaking}
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B8972E] hover:brightness-110 text-[#121E2F] font-bold text-xs tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
+            >
+              {isBaking ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Saving into Files...</span>
+                </>
+              ) : bakeResult?.success ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Save Again (Update Files)</span>
+                </>
+              ) : (
+                <>
+                  <CloudUpload className="w-4 h-4" />
+                  <span>Save into Project Files for Deployment</span>
+                </>
+              )}
+            </button>
+          </div>
+
           {/* Success Banner */}
           {successMessage && (
             <div className="p-3.5 rounded-xl bg-green-950/80 border border-green-500/70 text-green-300 text-xs flex items-center gap-2.5 shadow-md">
