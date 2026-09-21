@@ -1,4 +1,5 @@
 import { RateItem, PackageItem, VenueSnippet } from '../types';
+import { VENUE_IMAGES } from './venueImages';
 
 export const SPA_RATES: RateItem[] = [
   {
@@ -164,7 +165,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'entrance',
     title: 'Grand Entrance & Twisted Column Portico',
     subtitle: 'Garden Pathway, Manicured Hedges & Classical Twisted Columns',
-    image: '/images/venue_front_entrance.jpg',
+    image: VENUE_IMAGES.entrance,
     badge: 'Front Portico',
     videoLabel: 'View 1 • Grand Entrance',
     description:
@@ -180,7 +181,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'atrium',
     title: 'Sunlit Glass Conservatory & Atrium Foyer',
     subtitle: 'High Vaulted Glass Skylight, White Porcelain & Recliner',
-    image: '/images/venue_atrium_entrance.jpg',
+    image: VENUE_IMAGES.atrium,
     badge: 'Glass Atrium',
     videoLabel: 'View 2 • Glass Roof Conservatory',
     description:
@@ -196,7 +197,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'pool',
     title: 'Secluded Pool Courtyard & Thatched Lapa',
     subtitle: 'Sparkling Turquoise Swimming Pool & Thatched Cabana',
-    image: '/images/venue_pool_lapa.jpg',
+    image: VENUE_IMAGES.pool,
     badge: 'Pool & Lapa',
     videoLabel: 'View 3 • Pool Courtyard & Lapa',
     description:
@@ -212,7 +213,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'lounge',
     title: 'Vaulted Cathedral Ceiling Reception Salon',
     subtitle: 'High Timber Beams, Chandelier & Cream Leather Lounges',
-    image: '/images/venue_grand_lounge.jpg',
+    image: VENUE_IMAGES.lounge,
     badge: 'Grand Salon',
     videoLabel: 'View 4 • Vaulted Timber Lounge',
     description:
@@ -228,7 +229,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'champagne',
     title: 'Champagne Brocade Therapy Suite',
     subtitle: 'Warm Brocade Bed, Corner Chaise Lounge & Classical Art',
-    image: '/images/venue_champagne_suite.jpg',
+    image: VENUE_IMAGES.champagne,
     badge: 'Champagne Suite',
     videoLabel: 'View 5 • Champagne Therapy Suite',
     description:
@@ -244,7 +245,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'sapphire',
     title: 'Midnight Navy Velvet VIP Suite',
     subtitle: 'Plush Navy Velvet Bed, Butterfly Towel Art & Teal Silk Pillows',
-    image: '/images/venue_sapphire_suite.jpg',
+    image: VENUE_IMAGES.sapphire,
     badge: 'Midnight Velvet Suite',
     videoLabel: 'View 6 • Midnight Velvet Suite',
     description:
@@ -260,7 +261,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'mahogany',
     title: 'Warm Mahogany Executive Therapy Suite',
     subtitle: 'Dark Cherry Headboard, Black Throw & Crisp White Linens',
-    image: '/images/venue_mahogany_suite.jpg',
+    image: VENUE_IMAGES.mahogany,
     badge: 'Executive Suite',
     videoLabel: 'View 7 • Executive Suite',
     description:

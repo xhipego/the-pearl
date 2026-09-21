@@ -1,10 +1,11 @@
 import React from 'react';
 import { Sparkles, ShieldCheck, HeartHandshake, Eye, Award } from 'lucide-react';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
+import { VENUE_IMAGES } from '../data/venueImages';
 
 export const About: React.FC = () => {
   const { getPhoto } = useVenuePhotos();
-  const loungeImage = getPhoto('lounge', '/images/venue_grand_lounge.jpg');
+  const loungeImage = getPhoto('lounge', VENUE_IMAGES.lounge);
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#FDFBF7] relative overflow-hidden">
       {/* Background soft gold wash */}

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useMemo } from '
 import { getAllVenuePhotos, saveVenuePhoto, clearVenuePhotos, deleteVenuePhoto } from '../utils/photoStorage';
 import { VENUE_PHOTO_SLOTS, VenuePhotoSlot } from '../data/venuePhotoSlots';
 import { VENUE_SNIPPETS } from '../data/spaData';
+import { VENUE_IMAGES } from '../data/venueImages';
 import { VenueSnippet } from '../types';
 import savedVenueConfig from '../data/savedVenueConfig.json';
 
@@ -146,11 +147,14 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (photos[slotId]) {
       return photos[slotId];
     }
+    if (VENUE_IMAGES[slotId]) {
+      return VENUE_IMAGES[slotId];
+    }
     const slot = allSlots.find((s) => s.id === slotId);
     if (slot) {
       return fallbackDefault || slot.defaultSrc;
     }
-    return fallbackDefault || '/images/venue_grand_lounge.jpg';
+    return fallbackDefault || VENUE_IMAGES.lounge;
   };
 
   const updatePhoto = async (slotId: string, dataUrl: string): Promise<void> => {
