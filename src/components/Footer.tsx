@@ -72,17 +72,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li>
-                <a
-                  href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                    'Hi The Pearl Wellness Spa, please send me photos and profiles of the available hostesses today.'
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#D4AF37] transition-colors text-left flex items-center gap-1.5"
+                <button
+                  onClick={(e) => handleNav('hostesses', e)}
+                  className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
-                  <span>Our Hostesses (WhatsApp)</span>
-                  <span className="text-[10px] px-1.5 py-0.5 bg-[#25D366]/20 text-[#25D366] rounded font-medium">View</span>
-                </a>
+                  <span>The Girls / Hostesses</span>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-[#D4AF37]/20 text-[#F3E5AB] rounded font-medium">New</span>
+                </button>
               </li>
               <li>
                 <button

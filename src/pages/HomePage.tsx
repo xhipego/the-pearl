@@ -1,5 +1,6 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
+import { TherapistGrid } from '../components/TherapistGrid';
 import { PageId } from '../components/Navbar';
 import { CONTACT_INFO, SPA_RATES } from '../data/spaData';
 import {
@@ -11,6 +12,7 @@ import {
   MessageCircle,
   HeartHandshake,
   UserCheck,
+  Heart,
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -99,32 +101,28 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
           </div>
 
-          {/* Card 3: Hostesses (WhatsApp inquiry) */}
-          <a
-            href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-              'Hi The Pearl Wellness Spa, please send me photos and profiles of the available hostesses today.'
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative bg-white rounded-2xl p-7 border border-[#D4AF37]/30 hover:border-[#25D366] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
+          {/* Card 3: The Girls / Hostesses */}
+          <div
+            onClick={() => onNavigate('hostesses')}
+            className="group relative bg-white rounded-2xl p-7 border border-[#D4AF37]/30 hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#25D366]/5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#1B2B42] text-[#25D366] flex items-center justify-center mb-5 shadow-md group-hover:bg-[#25D366] group-hover:text-white transition-colors">
-                <MessageCircle className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-xl bg-[#1B2B42] text-[#D4AF37] flex items-center justify-center mb-5 shadow-md group-hover:bg-[#D4AF37] group-hover:text-[#1B2B42] transition-colors">
+                <Heart className="w-6 h-6" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#1B2B42] mb-2 group-hover:text-[#25D366] transition-colors">
-                Our Hostesses
+              <h3 className="font-serif text-xl font-bold text-[#1B2B42] mb-2 group-hover:text-[#C5A059] transition-colors">
+                The Girls
               </h3>
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                Hostesses are not displayed online. Text or WhatsApp 073 995 5927 to view today&apos;s available hostesses and photos.
+                Meet our beautiful sensual hostesses. View photos, appearance details, stats, and real-time daily shift availability.
               </p>
             </div>
-            <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#25D366] group-hover:text-[#1B2B42] transition-colors">
-              <span>WhatsApp for Photos</span>
+            <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#C5A059] group-hover:text-[#1B2B42] transition-colors">
+              <span>View The Girls</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
-          </a>
+          </div>
 
           {/* Card 4: Policies & Safety */}
           <div
@@ -200,8 +198,15 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 4. Hostesses WhatsApp Inquiry Spotlight */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* 4. Section for The Girls / Hostesses (Direct User Request) */}
+      <TherapistGrid
+        onSelectBooking={onOpenBooking}
+        title="Our Sensual Hostesses"
+        subtitle="Verified Photographs & Appearance Details"
+      />
+
+      {/* 5. Hostesses WhatsApp Inquiry Spotlight */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="bg-gradient-to-r from-[#1B2B42] via-[#243B55] to-[#1B2B42] rounded-3xl p-8 sm:p-14 text-white border border-[#D4AF37]/40 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="max-w-3xl relative z-10 space-y-5">
@@ -210,22 +215,22 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span>Direct Reception Roster</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-              View Today&apos;s Hostesses on WhatsApp
+              Instant Lineup &amp; Shift Confirmation
             </h2>
             <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-              To protect the privacy of our ladies and ensure you receive real-time availability for today&apos;s sessions, hostess profiles and verified photographs are shared directly through our Welgelen reception concierge.
+              Have specific preferences or want to know exactly which ladies are on shift this very moment? Contact our Welgelen reception concierge directly via WhatsApp or phone.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <a
                 href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                  'Hi The Pearl Wellness Spa, please send me photos and profiles of the available hostesses today.'
+                  'Hi The Pearl Wellness Spa, please confirm the active hostesses on shift right now.'
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-3.5 rounded-full text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 shadow-lg transition-all flex items-center justify-center gap-2 text-center"
               >
                 <MessageCircle className="w-4 h-4 text-[#1B2B42]" />
-                <span>Text WhatsApp for Hostess Photos</span>
+                <span>Text WhatsApp Concierge (073 995 5927)</span>
               </a>
               <a
                 href={`tel:${CONTACT_INFO.phone1}`}
@@ -238,7 +243,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 5. Location & Concierge Quick Banner */}
+      {/* 6. Location & Concierge Quick Banner */}
       <section className="pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#D4AF37]/40 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-xl">

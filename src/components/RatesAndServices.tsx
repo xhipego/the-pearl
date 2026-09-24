@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Clock, Check, MessageCircle, Waves, Users, Wine, Heart, Calculator } from 'lucide-react';
 import { SPA_RATES, SIGNATURE_PACKAGES, CONTACT_INFO } from '../data/spaData';
+import { safeOpenUrl } from '../utils/safeNavigation';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
 import { VENUE_IMAGES } from '../data/venueImages';
 
@@ -57,7 +58,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
       extras.length > 0 ? ` with ${extras.join(' & ')}` : ''
     }. Estimated Total: R${total}. Please let me know available slots today.`;
 
-    window.open(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(msg)}`, '_blank');
+    safeOpenUrl(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(msg)}`);
   };
 
   return (

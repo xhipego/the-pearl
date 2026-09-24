@@ -4,11 +4,13 @@ export interface Therapist {
   age: number;
   height: string;
   eyes: string;
-  hair: string;
+  hair?: string;
   bustOrBody?: string;
+  lookDescription: string;
   specialties: string[];
   bio: string;
-  image: string;
+  image: string; // Cover photo
+  photos?: string[]; // Up to 4 photos: [coverPhoto, photo2, photo3, photo4]
   featured?: boolean;
   availableToday: boolean;
   vipHostess?: boolean;

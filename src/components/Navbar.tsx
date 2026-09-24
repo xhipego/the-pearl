@@ -3,7 +3,7 @@ import { PearlLogo } from './PearlLogo';
 import { Phone, MessageCircle, Menu, X, ShieldCheck } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 
-export type PageId = 'home' | 'about' | 'rates' | 'policies' | 'contact';
+export type PageId = 'home' | 'hostesses' | 'rates' | 'about' | 'policies' | 'contact';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -29,8 +29,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks: { id: PageId; name: string; fullLabel?: string }[] = [
     { id: 'home', name: 'Home' },
-    { id: 'about', name: 'About Us' },
+    { id: 'hostesses', name: 'The Girls', fullLabel: 'The Hostesses' },
     { id: 'rates', name: 'Services & Rates' },
+    { id: 'about', name: 'About Us' },
     { id: 'policies', name: 'Policies', fullLabel: 'Policies & Safety' },
     { id: 'contact', name: 'Contact', fullLabel: 'Contact & Location' },
   ];

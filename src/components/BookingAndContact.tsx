@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, MessageCircle, MapPin, Mail, Globe, Clock, Calendar, Send, CheckCircle2, User, Sparkles } from 'lucide-react';
 import { CONTACT_INFO, SPA_RATES } from '../data/spaData';
+import { safeOpenUrl } from '../utils/safeNavigation';
 import { BookingFormState } from '../types';
 
 interface BookingAndContactProps {
@@ -46,8 +47,8 @@ Session Duration: ${formData.duration}${addOnsText}${notesText}
 
 Please confirm availability and private arrival instructions.`;
 
-    // Open WhatsApp
-    window.open(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(message)}`, '_blank');
+    // Open WhatsApp safely
+    safeOpenUrl(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(message)}`);
     setBookingSuccess(true);
   };
 

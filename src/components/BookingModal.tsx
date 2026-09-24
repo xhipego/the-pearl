@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, MessageCircle, Calendar, Clock, User, Phone, Sparkles } from 'lucide-react';
 import { CONTACT_INFO, SPA_RATES } from '../data/spaData';
+import { safeOpenUrl } from '../utils/safeNavigation';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -40,7 +41,7 @@ Session Duration: ${duration}${addOnsPart}
 
 Please confirm availability and private arrival details at 112 Genl Beyers Street, Welgelen, Polokwane.`;
 
-    window.open(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(msg)}`, '_blank');
+    safeOpenUrl(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(msg)}`);
     onClose();
   };
 

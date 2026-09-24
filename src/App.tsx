@@ -13,7 +13,9 @@ import { AboutPage } from './pages/AboutPage';
 import { RatesPage } from './pages/RatesPage';
 import { PoliciesPage } from './pages/PoliciesPage';
 import { ContactPage } from './pages/ContactPage';
+import { HostessesPage } from './pages/HostessesPage';
 import { VenuePhotoProvider } from './context/VenuePhotoContext';
+import { TherapistProvider } from './context/TherapistContext';
 import { VenuePhotoModal } from './components/VenuePhotoModal';
 
 export default function App() {
@@ -25,7 +27,7 @@ export default function App() {
   useEffect(() => {
     const parseHash = (): PageId => {
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      const validPages: PageId[] = ['home', 'about', 'rates', 'policies', 'contact'];
+      const validPages: PageId[] = ['home', 'hostesses', 'about', 'rates', 'policies', 'contact'];
       if (validPages.includes(hash as PageId)) {
         return hash as PageId;
       }
@@ -55,70 +57,80 @@ export default function App() {
   };
 
   return (
-    <VenuePhotoProvider>
-      <div className="min-h-screen bg-[#FDFBF7] text-[#111827] flex flex-col font-sans selection:bg-[#D4AF37]/30 selection:text-[#1B2B42]">
-        {/* Top Navigation Bar: Seamlessly Integrated Across All Pages */}
-        <Navbar
-          currentPage={currentPage}
-          onNavigate={handleNavigate}
-          onOpenBooking={() => setBookingModalOpen(true)}
-        />
+    <TherapistProvider>
+      <VenuePhotoProvider>
+        <div className="min-h-screen bg-[#FDFBF7] text-[#111827] flex flex-col font-sans selection:bg-[#D4AF37]/30 selection:text-[#1B2B42]">
+          {/* Top Navigation Bar: Seamlessly Integrated Across All Pages */}
+          <Navbar
+            currentPage={currentPage}
+            onNavigate={handleNavigate}
+            onOpenBooking={() => setBookingModalOpen(true)}
+          />
 
-        {/* Main Multi-Page Content Area: Each section has its own dedicated page */}
-        <main className="flex-1">
-          {currentPage === 'home' && (
-            <HomePage
-              onNavigate={handleNavigate}
-              onOpenBooking={() => setBookingModalOpen(true)}
-            />
-          )}
+          {/* Main Multi-Page Content Area: Each section has its own dedicated page */}
+          <main className="flex-1">
+            {currentPage === 'home' && (
+              <HomePage
+                onNavigate={handleNavigate}
+                onOpenBooking={() => setBookingModalOpen(true)}
+              />
+            )}
 
-          {currentPage === 'about' && (
-            <AboutPage
-              onNavigate={handleNavigate}
-              onOpenBooking={() => setBookingModalOpen(true)}
-            />
-          )}
+            {currentPage === 'hostesses' && (
+              <HostessesPage
+                onNavigate={handleNavigate}
+                onSelectBooking={(therapistName) => handleOpenBookingWithParams(therapistName)}
+                onOpenBooking={() => setBookingModalOpen(true)}
+              />
+            )}
 
-          {currentPage === 'rates' && (
-            <RatesPage
-              onNavigate={handleNavigate}
-              onSelectBooking={(duration) => handleOpenBookingWithParams(duration)}
-              onOpenBooking={() => setBookingModalOpen(true)}
-            />
-          )}
+            {currentPage === 'about' && (
+              <AboutPage
+                onNavigate={handleNavigate}
+                onOpenBooking={() => setBookingModalOpen(true)}
+              />
+            )}
 
-          {currentPage === 'policies' && (
-            <PoliciesPage
-              onNavigate={handleNavigate}
-              onOpenBooking={() => setBookingModalOpen(true)}
-            />
-          )}
+            {currentPage === 'rates' && (
+              <RatesPage
+                onNavigate={handleNavigate}
+                onSelectBooking={(duration) => handleOpenBookingWithParams(duration)}
+                onOpenBooking={() => setBookingModalOpen(true)}
+              />
+            )}
 
-          {currentPage === 'contact' && (
-            <ContactPage
-              onNavigate={handleNavigate}
-              initialDuration={selectedDuration}
-            />
-          )}
-        </main>
+            {currentPage === 'policies' && (
+              <PoliciesPage
+                onNavigate={handleNavigate}
+                onOpenBooking={() => setBookingModalOpen(true)}
+              />
+            )}
 
-        {/* Luxury Footer with Dynamic Multi-Page Navigation */}
-        <Footer onNavigate={handleNavigate} />
+            {currentPage === 'contact' && (
+              <ContactPage
+                onNavigate={handleNavigate}
+                initialDuration={selectedDuration}
+              />
+            )}
+          </main>
 
-        {/* Fixed Floating WhatsApp Action */}
-        <WhatsAppFloatingButton />
+          {/* Luxury Footer with Dynamic Multi-Page Navigation */}
+          <Footer onNavigate={handleNavigate} />
 
-        {/* Global Interactive Booking Dialog */}
-        <BookingModal
-          isOpen={bookingModalOpen}
-          onClose={() => setBookingModalOpen(false)}
-          defaultDuration={selectedDuration}
-        />
+          {/* Fixed Floating WhatsApp Action */}
+          <WhatsAppFloatingButton />
 
-        {/* Venue Real Photos Sync Modal */}
-        <VenuePhotoModal />
-      </div>
-    </VenuePhotoProvider>
+          {/* Global Interactive Booking Dialog */}
+          <BookingModal
+            isOpen={bookingModalOpen}
+            onClose={() => setBookingModalOpen(false)}
+            defaultDuration={selectedDuration}
+          />
+
+          {/* Venue Real Photos Sync Modal */}
+          <VenuePhotoModal />
+        </div>
+      </VenuePhotoProvider>
+    </TherapistProvider>
   );
 }
