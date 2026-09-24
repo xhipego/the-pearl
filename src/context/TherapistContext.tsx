@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Therapist } from '../types';
 import { THERAPISTS as INITIAL_THERAPISTS } from '../data/therapists';
+import { THERAPIST_IMAGES } from '../data/therapistImages';
 
-// Key bumped to v4 for Bliss, Faith, KitKate lineup
-const STORAGE_KEY = 'thepearl_therapists_v4';
+// Key bumped to v6 to flush any old stock/unsplash placeholders
+const STORAGE_KEY = 'thepearl_therapists_v6';
 
 interface TherapistContextType {
   therapists: Therapist[];
@@ -14,33 +15,39 @@ interface TherapistContextType {
   deleteTherapist: (id: string) => void;
   resetToDefaults: () => void;
   hasCustomizations: boolean;
+  bakePhotosToProject: (overrideTherapists?: Therapist[]) => Promise<{ success: boolean; message: string; savedCount?: number }>;
+  isBaking: boolean;
+  bakeResult: { success: boolean; message: string } | null;
+  isOwnerModalOpen: boolean;
+  setIsOwnerModalOpen: (open: boolean) => void;
 }
 
 const TherapistContext = createContext<TherapistContextType | undefined>(undefined);
 
-// Helper to normalize photos to array of 4 items
+// Helper to normalize photos to array of 4 items with authentic default images
 export const normalizeTherapistPhotos = (therapist: Partial<Therapist>): string[] => {
   const base = INITIAL_THERAPISTS.find((t) => t.id === therapist.id);
-  const existingPhotos = Array.isArray(therapist.photos) && therapist.photos.length > 0
+  const basePhotos = base?.photos || (therapist.id && THERAPIST_IMAGES[therapist.id]) || [];
+
+  const rawPhotos = Array.isArray(therapist.photos) && therapist.photos.length > 0
     ? therapist.photos.filter(Boolean)
     : [];
 
-  const basePhotos = base?.photos || [];
-  const primaryImage = therapist.image || base?.image || '';
-
   const photos: string[] = [];
 
-  // Slot 0 (Cover Photo)
-  photos[0] = existingPhotos[0] || primaryImage || basePhotos[0] || '';
+  for (let idx = 0; idx < 4; idx++) {
+    const raw = rawPhotos[idx];
+    if (typeof raw === 'string' && raw.trim().length > 0 && !raw.includes('unsplash.com')) {
+      photos[idx] = raw;
+    } else {
+      photos[idx] = basePhotos[idx] || basePhotos[0] || (therapist.id && THERAPIST_IMAGES[therapist.id]?.[idx]) || '';
+    }
+  }
 
-  // Slot 1 (Other Photo 1)
-  photos[1] = existingPhotos[1] || basePhotos[1] || photos[0];
-
-  // Slot 2 (Other Photo 2)
-  photos[2] = existingPhotos[2] || basePhotos[2] || photos[0];
-
-  // Slot 3 (Other Photo 3)
-  photos[3] = existingPhotos[3] || basePhotos[3] || photos[0];
+  // Ensure cover photo is never empty
+  if (!photos[0]) {
+    photos[0] = therapist.image || base?.image || (therapist.id && THERAPIST_IMAGES[therapist.id]?.[0]) || '';
+  }
 
   return photos;
 };
@@ -76,21 +83,16 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [therapists, setTherapists] = useState<Therapist[]>(() => {
     if (typeof window === 'undefined') return INITIAL_THERAPISTS;
     try {
-      const stored =
-        localStorage.getItem(STORAGE_KEY) ||
-        localStorage.getItem('thepearl_therapists_v3') ||
-        localStorage.getItem('thepearl_therapists_v2');
-
+      const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Take top 3 therapists (Bliss, Faith, KitKate)
           const slice3 = parsed.slice(0, 3);
           return slice3.map((item: any, idx: number) => {
             const { id, name } = mapToCanonicalNameAndId(item, idx);
             const base = INITIAL_THERAPISTS.find((t) => t.id === id) || INITIAL_THERAPISTS[idx];
             const photos = normalizeTherapistPhotos({ ...base, ...item, id });
-            const coverImage = photos[0] || item.image || base?.image || '';
+            const coverImage = photos[0];
 
             return {
               ...base,
@@ -114,18 +116,86 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   });
 
   const [hasCustomizations, setHasCustomizations] = useState<boolean>(false);
+  const [isBaking, setIsBaking] = useState(false);
+  const [bakeResult, setBakeResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
 
+  // Bake photos directly to project files on the server
+  const bakePhotosToProject = async (
+    overrideTherapists?: Therapist[]
+  ): Promise<{ success: boolean; message: string; savedCount?: number }> => {
+    const listToBake = overrideTherapists || therapists;
+    setIsBaking(true);
+    try {
+      const res = await fetch('/api/bake-therapist-photos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          therapists: listToBake,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        if (data.therapists && Array.isArray(data.therapists)) {
+          setTherapists(data.therapists);
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data.therapists));
+          } catch {}
+        }
+        setBakeResult({ success: true, message: data.message });
+        setIsBaking(false);
+        return { success: true, message: data.message, savedCount: data.savedPhotoCount };
+      } else {
+        throw new Error(data.error || 'Failed to bake therapist photos into project files');
+      }
+    } catch (err: any) {
+      const msg = err?.message || 'Unable to connect to server to bake photos.';
+      setBakeResult({ success: false, message: msg });
+      setIsBaking(false);
+      return { success: false, message: msg };
+    }
+  };
+
+  // Clean old storage versions and check for owner URL params
   useEffect(() => {
     try {
-      const stored =
-        localStorage.getItem(STORAGE_KEY) ||
-        localStorage.getItem('thepearl_therapists_v3') ||
-        localStorage.getItem('thepearl_therapists_v2');
+      // Clear out outdated keys that might contain unsplash links
+      localStorage.removeItem('thepearl_therapists_v1');
+      localStorage.removeItem('thepearl_therapists_v2');
+      localStorage.removeItem('thepearl_therapists_v3');
+      localStorage.removeItem('thepearl_therapists_v4');
+      localStorage.removeItem('thepearl_therapists_v5');
+
+      const stored = localStorage.getItem(STORAGE_KEY);
       setHasCustomizations(Boolean(stored));
-    } catch {
-      // ignore
+    } catch (err) {
+      console.warn('Storage check failed:', err);
     }
-  }, [therapists]);
+
+    // Owner shortcut: ?admin=girls or ?admin=hostesses in URL
+    if (
+      typeof window !== 'undefined' &&
+      (window.location.search.includes('admin=girls') ||
+        window.location.search.includes('admin=hostesses') ||
+        window.location.search.includes('admin=therapists'))
+    ) {
+      setIsOwnerModalOpen(true);
+    }
+
+    // Owner keyboard shortcut (Alt + G or Ctrl + Shift + G for Girls)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        (e.altKey && e.key.toLowerCase() === 'g') ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'g')
+      ) {
+        e.preventDefault();
+        setIsOwnerModalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const saveTherapists = (updated: Therapist[]) => {
     const normalized = updated.map((t) => {
@@ -146,6 +216,9 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     } catch (err) {
       console.error('Failed to save therapists to storage', err);
     }
+
+    // Automatically trigger bake so files are instantly saved to disk
+    bakePhotosToProject(normalized);
   };
 
   const updateTherapistPhoto = (id: string, newImage: string) => {
@@ -168,7 +241,9 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const updateTherapist = (updatedTherapist: Therapist) => {
     const updated = therapists.map((t) =>
-      t.id === updatedTherapist.id ? { ...updatedTherapist, vipHostess: true, availableToday: true, featured: true } : t
+      t.id === updatedTherapist.id
+        ? { ...updatedTherapist, vipHostess: true, availableToday: true, featured: true }
+        : t
     );
     saveTherapists(updated);
   };
@@ -189,6 +264,8 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const resetToDefaults = () => {
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('thepearl_therapists_v5');
+      localStorage.removeItem('thepearl_therapists_v4');
       localStorage.removeItem('thepearl_therapists_v3');
       localStorage.removeItem('thepearl_therapists_v2');
       localStorage.removeItem('thepearl_therapists_v1');
@@ -210,6 +287,11 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         deleteTherapist,
         resetToDefaults,
         hasCustomizations,
+        bakePhotosToProject,
+        isBaking,
+        bakeResult,
+        isOwnerModalOpen,
+        setIsOwnerModalOpen,
       }}
     >
       {children}

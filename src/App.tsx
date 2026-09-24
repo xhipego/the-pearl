@@ -17,6 +17,7 @@ import { HostessesPage } from './pages/HostessesPage';
 import { VenuePhotoProvider } from './context/VenuePhotoContext';
 import { TherapistProvider } from './context/TherapistContext';
 import { VenuePhotoModal } from './components/VenuePhotoModal';
+import { HostessPhotoModal } from './components/HostessPhotoModal';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
@@ -129,6 +130,9 @@ export default function App() {
 
           {/* Venue Real Photos Sync Modal */}
           <VenuePhotoModal />
+
+          {/* Hostesses Real Photos Sync Modal (Owner) */}
+          <HostessPhotoModal />
         </div>
       </VenuePhotoProvider>
     </TherapistProvider>

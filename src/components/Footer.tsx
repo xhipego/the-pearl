@@ -1,14 +1,16 @@
 import React from 'react';
 import { PearlLogo } from './PearlLogo';
 import { CONTACT_INFO } from '../data/spaData';
-import { Phone, MessageCircle, MapPin, Mail, Shield } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Mail, Shield, Lock } from 'lucide-react';
 import { PageId } from './Navbar';
+import { useTherapists } from '../context/TherapistContext';
 
 interface FooterProps {
   onNavigate?: (page: PageId) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const { setIsOwnerModalOpen } = useTherapists();
   const handleNav = (page: PageId, e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
@@ -144,6 +146,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span>Website: {CONTACT_INFO.website}</span>
             <span>&bull;</span>
             <span>Welgelen, Polokwane</span>
+            <span>&bull;</span>
+            <button
+              onClick={() => setIsOwnerModalOpen(true)}
+              className="text-slate-500 hover:text-[#D4AF37] transition-colors cursor-pointer text-[10px] flex items-center gap-1 hover:underline"
+              title="Hostess Photos Manager (Staff)"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Staff Portal</span>
+            </button>
           </p>
         </div>
       </div>
