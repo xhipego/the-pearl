@@ -2,6 +2,18 @@ import React, { createContext, useContext, useState } from 'react';
 import { Therapist } from '../types';
 import { THERAPISTS as INITIAL_THERAPISTS } from '../data/therapists';
 
+// Helper function required by TherapistModal and EditTherapistModal
+export function normalizeTherapistPhotos(therapist: any): string[] {
+  if (!therapist) return [];
+  if (Array.isArray(therapist.photos) && therapist.photos.length > 0) {
+    return therapist.photos.filter((p: any) => typeof p === 'string' && p.trim() !== '');
+  }
+  if (therapist.image && typeof therapist.image === 'string') {
+    return [therapist.image];
+  }
+  return [];
+}
+
 interface TherapistContextType {
   therapists: Therapist[];
   selectedTherapist: Therapist | null;
