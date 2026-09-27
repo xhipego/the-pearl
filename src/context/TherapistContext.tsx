@@ -105,28 +105,7 @@ const mapToCanonicalNameAndId = (item: any, index: number) => {
 };
 
 export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [therapists, setTherapists] = useState<Therapist[]>(() => {
-    if (typeof window === 'undefined') return INITIAL_THERAPISTS;
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length >= 3) {
-          const canonicalIds = ['bliss', 'faith', 'kitkate', 'barbie', 'kylie'];
-
-          const loaded = canonicalIds.map((cId, idx) => {
-            const base = INITIAL_THERAPISTS.find((t) => t.id === cId) || INITIAL_THERAPISTS[idx];
-            // Find in parsed list, checking canonical id and legacy ids
-            const storedItem = parsed.find(
-              (p: any) =>
-                p.id === cId ||
-                (cId === 'barbie' && (p.id === 'amber' || p.name === 'Amber' || p.name === 'Barbie')) ||
-                (cId === 'kylie' && (p.id === 'zara' || p.name === 'Zara' || p.name === 'Kylie'))
-            );
-
-            if (!storedItem) {
-              return base;
-            }
+  const [therapists, setTherapists] = useState<Therapist[]>(INITIAL_THERAPISTS);
 
             const photos = normalizeTherapistPhotos({ ...base, ...storedItem, id: cId });
             const coverImage = photos[0] || storedItem.image || base.image;
