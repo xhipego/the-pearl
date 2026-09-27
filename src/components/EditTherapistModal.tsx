@@ -350,15 +350,6 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
                       </div>
                     </div>
 
-                    {/* Hidden input for this slot */}
-                    <input
-                      ref={fileInputRefs[slotIdx]}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleFileUpload(slotIdx, e)}
-                      className="hidden"
-                    />
-
                     {/* Bottom Slot Action Buttons */}
                     <div className="mt-2 space-y-1">
                       <button
