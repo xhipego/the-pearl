@@ -10,7 +10,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const { setIsOwnerModalOpen } = useTherapists();
+  const { setIsOwnerModalOpen, openAttachPhotosModal } = useTherapists();
   const handleNav = (page: PageId, e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
@@ -155,6 +155,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span>Website: {CONTACT_INFO.website}</span>
             <span>&bull;</span>
             <span>Welgelen, Polokwane</span>
+            <span>&bull;</span>
+            <button
+              onClick={() => openAttachPhotosModal('barbie')}
+              className="text-slate-500 hover:text-[#D4AF37] transition-colors cursor-pointer text-[10px] flex items-center gap-1 hover:underline"
+              title="Attach Hostess Photos (Barbie & Kylie)"
+            >
+              <span>Attach Photos</span>
+            </button>
             <span>&bull;</span>
             <button
               onClick={() => setIsOwnerModalOpen(true)}

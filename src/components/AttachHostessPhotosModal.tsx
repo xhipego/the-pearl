@@ -15,6 +15,8 @@ import {
   AlertCircle,
   FolderOpen,
   Edit3,
+  CloudUpload,
+  Loader2,
 } from 'lucide-react';
 import { Therapist } from '../types';
 
@@ -60,6 +62,8 @@ export const AttachHostessPhotosModal: React.FC = () => {
     updateTherapistPhotos,
     resetTherapistToDefaults,
     openEditModal,
+    bakePhotosToProject,
+    isBaking,
   } = useTherapists();
 
   const [selectedId, setSelectedId] = useState<string>('kylie');
@@ -508,11 +512,40 @@ export const AttachHostessPhotosModal: React.FC = () => {
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <button
               type="button"
-              onClick={closeAttachPhotosModal}
+              disabled={isBaking}
+              onClick={async () => {
+                const res = await bakePhotosToProject();
+                if (res.success) {
+                  setSaveSuccess(res.message || 'Photos baked permanently into codebase!');
+                  setTimeout(() => setSaveSuccess(null), 4000);
+                }
+              }}
+              className="py-2.5 px-4 rounded-full bg-[#1B2B42] hover:bg-[#22334d] border border-[#D4AF37]/70 text-[#F3E5AB] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+              title="Writes photo files permanently into project code so they never disappear upon deployment"
+            >
+              {isBaking ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin text-[#D4AF37]" />
+                  <span>Baking to Codebase...</span>
+                </>
+              ) : (
+                <>
+                  <CloudUpload className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Bake to Codebase</span>
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={async () => {
+                await bakePhotosToProject();
+                closeAttachPhotosModal();
+              }}
               className="flex-1 sm:flex-initial py-2.5 px-6 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] text-[#1B2B42] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg shadow-[#D4AF37]/20 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <Check className="w-4 h-4 text-[#1B2B42]" />
-              <span>Done &amp; View on Website</span>
+              <span>Done &amp; Save for Live Site</span>
             </button>
           </div>
         </div>

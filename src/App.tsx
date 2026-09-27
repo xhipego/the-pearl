@@ -15,10 +15,25 @@ import { PoliciesPage } from './pages/PoliciesPage';
 import { ContactPage } from './pages/ContactPage';
 import { HostessesPage } from './pages/HostessesPage';
 import { VenuePhotoProvider } from './context/VenuePhotoContext';
-import { TherapistProvider } from './context/TherapistContext';
+import { TherapistProvider, useTherapists } from './context/TherapistContext';
 import { VenuePhotoModal } from './components/VenuePhotoModal';
 import { HostessPhotoModal } from './components/HostessPhotoModal';
+import { AttachHostessPhotosModal } from './components/AttachHostessPhotosModal';
+import { EditTherapistModal } from './components/EditTherapistModal';
 import { AgeVerificationClockModal } from './components/AgeVerificationClockModal';
+
+const GlobalEditTherapistModalWrapper: React.FC = () => {
+  const { isEditModalOpen, editingTherapist, closeEditModal, updateTherapist, deleteTherapist } = useTherapists();
+  return (
+    <EditTherapistModal
+      isOpen={isEditModalOpen}
+      therapist={editingTherapist}
+      onClose={closeEditModal}
+      onSave={updateTherapist}
+      onDelete={deleteTherapist}
+    />
+  );
+};
 
 export default function App() {
 
@@ -135,6 +150,12 @@ export default function App() {
 
           {/* Hostesses Real Photos Sync Modal (Owner) */}
           <HostessPhotoModal />
+
+          {/* Attach Hostess Photos Modal (Barbie & Kylie) */}
+          <AttachHostessPhotosModal />
+
+          {/* Edit Profile Modal */}
+          <GlobalEditTherapistModalWrapper />
 
           {/* Strictly 18+ Restricted Access Warning Modal */}
           <AgeVerificationClockModal />

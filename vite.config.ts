@@ -145,8 +145,8 @@ function savePhotosPlugin(): Plugin {
               }
 
               let savedPhotoCount = 0;
-              const canonicalIds = ['bliss', 'faith', 'kitkate', 'amber', 'zara'];
-              const canonicalNames = ['Bliss', 'Faith', 'KitKate', 'Amber', 'Zara'];
+              const canonicalIds = ['bliss', 'faith', 'kitkate', 'barbie', 'kylie'];
+              const canonicalNames = ['Bliss', 'Faith', 'KitKate', 'Barbie', 'Kylie'];
 
               const updatedTherapists = therapists.map((t: any, idx: number) => {
                 const id = canonicalIds[idx] || t.id;
