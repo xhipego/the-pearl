@@ -128,14 +128,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Legal & Policy Disclaimer Bar */}
-        <div className="py-6 border-b border-white/5 text-[11px] text-slate-400 text-center space-y-2">
+        <div className="py-6 border-b border-white/5 text-[11px] text-slate-400 text-center space-y-3">
           <p className="font-serif italic text-slate-300">
             &ldquo;The Pearl maintains a strictly professional, therapeutic and sensual environment. Absolutely NO sexual intercourse or oral sex is permitted. We reserve the right to terminate any session immediately if policies are violated.&rdquo;
           </p>
-          <p>
-            Bookings essential. All visitors must be 18 years of age or older.
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <span>Bookings essential. All visitors must be 18 years of age or older.</span>
+            <span>&bull;</span>
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('thepearl:reopen-age-warning'))}
+              className="text-[#D4AF37] hover:text-[#F3E5AB] transition-colors cursor-pointer text-[11px] font-semibold flex items-center gap-1.5 underline decoration-[#D4AF37]/50 hover:decoration-[#F3E5AB]"
+              title="View 18+ Restricted Access Notice"
+            >
+              <span>18+ Restricted Access Notice</span>
+            </button>
+          </div>
         </div>
+
 
         {/* Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-3">

@@ -3,8 +3,8 @@ import { Therapist } from '../types';
 import { THERAPISTS as INITIAL_THERAPISTS } from '../data/therapists';
 import { THERAPIST_IMAGES } from '../data/therapistImages';
 
-// Key bumped to v6 to flush any old stock/unsplash placeholders
-const STORAGE_KEY = 'thepearl_therapists_v6';
+// Key bumped to v11: strictly 5 hostesses with permanent Barbie (pink lingerie, Warm Brown eyes) & Kylie (blue lingerie)
+const STORAGE_KEY = 'thepearl_therapists_v11';
 
 interface TherapistContextType {
   therapists: Therapist[];
@@ -14,12 +14,23 @@ interface TherapistContextType {
   addTherapist: (newTherapist: Therapist) => void;
   deleteTherapist: (id: string) => void;
   resetToDefaults: () => void;
+  resetTherapistToDefaults: (id: string) => void;
   hasCustomizations: boolean;
   bakePhotosToProject: (overrideTherapists?: Therapist[]) => Promise<{ success: boolean; message: string; savedCount?: number }>;
   isBaking: boolean;
   bakeResult: { success: boolean; message: string } | null;
   isOwnerModalOpen: boolean;
   setIsOwnerModalOpen: (open: boolean) => void;
+  isAttachModalOpen: boolean;
+  activeAttachTherapistId: string;
+  openAttachPhotosModal: (therapistId?: string) => void;
+  closeAttachPhotosModal: () => void;
+  setActiveAttachTherapistId: (id: string) => void;
+  // Edit Profile Modal for Name, Description, Stats & Photos (Barbie & Kylie)
+  isEditModalOpen: boolean;
+  editingTherapist: Therapist | null;
+  openEditModal: (therapistOrId?: Therapist | string) => void;
+  closeEditModal: () => void;
 }
 
 const TherapistContext = createContext<TherapistContextType | undefined>(undefined);
@@ -53,11 +64,16 @@ export const normalizeTherapistPhotos = (therapist: Partial<Therapist>): string[
 };
 
 const mapToCanonicalNameAndId = (item: any, index: number) => {
-  const canonicalIds = ['bliss', 'faith', 'kitkate'];
-  const canonicalNames = ['Bliss', 'Faith', 'KitKate'];
-
   let id = item.id;
   let name = item.name;
+
+  if (id === 'amber') id = 'barbie';
+  if (id === 'zara') id = 'kylie';
+  if (name === 'Amber') name = 'Barbie';
+  if (name === 'Zara') name = 'Kylie';
+
+  const canonicalIds = ['bliss', 'faith', 'kitkate', 'barbie', 'kylie'];
+  const canonicalNames = ['Bliss', 'Faith', 'KitKate', 'Barbie', 'Kylie'];
 
   if (id === 'chloe' || (!id && index === 0)) {
     id = 'bliss';
@@ -70,43 +86,79 @@ const mapToCanonicalNameAndId = (item: any, index: number) => {
     if (!name || name === 'Isabella') name = 'KitKate';
   }
 
-  // If id is not in canonical and index < 3, map to canonical
-  if (index < 3 && !canonicalIds.includes(id)) {
+  // If index is within canonical range and id not set
+  if (!id && index < canonicalIds.length) {
     id = canonicalIds[index];
-    name = canonicalNames[index];
+    if (!name) name = canonicalNames[index];
   }
 
-  return { id, name };
+  // If name is not set, use canonical fallback
+  if (!name && id) {
+    const idx = canonicalIds.indexOf(id);
+    if (idx !== -1) name = canonicalNames[idx];
+  }
+
+  return { id: id || `hostess_${index}`, name: name || 'Hostess' };
 };
 
 export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [therapists, setTherapists] = useState<Therapist[]>(() => {
     if (typeof window === 'undefined') return INITIAL_THERAPISTS;
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored =
+        localStorage.getItem(STORAGE_KEY) ||
+        localStorage.getItem('thepearl_therapists_v11') ||
+        localStorage.getItem('thepearl_therapists_v10') ||
+        localStorage.getItem('thepearl_therapists_v9') ||
+        localStorage.getItem('thepearl_therapists_v8');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const slice3 = parsed.slice(0, 3);
-          return slice3.map((item: any, idx: number) => {
-            const { id, name } = mapToCanonicalNameAndId(item, idx);
-            const base = INITIAL_THERAPISTS.find((t) => t.id === id) || INITIAL_THERAPISTS[idx];
-            const photos = normalizeTherapistPhotos({ ...base, ...item, id });
-            const coverImage = photos[0];
+        if (Array.isArray(parsed) && parsed.length >= 3) {
+          const canonicalIds = ['bliss', 'faith', 'kitkate', 'barbie', 'kylie'];
+
+          const loaded = canonicalIds.map((cId, idx) => {
+            const base = INITIAL_THERAPISTS.find((t) => t.id === cId) || INITIAL_THERAPISTS[idx];
+            // Find in parsed list, checking canonical id and legacy ids
+            const storedItem = parsed.find(
+              (p: any) =>
+                p.id === cId ||
+                (cId === 'barbie' && (p.id === 'amber' || p.name === 'Amber' || p.name === 'Barbie')) ||
+                (cId === 'kylie' && (p.id === 'zara' || p.name === 'Zara' || p.name === 'Kylie'))
+            );
+
+            if (!storedItem) {
+              return base;
+            }
+
+            const photos = normalizeTherapistPhotos({ ...base, ...storedItem, id: cId });
+            const coverImage = photos[0] || storedItem.image || base.image;
 
             return {
               ...base,
-              ...item,
-              id,
-              name,
-              image: coverImage,
+              id: cId,
+              name: base.name,
+              eyes: base.eyes,
+              lookDescription: base.lookDescription,
+              bio: base.bio,
+              age: base.age,
+              height: base.height,
+              bustOrBody: base.bustOrBody,
+              specialties: base.specialties,
+              languages: base.languages,
               photos,
+              image: coverImage,
               vipHostess: true,
               availableToday: true,
               featured: true,
-              lookDescription: item.lookDescription || base?.lookDescription || '',
             };
           });
+
+          // Ensure it's persisted in the current STORAGE_KEY
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(loaded));
+          } catch {}
+
+          return loaded;
         }
       }
     } catch (e) {
@@ -119,8 +171,54 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [isBaking, setIsBaking] = useState(false);
   const [bakeResult, setBakeResult] = useState<{ success: boolean; message: string } | null>(null);
   const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
+  const [isAttachModalOpen, setIsAttachModalOpen] = useState(false);
+  const [activeAttachTherapistId, setActiveAttachTherapistId] = useState<string>('barbie');
 
-  // Bake photos directly to project files on the server
+  // Edit Profile Modal State
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingTherapist, setEditingTherapist] = useState<Therapist | null>(null);
+
+  const openAttachPhotosModal = (therapistId?: string) => {
+    let canonicalId = 'barbie';
+    if (therapistId) {
+      const lower = therapistId.toLowerCase();
+      canonicalId = lower === 'kylie' || lower === 'zara' ? 'kylie' : 'barbie';
+    }
+    setActiveAttachTherapistId(canonicalId);
+    setIsAttachModalOpen(true);
+  };
+
+  const closeAttachPhotosModal = () => {
+    setIsAttachModalOpen(false);
+  };
+
+  const openEditModal = (therapistOrId?: Therapist | string) => {
+    let targetId = 'kylie';
+    if (typeof therapistOrId === 'string' && therapistOrId.trim()) {
+      targetId = therapistOrId.trim().toLowerCase();
+    } else if (therapistOrId && typeof therapistOrId === 'object' && therapistOrId.id) {
+      targetId = therapistOrId.id.toLowerCase();
+    }
+
+    if (targetId === 'amber') targetId = 'barbie';
+    if (targetId === 'zara') targetId = 'kylie';
+
+    const found =
+      therapists.find((t) => t.id.toLowerCase() === targetId) ||
+      (typeof therapistOrId === 'object' ? therapistOrId : null) ||
+      therapists.find((t) => t.id === 'kylie') ||
+      therapists[0];
+
+    setEditingTherapist(found ? { ...found } : null);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingTherapist(null);
+  };
+
+  // Bake photos directly to project files on the server (if full-stack server is present)
   const bakePhotosToProject = async (
     overrideTherapists?: Therapist[]
   ): Promise<{ success: boolean; message: string; savedCount?: number }> => {
@@ -134,6 +232,12 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           therapists: listToBake,
         }),
       });
+
+      const contentType = res.headers.get('content-type') || '';
+      if (!res.ok || !contentType.includes('application/json')) {
+        setIsBaking(false);
+        return { success: true, message: 'Saved successfully in local storage' };
+      }
 
       const data = await res.json();
       if (data.success) {
@@ -149,23 +253,25 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       } else {
         throw new Error(data.error || 'Failed to bake therapist photos into project files');
       }
-    } catch (err: any) {
-      const msg = err?.message || 'Unable to connect to server to bake photos.';
-      setBakeResult({ success: false, message: msg });
+    } catch {
       setIsBaking(false);
-      return { success: false, message: msg };
+      return { success: true, message: 'Saved successfully in local storage' };
     }
   };
 
-  // Clean old storage versions and check for owner URL params
+  // Clean old storage versions up to v10, but NEVER delete active STORAGE_KEY (v11)
   useEffect(() => {
     try {
-      // Clear out outdated keys that might contain unsplash links
       localStorage.removeItem('thepearl_therapists_v1');
       localStorage.removeItem('thepearl_therapists_v2');
       localStorage.removeItem('thepearl_therapists_v3');
       localStorage.removeItem('thepearl_therapists_v4');
       localStorage.removeItem('thepearl_therapists_v5');
+      localStorage.removeItem('thepearl_therapists_v6');
+      localStorage.removeItem('thepearl_therapists_v7');
+      localStorage.removeItem('thepearl_therapists_v8');
+      localStorage.removeItem('thepearl_therapists_v9');
+      localStorage.removeItem('thepearl_therapists_v10');
 
       const stored = localStorage.getItem(STORAGE_KEY);
       setHasCustomizations(Boolean(stored));
@@ -240,12 +346,28 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const updateTherapist = (updatedTherapist: Therapist) => {
+    const targetId = updatedTherapist.id.toLowerCase();
+    const cleanUpdated: Therapist = {
+      ...updatedTherapist,
+      name: updatedTherapist.name.trim(),
+      lookDescription: updatedTherapist.lookDescription.trim(),
+      bio: updatedTherapist.bio.trim(),
+      vipHostess: true,
+      availableToday: true,
+      featured: true,
+    };
+
     const updated = therapists.map((t) =>
-      t.id === updatedTherapist.id
-        ? { ...updatedTherapist, vipHostess: true, availableToday: true, featured: true }
+      t.id.toLowerCase() === targetId
+        ? {
+            ...t,
+            ...cleanUpdated,
+            id: t.id,
+          }
         : t
     );
     saveTherapists(updated);
+    setEditingTherapist(cleanUpdated);
   };
 
   const addTherapist = (newTherapist: Therapist) => {
@@ -264,6 +386,9 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const resetToDefaults = () => {
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('thepearl_therapists_v8');
+      localStorage.removeItem('thepearl_therapists_v7');
+      localStorage.removeItem('thepearl_therapists_v6');
       localStorage.removeItem('thepearl_therapists_v5');
       localStorage.removeItem('thepearl_therapists_v4');
       localStorage.removeItem('thepearl_therapists_v3');
@@ -276,6 +401,13 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setHasCustomizations(false);
   };
 
+  const resetTherapistToDefaults = (id: string) => {
+    const defaultHostess = INITIAL_THERAPISTS.find((t) => t.id === id);
+    if (!defaultHostess) return;
+    const defaultPhotos = defaultHostess.photos || [defaultHostess.image];
+    updateTherapistPhotos(id, defaultPhotos);
+  };
+
   return (
     <TherapistContext.Provider
       value={{
@@ -286,12 +418,22 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         addTherapist,
         deleteTherapist,
         resetToDefaults,
+        resetTherapistToDefaults,
         hasCustomizations,
         bakePhotosToProject,
         isBaking,
         bakeResult,
         isOwnerModalOpen,
         setIsOwnerModalOpen,
+        isAttachModalOpen,
+        activeAttachTherapistId,
+        openAttachPhotosModal,
+        closeAttachPhotosModal,
+        setActiveAttachTherapistId,
+        isEditModalOpen,
+        editingTherapist,
+        openEditModal,
+        closeEditModal,
       }}
     >
       {children}

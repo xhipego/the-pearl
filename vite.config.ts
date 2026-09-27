@@ -145,12 +145,13 @@ function savePhotosPlugin(): Plugin {
               }
 
               let savedPhotoCount = 0;
-              const canonicalIds = ['bliss', 'faith', 'kitkate'];
-              const canonicalNames = ['Bliss', 'Faith', 'KitKate'];
+              const canonicalIds = ['bliss', 'faith', 'kitkate', 'amber', 'zara'];
+              const canonicalNames = ['Bliss', 'Faith', 'KitKate', 'Amber', 'Zara'];
 
-              const updatedTherapists = therapists.slice(0, 3).map((t: any, idx: number) => {
+              const updatedTherapists = therapists.map((t: any, idx: number) => {
                 const id = canonicalIds[idx] || t.id;
                 const name = canonicalNames[idx] || t.name;
+
 
                 const rawPhotos = Array.isArray(t.photos) && t.photos.length > 0
                   ? t.photos

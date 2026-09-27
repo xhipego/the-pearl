@@ -90,6 +90,7 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
 
   const [activeSlotUrls, setActiveSlotUrls] = useState<string[]>(['', '', '', '']);
   const [specialtiesText, setSpecialtiesText] = useState('');
+  const [languagesText, setLanguagesText] = useState('English');
   const [urlInputSlot, setUrlInputSlot] = useState<number | null>(null);
   const [urlDraft, setUrlDraft] = useState('');
 
@@ -103,6 +104,7 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
       });
       setActiveSlotUrls(photos);
       setSpecialtiesText(therapist.specialties?.join(', ') || '');
+      setLanguagesText(therapist.languages?.join(', ') || 'English');
     } else if (isNew) {
       const newId = `hostess_${Date.now()}`;
       const defaultPhotos = [
@@ -131,6 +133,7 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
       });
       setActiveSlotUrls(defaultPhotos);
       setSpecialtiesText('Girlfriend Experience, Sensory Bodywork');
+      setLanguagesText('English');
     }
   }, [therapist, isNew, isOpen]);
 
@@ -201,6 +204,11 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
       .map((s) => s.trim())
       .filter(Boolean);
 
+    const langs = languagesText
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+
     const finalPhotos = normalizeTherapistPhotos(formData);
 
     onSave({
@@ -211,6 +219,7 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
       availableToday: true,
       featured: true,
       specialties: specs.length > 0 ? specs : ['Girlfriend Experience', 'Bodywork'],
+      languages: langs.length > 0 ? langs : ['English'],
     });
     onClose();
   };
@@ -223,11 +232,18 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
       >
         {/* Header */}
         <div className="px-6 py-4 bg-[#1B2B42] text-white flex items-center justify-between border-b border-[#D4AF37]/40 shrink-0">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-            <h3 className="font-serif text-lg font-bold text-[#F3E5AB]">
-              {isNew ? 'Add New Hostess (Attach 4 Photos)' : `Attach 4 Photos & Profile — ${formData.name || 'Hostess'}`}
-            </h3>
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37]">
+              <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+            </div>
+            <div>
+              <h3 className="font-serif text-lg font-bold text-[#F3E5AB]">
+                {isNew ? 'Add New Hostess' : `Edit Profile & Details — ${formData.name || 'Hostess'}`}
+              </h3>
+              <p className="text-[11px] text-slate-300 font-light">
+                Edit her name, description, appearance, stats, bio, and 4 photos.
+              </p>
+            </div>
           </div>
           <button
             onClick={onClose}
@@ -528,6 +544,19 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
                 className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-[#1B2B42] text-xs"
               />
             </div>
+
+            <div>
+              <label className="block text-[11px] font-bold text-gray-600 mb-1">
+                Fluent Languages (Comma Separated)
+              </label>
+              <input
+                type="text"
+                value={languagesText}
+                onChange={(e) => setLanguagesText(e.target.value)}
+                placeholder="English, Zulu, Sesotho, Afrikaans"
+                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-[#1B2B42] text-xs"
+              />
+            </div>
           </div>
 
           {/* Form Actions */}
@@ -564,7 +593,7 @@ export const EditTherapistModal: React.FC<EditTherapistModalProps> = ({
                 className="px-6 py-2.5 rounded-xl bg-[#1B2B42] text-white hover:bg-[#152234] border border-[#D4AF37] text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-md transition-all cursor-pointer"
               >
                 <Check className="w-4 h-4 text-[#D4AF37]" />
-                <span>Save Hostess &amp; 4 Photos</span>
+                <span>Save Profile &amp; Details</span>
               </button>
             </div>
           </div>

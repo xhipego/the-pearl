@@ -29,7 +29,7 @@ export const HostessesPage: React.FC<HostessesPageProps> = ({
 
       {/* Intro Context Banner */}
       <div className="bg-[#F5EFEB]/70 border-b border-[#D4AF37]/30 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-2">
+        <div className="max-w-4xl mx-auto text-center space-y-3">
           <span className="text-xs font-bold uppercase tracking-widest text-[#C5A059] flex items-center justify-center gap-1.5">
             <Heart className="w-3.5 h-3.5 text-[#D4AF37]" />
             <span>Gentlemen&apos;s Sanctuary Companions</span>

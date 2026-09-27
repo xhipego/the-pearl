@@ -18,8 +18,10 @@ import { VenuePhotoProvider } from './context/VenuePhotoContext';
 import { TherapistProvider } from './context/TherapistContext';
 import { VenuePhotoModal } from './components/VenuePhotoModal';
 import { HostessPhotoModal } from './components/HostessPhotoModal';
+import { AgeVerificationClockModal } from './components/AgeVerificationClockModal';
 
 export default function App() {
+
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState('60 min');
@@ -133,8 +135,12 @@ export default function App() {
 
           {/* Hostesses Real Photos Sync Modal (Owner) */}
           <HostessPhotoModal />
+
+          {/* Strictly 18+ Restricted Access Warning Modal */}
+          <AgeVerificationClockModal />
         </div>
       </VenuePhotoProvider>
+
     </TherapistProvider>
   );
 }

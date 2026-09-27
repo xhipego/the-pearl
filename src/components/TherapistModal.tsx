@@ -43,6 +43,7 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
 
   const photos = normalizeTherapistPhotos(therapist);
   const currentPhoto = photos[activePhotoIdx] || therapist.image;
+  const isEditableNew = therapist.id === 'kylie' || therapist.id === 'barbie';
 
   const handleNextPhoto = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -109,7 +110,7 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
               <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2 z-20">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#D4AF37] text-[#1B2B42] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md">
                   <Star className="w-3.5 h-3.5 fill-[#1B2B42]" />
-                  <span>VIP Hostess</span>
+                  <span>{isEditableNew ? 'New Hostess' : 'VIP Hostess'}</span>
                 </div>
               </div>
 
@@ -205,11 +206,13 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
                     <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                     <span>Appearance &amp; How She Looks</span>
                   </span>
-                  {therapist.bustOrBody && (
-                    <span className="text-[11px] font-semibold text-[#1B2B42] bg-white px-2 py-0.5 rounded-full border border-[#D4AF37]/30">
-                      {therapist.bustOrBody}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {therapist.bustOrBody && (
+                      <span className="text-[11px] font-semibold text-[#1B2B42] bg-white px-2 py-0.5 rounded-full border border-[#D4AF37]/30">
+                        {therapist.bustOrBody}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <p className="font-serif italic text-sm sm:text-base text-[#1B2B42] leading-relaxed">
                   &ldquo;{therapist.lookDescription}&rdquo;
@@ -218,10 +221,12 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
 
               {/* Bio */}
               <div>
-                <h4 className="font-serif text-sm font-bold text-[#1B2B42] tracking-wider uppercase mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                  <span>About {therapist.name}</span>
-                </h4>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-serif text-sm font-bold text-[#1B2B42] tracking-wider uppercase flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                    <span>About {therapist.name}</span>
+                  </h4>
+                </div>
                 <p className="text-sm text-gray-700 leading-relaxed font-light">
                   {therapist.bio}
                 </p>

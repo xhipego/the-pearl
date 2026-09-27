@@ -64,6 +64,7 @@ export const TherapistGrid: React.FC<TherapistGridProps> = ({
               therapist.photos?.[2] || therapist.image,
               therapist.photos?.[3] || therapist.image,
             ];
+            const isExtraGirl = therapist.id === 'kylie' || therapist.id === 'barbie';
 
             return (
               <div
@@ -83,22 +84,32 @@ export const TherapistGrid: React.FC<TherapistGridProps> = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1B2B42] via-transparent to-transparent opacity-85 group-hover:opacity-70 transition-opacity" />
 
-                  {/* Status Badge - All are VIP Hostesses */}
+                  {/* Status Badge */}
                   <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5">
                     <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#D4AF37] text-[#1B2B42] shadow-md flex items-center gap-1.5">
                       <Star className="w-3 h-3 fill-[#1B2B42]" />
-                      <span>VIP Hostess</span>
+                      <span>{isExtraGirl ? 'New Hostess' : 'VIP Hostess'}</span>
                     </span>
                   </div>
 
-                  {/* Top-Right Action: Quick Profile View */}
+                  {/* Top-Right Action */}
                   <div className="absolute top-3.5 right-3.5 flex items-center gap-2">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleOpenCover(therapist);
                       }}
-                      className="p-2 rounded-full bg-white/90 hover:bg-white text-[#1B2B42] shadow-md transition-all transform active:scale-95 border border-[#D4AF37]/50"
+                      className="p-2 rounded-full bg-[#1B2B42]/90 hover:bg-[#1B2B42] text-[#F3E5AB] shadow-md transition-all transform active:scale-95 border border-[#D4AF37] cursor-pointer"
+                      title="View Gallery"
+                    >
+                      <ImageIcon className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOpenCover(therapist);
+                      }}
+                      className="p-2 rounded-full bg-white/90 hover:bg-white text-[#1B2B42] shadow-md transition-all transform active:scale-95 border border-[#D4AF37]/50 cursor-pointer"
                       title="View Full Profile &amp; Photos"
                     >
                       <Eye className="w-3.5 h-3.5 text-[#1B2B42]" />
@@ -217,18 +228,21 @@ export const TherapistGrid: React.FC<TherapistGridProps> = ({
         <div className="mt-12 p-4 rounded-xl bg-[#F5EFEB] border border-[#D4AF37]/40 text-center max-w-2xl mx-auto flex items-center justify-center gap-3">
           <ShieldCheck className="w-5 h-5 text-[#C5A059] shrink-0" />
           <p className="text-xs text-[#1B2B42]/80">
-            Hostess sessions are strictly confidential and private. WhatsApp us at <strong>073 995 5927</strong> to reserve your session with Bliss, Faith, or KitKate.
+            Hostess sessions are strictly confidential and private. WhatsApp us at <strong>073 995 5927</strong> to reserve your session with Bliss, Faith, KitKate, Kylie, or Barbie.
           </p>
+
         </div>
       </div>
 
       {/* Full Profile & 4-Photo Modal */}
-      <TherapistModal
-        therapist={selectedTherapist}
-        initialPhotoIndex={initialPhotoIndex}
-        onClose={() => setSelectedTherapist(null)}
-        onSelectBooking={onSelectBooking}
-      />
+      {selectedTherapist && (
+        <TherapistModal
+          therapist={therapists.find((t) => t.id === selectedTherapist.id) || selectedTherapist}
+          initialPhotoIndex={initialPhotoIndex}
+          onClose={() => setSelectedTherapist(null)}
+          onSelectBooking={onSelectBooking}
+        />
+      )}
     </section>
   );
 };

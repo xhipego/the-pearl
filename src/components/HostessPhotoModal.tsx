@@ -193,20 +193,20 @@ export const HostessPhotoModal: React.FC = () => {
             </button>
           </div>
 
-          {/* 3 Hostesses Tabs */}
+          {/* Hostesses Tabs */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-              Select VIP Hostess:
+              Select VIP Hostess ({localTherapists.length}):
             </label>
-            <div className="grid grid-cols-3 gap-3">
-              {localTherapists.slice(0, 3).map((hostess, idx) => {
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+              {localTherapists.map((hostess, idx) => {
                 const isActive = idx === activeHostessIdx;
                 const cover = hostess.photos?.[0] || hostess.image;
                 return (
                   <button
                     key={hostess.id}
                     onClick={() => setActiveHostessIdx(idx)}
-                    className={`p-3 rounded-2xl border-2 transition-all flex items-center gap-3 text-left cursor-pointer ${
+                    className={`p-2.5 rounded-2xl border-2 transition-all flex items-center gap-2.5 text-left cursor-pointer ${
                       isActive
                         ? 'border-[#D4AF37] bg-[#1B2B42] shadow-lg ring-2 ring-[#D4AF37]/50'
                         : 'border-white/10 bg-[#142132] hover:border-white/30'
@@ -215,14 +215,14 @@ export const HostessPhotoModal: React.FC = () => {
                     <img
                       src={cover}
                       alt={hostess.name}
-                      className="w-12 h-12 rounded-xl object-cover shrink-0 border border-white/20"
+                      className="w-10 h-10 rounded-xl object-cover shrink-0 border border-white/20"
                     />
                     <div className="overflow-hidden">
                       <h4 className="font-serif text-sm font-bold text-white truncate">
                         {hostess.name}
                       </h4>
                       <p className="text-[10px] text-[#D4AF37] font-semibold uppercase tracking-wider flex items-center gap-1">
-                        <Star className="w-2.5 h-2.5 fill-[#D4AF37]" /> VIP Hostess
+                        <Star className="w-2.5 h-2.5 fill-[#D4AF37]" /> VIP
                       </p>
                     </div>
                   </button>
@@ -230,6 +230,7 @@ export const HostessPhotoModal: React.FC = () => {
               })}
             </div>
           </div>
+
 
           {/* 4 Photo Slots for Selected Hostess */}
           <div className="space-y-3">
