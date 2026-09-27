@@ -3,8 +3,8 @@ import { Therapist } from '../types';
 import { THERAPISTS as INITIAL_THERAPISTS } from '../data/therapists';
 import { THERAPIST_IMAGES } from '../data/therapistImages';
 
-// Key bumped to v11: strictly 5 hostesses with permanent Barbie (pink lingerie, Warm Brown eyes) & Kylie (blue lingerie)
-const STORAGE_KEY = 'thepearl_therapists_v11';
+// Key bumped to v12: bundled hashed assets imported directly, fallback to THERAPIST_IMAGES
+const STORAGE_KEY = 'thepearl_therapists_v12';
 
 interface TherapistContextType {
   therapists: Therapist[];
@@ -48,16 +48,19 @@ export const normalizeTherapistPhotos = (therapist: Partial<Therapist>): string[
 
   for (let idx = 0; idx < 4; idx++) {
     const raw = rawPhotos[idx];
-    if (typeof raw === 'string' && raw.trim().length > 0 && !raw.includes('unsplash.com')) {
+    const isBrokenPath = typeof raw === 'string' && (raw.startsWith('/src/assets/') || raw.startsWith('/images/'));
+    const isUnsplash = typeof raw === 'string' && raw.includes('unsplash.com');
+
+    if (typeof raw === 'string' && raw.trim().length > 0 && !isBrokenPath && !isUnsplash) {
       photos[idx] = raw;
     } else {
-      photos[idx] = basePhotos[idx] || basePhotos[0] || (therapist.id && THERAPIST_IMAGES[therapist.id]?.[idx]) || '';
+      photos[idx] = basePhotos[idx] || (therapist.id && THERAPIST_IMAGES[therapist.id]?.[idx]) || basePhotos[0] || '';
     }
   }
 
   // Ensure cover photo is never empty
   if (!photos[0]) {
-    photos[0] = therapist.image || base?.image || (therapist.id && THERAPIST_IMAGES[therapist.id]?.[0]) || '';
+    photos[0] = basePhotos[0] || (therapist.id && THERAPIST_IMAGES[therapist.id]?.[0]) || '';
   }
 
   return photos;
@@ -105,12 +108,7 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [therapists, setTherapists] = useState<Therapist[]>(() => {
     if (typeof window === 'undefined') return INITIAL_THERAPISTS;
     try {
-      const stored =
-        localStorage.getItem(STORAGE_KEY) ||
-        localStorage.getItem('thepearl_therapists_v11') ||
-        localStorage.getItem('thepearl_therapists_v10') ||
-        localStorage.getItem('thepearl_therapists_v9') ||
-        localStorage.getItem('thepearl_therapists_v8');
+      const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length >= 3) {
@@ -259,7 +257,7 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   };
 
-  // Clean old storage versions up to v10, but NEVER delete active STORAGE_KEY (v11)
+  // Clean old storage versions up to v11, but NEVER delete active STORAGE_KEY (v12)
   useEffect(() => {
     try {
       localStorage.removeItem('thepearl_therapists_v1');
@@ -272,6 +270,7 @@ export const TherapistProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       localStorage.removeItem('thepearl_therapists_v8');
       localStorage.removeItem('thepearl_therapists_v9');
       localStorage.removeItem('thepearl_therapists_v10');
+      localStorage.removeItem('thepearl_therapists_v11');
 
       const stored = localStorage.getItem(STORAGE_KEY);
       setHasCustomizations(Boolean(stored));

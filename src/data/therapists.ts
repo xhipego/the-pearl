@@ -1,4 +1,26 @@
 import { Therapist } from '../types';
+import {
+  blissPhoto1,
+  blissPhoto2,
+  blissPhoto3,
+  blissPhoto4,
+  faithPhoto1,
+  faithPhoto2,
+  faithPhoto3,
+  faithPhoto4,
+  kitkatePhoto1,
+  kitkatePhoto2,
+  kitkatePhoto3,
+  kitkatePhoto4,
+  amberPhoto1,
+  amberPhoto2,
+  amberPhoto3,
+  amberPhoto4,
+  zaraPhoto1,
+  zaraPhoto2,
+  zaraPhoto3,
+  zaraPhoto4,
+} from './therapistImages';
 
 export const THERAPISTS: Therapist[] = [
   {
@@ -15,12 +37,12 @@ export const THERAPISTS: Therapist[] = [
       "Warm Oil Touch"
     ],
     "bio": "Naturally warm, playful, and deeply attentive. Bliss specializes in seamless sensual body slides and gentle lingering touch that eases all tension.",
-    "image": "/src/assets/therapists/bliss_photo_1.jpg",
+    "image": blissPhoto1,
     "photos": [
-      "/src/assets/therapists/bliss_photo_1.jpg",
-      "/src/assets/therapists/bliss_photo_2.jpg",
-      "/src/assets/therapists/bliss_photo_3.jpg",
-      "/src/assets/therapists/bliss_photo_4.jpg"
+      blissPhoto1,
+      blissPhoto2,
+      blissPhoto3,
+      blissPhoto4
     ],
     "featured": true,
     "availableToday": true,
@@ -44,12 +66,12 @@ export const THERAPISTS: Therapist[] = [
       "Doubles Sessions"
     ],
     "bio": "Poised with an alluring aura and gentle hands. Faith excels in sensory tactile exploration and full-body relaxation, leaving you completely rejuvenated.",
-    "image": "/src/assets/therapists/faith_photo_1.jpg",
+    "image": faithPhoto1,
     "photos": [
-      "/src/assets/therapists/faith_photo_1.jpg",
-      "/src/assets/therapists/faith_photo_2.jpg",
-      "/src/assets/therapists/faith_photo_3.jpg",
-      "/src/assets/therapists/faith_photo_4.jpg"
+      faithPhoto1,
+      faithPhoto2,
+      faithPhoto3,
+      faithPhoto4
     ],
     "featured": true,
     "availableToday": true,
@@ -72,12 +94,12 @@ export const THERAPISTS: Therapist[] = [
       "Pool Sessions"
     ],
     "bio": "Sweet, passionate, and exceptionally intuitive. KitKate loves creating genuine, soft connections where you can feel pampered and completely at ease.",
-    "image": "/src/assets/therapists/kitkate_photo_1.jpg",
+    "image": kitkatePhoto1,
     "photos": [
-      "/src/assets/therapists/kitkate_photo_1.jpg",
-      "/src/assets/therapists/kitkate_photo_2.jpg",
-      "/src/assets/therapists/kitkate_photo_3.jpg",
-      "/src/assets/therapists/kitkate_photo_4.jpg"
+      kitkatePhoto1,
+      kitkatePhoto2,
+      kitkatePhoto3,
+      kitkatePhoto4
     ],
     "featured": true,
     "availableToday": true,
@@ -101,12 +123,12 @@ export const THERAPISTS: Therapist[] = [
       "Tension Dissolving Bodywork"
     ],
     "bio": "Irresistibly warm, radiant, and deeply attuned to your desires. Barbie specializes in full-body heated oil slides and captivating conversational chemistry that dissolves all stress.",
-    "image": "/images/therapists/amber_photo_1.jpg",
+    "image": amberPhoto1,
     "photos": [
-      "/images/therapists/amber_photo_1.jpg",
-      "/images/therapists/amber_photo_2.jpg",
-      "/images/therapists/amber_photo_3.jpg",
-      "/images/therapists/amber_photo_4.jpg"
+      amberPhoto1,
+      amberPhoto2,
+      amberPhoto3,
+      amberPhoto4
     ],
     "featured": true,
     "availableToday": true,
@@ -130,12 +152,12 @@ export const THERAPISTS: Therapist[] = [
       "Dual Hostess Indulgence"
     ],
     "bio": "Gentle, alluring, and intuitively attentive. Kylie creates a deeply soothing escape of effortless intimacy and slow rhythmic touch that leaves you completely rejuvenated.",
-    "image": "/images/therapists/zara_photo_1.jpg",
+    "image": zaraPhoto1,
     "photos": [
-      "/images/therapists/zara_photo_1.jpg",
-      "/images/therapists/zara_photo_2.jpg",
-      "/images/therapists/zara_photo_3.jpg",
-      "/images/therapists/zara_photo_4.jpg"
+      zaraPhoto1,
+      zaraPhoto2,
+      zaraPhoto3,
+      zaraPhoto4
     ],
     "featured": true,
     "availableToday": true,
