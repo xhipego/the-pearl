@@ -3,7 +3,7 @@ import { Therapist } from '../types';
 import { THERAPISTS as INITIAL_THERAPISTS } from '../data/therapists';
 import { THERAPIST_IMAGES } from '../data/therapistImages';
 
-const STORAGE_KEY = 'thepearl_therapists_v15';
+const STORAGE_KEY = 'thepearl_therapists_v16';
 
 // Helper function required by TherapistModal and EditTherapistModal
 export function normalizeTherapistPhotos(therapist: any): string[] {
