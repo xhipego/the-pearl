@@ -1,22 +1,24 @@
 {
   "enabledSlotIds": [
-    "entrance",
-    "atrium",
-    "pool",
-    "lounge",
-    "champagne",
-    "sapphire",
-    "mahogany"
+    "room-1",
+    "room-1-ensuite",
+    "room-2-night",
+    "room-3-couples",
+    "room-4-footscrub",
+    "room-4-ensuite",
+    "pool-lapa",
+    "secure-parking"
   ],
   "customSlots": [],
   "slotOrder": [
-    "entrance",
-    "atrium",
-    "pool",
-    "lounge",
-    "champagne",
-    "sapphire",
-    "mahogany"
+    "room-1",
+    "room-1-ensuite",
+    "room-2-night",
+    "room-3-couples",
+    "room-4-footscrub",
+    "room-4-ensuite",
+    "pool-lapa",
+    "secure-parking"
   ],
   "lastBakedAt": null
 }

@@ -15,10 +15,10 @@ import {
   Info,
   Layers,
   RefreshCw,
-  Sliders,
   CloudUpload,
   Loader2,
   AlertCircle,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 export const VenuePhotoModal: React.FC = () => {
@@ -57,7 +57,6 @@ export const VenuePhotoModal: React.FC = () => {
 
   if (!isModalOpen) return null;
 
-  // Helper to read file to base64 data url
   const readFileAsDataUrl = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -79,7 +78,7 @@ export const VenuePhotoModal: React.FC = () => {
     const newPhotosMap: Record<string, string> = {};
     const unassignedFiles: File[] = [];
 
-    // First pass: match by filename against slot matchers or names
+    // Match files by slot matcher or ID
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       let matched = false;
@@ -98,545 +97,338 @@ export const VenuePhotoModal: React.FC = () => {
       }
     }
 
-    // Second pass: fill empty slots in order
-    for (const slot of allSlots) {
-      if (!newPhotosMap[slot.id] && unassignedFiles.length > 0) {
-        const nextFile = unassignedFiles.shift();
-        if (nextFile) {
-          newPhotosMap[slot.id] = await readFileAsDataUrl(nextFile);
-        }
-      }
-    }
-
-    // Any remaining files can be added as new custom slots!
-    while (unassignedFiles.length > 0) {
-      const extraFile = unassignedFiles.shift();
-      if (extraFile) {
-        const dataUrl = await readFileAsDataUrl(extraFile);
-        const nameClean = extraFile.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
-        await addCustomPhoto(
-          nameClean.charAt(0).toUpperCase() + nameClean.slice(1),
-          dataUrl,
-          'Extra View'
-        );
-      }
+    // Assign remaining unassigned files to empty slots
+    const availableSlots = allSlots.filter((slot) => !newPhotosMap[slot.id]);
+    for (let i = 0; i < Math.min(unassignedFiles.length, availableSlots.length); i++) {
+      newPhotosMap[availableSlots[i].id] = await readFileAsDataUrl(unassignedFiles[i]);
     }
 
     if (Object.keys(newPhotosMap).length > 0) {
       await bulkUpdatePhotos(newPhotosMap);
+      showToast(`Successfully updated ${Object.keys(newPhotosMap).length} venue photo(s)!`);
     }
 
     setIsProcessing(false);
-    showToast(`Successfully synced ${Object.keys(newPhotosMap).length + (files.length - Object.keys(newPhotosMap).length)} photo(s)!`);
-    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleBulkUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      processFiles(e.target.files);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      processFiles(e.dataTransfer.files);
+      await processFiles(e.dataTransfer.files);
     }
   };
 
-  const handleSingleUpload = async (slotId: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
 
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleSingleSlotUpload = async (slotId: string, file: File) => {
     setIsProcessing(true);
     const dataUrl = await readFileAsDataUrl(file);
     await updatePhoto(slotId, dataUrl);
     setIsProcessing(false);
-    showToast(`Updated photo for ${slotId}!`);
-    if (e.target) e.target.value = '';
+    showToast(`Updated photo for ${slotId}`);
   };
 
-  const handleCustomPhotoSubmit = async (e: React.FormEvent) => {
+  const handleAddCustomSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!customImageData) {
-      alert('Please select an image file first.');
-      return;
-    }
-    const title = customTitle.trim() || `Custom View ${allSlots.length + 1}`;
-    const badge = customBadge.trim() || 'New View';
+    if (!customImageData || !customTitle.trim()) return;
 
-    setIsProcessing(true);
-    await addCustomPhoto(title, customImageData, badge);
-    setIsProcessing(false);
-    setIsAddingCustom(false);
+    await addCustomPhoto(customTitle.trim(), customImageData, customBadge.trim() || 'Venue View');
     setCustomTitle('');
     setCustomBadge('');
     setCustomImageData(null);
-    showToast(`Added "${title}" to your moving views!`);
-  };
-
-  const handleEnableAll = () => {
-    allSlots.forEach((slot) => {
-      toggleSlotVisibility(slot.id, true);
-    });
-    showToast('All photos are now active in the moving views tour!');
-  };
-
-  const handleBakePhotos = async () => {
-    const res = await bakePhotosToProject();
-    if (res.success) {
-      setSuccessMessage(res.message || 'Photos baked into project files successfully! You can now deploy.');
-      setTimeout(() => setSuccessMessage(null), 6000);
-    }
+    setIsAddingCustom(false);
+    showToast('New venue photo view added to carousel!');
   };
 
   return (
     <div
-      id="venue-photo-modal-overlay"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto"
-      onDragOver={(e) => {
-        e.preventDefault();
-        setIsDragOver(true);
-      }}
-      onDragLeave={() => setIsDragOver(false)}
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-md overflow-y-auto"
       onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
     >
-      <div
-        id="venue-photo-modal-container"
-        className="relative w-full max-w-4xl bg-[#18263A] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden text-white my-auto max-h-[92vh] flex flex-col"
-      >
-        {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#121E2F]">
+      <div className="relative w-full max-w-5xl bg-[#1B2B42] text-slate-100 rounded-3xl border-2 border-[#D4AF37] shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+        {/* Header Bar */}
+        <div className="flex items-center justify-between p-5 sm:p-7 border-b border-[#D4AF37]/30 bg-[#162234]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center shadow-inner">
-              <Camera className="w-5 h-5 text-[#D4AF37]" />
+            <div className="w-10 h-10 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37]">
+              <Camera className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-[#F3E5AB]">
-                  Sync &amp; Select Photos to View
-                </h3>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#F3E5AB] text-[10px] font-bold">
-                  {activeMovingCount} of {allSlots.length} Views Active
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                <span>The Pearl Venue Photos Manager</span>
+                <span className="text-xs font-mono font-normal uppercase tracking-wider text-[#F3E5AB] bg-[#D4AF37]/20 px-2 py-0.5 rounded">
+                  {activeMovingCount} Active in Carousel
                 </span>
-              </div>
-              <p className="text-xs text-slate-300">
-                Choose exactly which photos cycle in the homepage moving background and sync your real pictures
+              </h3>
+              <p className="text-xs text-slate-300 font-light mt-0.5">
+                Upload &amp; manage moving photos of Room 1, Room 2 (Night mode), Room 3 (Couples), Room 4 (Foot scrub), en-suite baths, pool &amp; parking.
               </p>
             </div>
           </div>
+
           <button
-            id="close-venue-photo-modal"
             onClick={() => setIsModalOpen(false)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1">
-          {/* Permanent Deployment Card */}
-          <div className="p-4 rounded-xl bg-gradient-to-r from-[#1B2B42] to-[#121E2F] border-2 border-[#D4AF37] shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center shrink-0 mt-0.5">
-                {isBaking ? (
-                  <Loader2 className="w-5 h-5 text-[#D4AF37] animate-spin" />
-                ) : bakeResult?.success ? (
-                  <CheckCircle2 className="w-5 h-5 text-[#25D366]" />
-                ) : (
-                  <CloudUpload className="w-5 h-5 text-[#D4AF37]" />
-                )}
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-bold text-[#F3E5AB]">
-                    Deploy Synced Photos to Live Website
-                  </h4>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] font-bold">
-                    For Deployment
-                  </span>
-                </div>
-                <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">
-                  Clicking this saves your synced photos directly into the website's project folder (<code className="text-[#F3E5AB] font-mono">public/images/</code>). Once saved, your photos and enabled views will appear permanently on the live deployed website for all visitors on any device!
-                </p>
-                {lastBakedAt && (
-                  <p className="text-[11px] text-green-400 mt-1.5 flex items-center gap-1.5 font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Saved into project files ({new Date(lastBakedAt).toLocaleString()}). Ready to deploy!</span>
-                  </p>
-                )}
-                {bakeResult && !bakeResult.success && (
-                  <p className="text-[11px] text-red-300 mt-1.5 flex items-center gap-1.5">
-                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                    <span>{bakeResult.message}</span>
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <button
-              id="modal-bake-photos-btn"
-              onClick={handleBakePhotos}
-              disabled={isBaking}
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B8972E] hover:brightness-110 text-[#121E2F] font-bold text-xs tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
-            >
-              {isBaking ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Saving into Files...</span>
-                </>
-              ) : bakeResult?.success ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Save Again (Update Files)</span>
-                </>
-              ) : (
-                <>
-                  <CloudUpload className="w-4 h-4" />
-                  <span>Save into Project Files for Deployment</span>
-                </>
-              )}
-            </button>
+        {/* Success Toast */}
+        {successMessage && (
+          <div className="bg-[#1F7A4D] text-white px-6 py-2.5 text-xs font-medium flex items-center gap-2 animate-fadeIn border-b border-white/20">
+            <CheckCircle2 className="w-4 h-4 shrink-0" />
+            <span>{successMessage}</span>
           </div>
+        )}
 
-          {/* Success Banner */}
-          {successMessage && (
-            <div className="p-3.5 rounded-xl bg-green-950/80 border border-green-500/70 text-green-300 text-xs flex items-center gap-2.5 shadow-md">
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-green-400" />
-              <span className="font-medium">{successMessage}</span>
-            </div>
-          )}
-
-          {/* Drag and Drop & Bulk Sync Zone */}
+        {/* Content Body */}
+        <div className="p-5 sm:p-7 overflow-y-auto flex-1 space-y-6">
+          {/* Multi-file Drag & Drop Zone */}
           <div
-            className={`p-5 rounded-2xl border-2 border-dashed transition-all text-center flex flex-col items-center justify-center gap-3 ${
+            onClick={() => fileInputRef.current?.click()}
+            className={`border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all ${
               isDragOver
                 ? 'border-[#D4AF37] bg-[#D4AF37]/15 scale-[1.01]'
-                : 'border-[#D4AF37]/40 bg-black/25 hover:border-[#D4AF37]/70'
+                : 'border-[#D4AF37]/40 hover:border-[#D4AF37] bg-white/5 hover:bg-white/10'
             }`}
           >
-            <div className="w-12 h-12 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37]">
-              <Upload className="w-6 h-6" />
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={(e) => e.target.files && processFiles(e.target.files)}
+              multiple
+              accept="image/*"
+              className="hidden"
+            />
+            <div className="flex flex-col items-center justify-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37]">
+                <Upload className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-serif text-lg font-bold text-white">
+                  Drop Photos Here to Update Venue Slots
+                </h4>
+                <p className="text-xs text-slate-300 font-light mt-1">
+                  Upload photos for Room 1, Room 2, Room 3, Room 4, en-suite showers, pool and lapa. Filenames are automatically matched!
+                </p>
+              </div>
+              <span className="text-[11px] font-mono tracking-wider uppercase text-[#F3E5AB] bg-[#D4AF37]/20 px-3 py-1 rounded-full">
+                Click to Browse Files or Drag &amp; Drop
+              </span>
             </div>
-            <div>
-              <h4 className="text-sm font-bold text-white mb-0.5">
-                Upload &amp; Sync Your Photos
-              </h4>
-              <p className="text-xs text-slate-300 max-w-md mx-auto">
-                Drag and drop your photos here, or click the button to select images from your phone or computer.
-              </p>
+          </div>
+
+          {/* Quick Actions Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 pb-1 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-slate-300">Venue Photo Slots:</span>
+              <span className="text-xs font-mono font-bold text-[#F3E5AB]">{allSlots.length} Total</span>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleBulkUpload}
-                className="hidden"
-                id="bulk-photo-sync-input"
-              />
+            <div className="flex items-center gap-2">
               <button
-                id="btn-upload-all-photos"
-                disabled={isProcessing}
-                onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] text-[#1B2B42] text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-lg cursor-pointer disabled:opacity-50"
-              >
-                <Upload className="w-4 h-4" />
-                <span>{isProcessing ? 'Syncing...' : 'Select Photos to Sync'}</span>
-              </button>
-
-              <button
-                id="btn-add-custom-view-toggle"
                 onClick={() => setIsAddingCustom(!isAddingCustom)}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-slate-200 hover:text-white border border-white/20 text-xs font-semibold transition-colors cursor-pointer"
+                className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-[#1B2B42] bg-[#D4AF37] hover:bg-[#F3E5AB] transition-colors flex items-center gap-1.5 cursor-pointer shadow"
               >
-                <Plus className="w-4 h-4 text-[#D4AF37]" />
-                <span>{isAddingCustom ? 'Cancel New View' : 'Add Custom View'}</span>
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add Extra Venue View</span>
               </button>
 
               <button
-                id="btn-enable-all-slots"
-                onClick={handleEnableAll}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 hover:text-white border border-white/10 text-xs font-medium transition-colors cursor-pointer"
-                title="Include all available views in the moving tour"
+                onClick={resetPhotos}
+                className="px-3 py-1.5 rounded-full text-xs text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/15 transition-colors flex items-center gap-1.5 cursor-pointer"
+                title="Reset all photos to default"
               >
-                <Eye className="w-3.5 h-3.5 text-[#D4AF37]" />
-                <span>View All ({allSlots.length})</span>
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset Defaults</span>
               </button>
             </div>
           </div>
 
-          {/* Add Custom View Sub-Form */}
+          {/* Add Custom View Inline Form */}
           {isAddingCustom && (
-            <form
-              onSubmit={handleCustomPhotoSubmit}
-              className="p-4 rounded-xl bg-[#121E2F] border border-[#D4AF37]/50 space-y-3"
-            >
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
-                <Plus className="w-4 h-4" />
-                <span>Add a New Moving Background Photo</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <form onSubmit={handleAddCustomSubmit} className="bg-white/10 border border-[#D4AF37]/50 rounded-2xl p-5 space-y-4">
+              <h5 className="font-serif text-base font-bold text-[#F3E5AB] flex items-center gap-2">
+                <Plus className="w-4 h-4 text-[#D4AF37]" />
+                <span>Add New Photo Slot to Venue Carousel</span>
+              </h5>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                    Space / Room Name
-                  </label>
+                  <label className="block text-[11px] uppercase tracking-wider text-slate-300 mb-1">View Title</label>
                   <input
                     type="text"
+                    required
+                    placeholder="e.g. Room 1 Private Garden View"
                     value={customTitle}
                     onChange={(e) => setCustomTitle(e.target.value)}
-                    placeholder="e.g. Couples Suite, Private Jacuzzi"
-                    className="w-full px-3 py-2 text-xs rounded-lg bg-black/40 border border-white/20 text-white focus:outline-none focus:border-[#D4AF37]"
-                    required
+                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-[#D4AF37]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                    Tag / Badge
-                  </label>
+                  <label className="block text-[11px] uppercase tracking-wider text-slate-300 mb-1">Badge Tag</label>
                   <input
                     type="text"
+                    placeholder="e.g. Garden View"
                     value={customBadge}
                     onChange={(e) => setCustomBadge(e.target.value)}
-                    placeholder="e.g. VIP Suite, Garden"
-                    className="w-full px-3 py-2 text-xs rounded-lg bg-black/40 border border-white/20 text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-[#D4AF37]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                  Choose Photo File
-                </label>
-                <div className="flex items-center gap-3">
-                  <input
-                    ref={customFileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        const data = await readFileAsDataUrl(file);
-                        setCustomImageData(data);
-                        if (!customTitle) {
-                          const base = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
-                          setCustomTitle(base.charAt(0).toUpperCase() + base.slice(1));
-                        }
-                      }
-                    }}
-                    className="hidden"
-                    id="custom-single-file-picker"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => customFileInputRef.current?.click()}
-                    className="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-xs text-white border border-white/20 flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <Upload className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>{customImageData ? 'Change Selected Image' : 'Browse Photo...'}</span>
-                  </button>
-                  {customImageData && (
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={customImageData}
-                        alt="Preview"
-                        className="w-10 h-10 object-cover rounded border border-[#D4AF37]"
-                      />
-                      <span className="text-[11px] text-green-300">Image selected</span>
-                    </div>
-                  )}
-                </div>
+                <label className="block text-[11px] uppercase tracking-wider text-slate-300 mb-1">Select Image File</label>
+                <input
+                  type="file"
+                  ref={customFileInputRef}
+                  required
+                  accept="image/*"
+                  onChange={async (e) => {
+                    if (e.target.files?.[0]) {
+                      const data = await readFileAsDataUrl(e.target.files[0]);
+                      setCustomImageData(data);
+                    }
+                  }}
+                  className="w-full text-xs text-slate-300 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#D4AF37] file:text-[#1B2B42] hover:file:bg-[#F3E5AB] cursor-pointer"
+                />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+              {customImageData && (
+                <div className="h-32 rounded-xl overflow-hidden border border-[#D4AF37]/40 w-48 relative">
+                  <img src={customImageData} alt="Preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="submit"
+                  disabled={!customImageData || !customTitle.trim()}
+                  className="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-[#1B2B42] bg-[#D4AF37] hover:bg-[#F3E5AB] disabled:opacity-50 cursor-pointer"
+                >
+                  Save Photo View
+                </button>
                 <button
                   type="button"
                   onClick={() => setIsAddingCustom(false)}
-                  className="px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:text-white"
+                  className="px-4 py-2 rounded-full text-xs text-slate-300 hover:text-white cursor-pointer"
                 >
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={!customImageData || isProcessing}
-                  className="px-4 py-1.5 rounded-lg bg-[#D4AF37] text-[#1B2B42] text-xs font-bold uppercase tracking-wider hover:brightness-110 disabled:opacity-50 cursor-pointer"
-                >
-                  Save &amp; Add to Moving Tour
                 </button>
               </div>
             </form>
           )}
 
-          {/* Slots & Viewed Toggles */}
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
-                  Photos &amp; Moving Views (Toggle to Show/Hide)
-                </h4>
-                <p className="text-[11px] text-slate-400">
-                  Click the <strong>&quot;View in Tour&quot;</strong> switch on each photo to choose whether it appears in the moving background.
-                </p>
-              </div>
-            </div>
+          {/* Slots Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {allSlots.map((slot) => {
+              const currentSrc = getPhoto(slot.id, slot.defaultSrc);
+              const isEnabled = isSlotEnabled(slot.id);
+              const isCustom = slot.id.startsWith('custom_');
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-              {allSlots.map((slot) => {
-                const isEnabled = isSlotEnabled(slot.id);
-                const customImage = photos[slot.id];
-                const activeSrc = getPhoto(slot.id, slot.defaultSrc);
-                const isCustomSlot = slot.id.startsWith('custom_');
+              return (
+                <div
+                  key={slot.id}
+                  className={`bg-white/5 rounded-2xl overflow-hidden border transition-all flex flex-col justify-between ${
+                    isEnabled
+                      ? 'border-[#D4AF37]/50 shadow-md ring-1 ring-[#D4AF37]/30'
+                      : 'border-white/10 opacity-60'
+                  }`}
+                >
+                  {/* Photo Preview & Overlays */}
+                  <div className="relative aspect-video w-full overflow-hidden bg-black/50 group">
+                    <img
+                      src={currentSrc}
+                      alt={slot.label}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
 
-                return (
-                  <div
-                    key={slot.id}
-                    id={`venue-slot-card-${slot.id}`}
-                    className={`p-3.5 rounded-xl border transition-all flex gap-3.5 items-center ${
-                      isEnabled
-                        ? 'bg-[#152336] border-[#D4AF37]/50 shadow-md'
-                        : 'bg-[#121B29]/60 border-white/5 opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    {/* Thumbnail Preview with Status */}
-                    <div className="relative w-24 h-22 rounded-lg overflow-hidden shrink-0 border border-white/15 bg-black/50">
-                      <img
-                        src={activeSrc}
-                        alt={slot.label}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover"
+                    {/* Badge */}
+                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono tracking-wider uppercase bg-[#1B2B42]/90 text-[#F3E5AB] border border-[#D4AF37]/40">
+                      {slot.badge}
+                    </div>
+
+                    {/* Enable/Disable Toggle in top right */}
+                    <button
+                      onClick={() => toggleSlotVisibility(slot.id)}
+                      className={`absolute top-2 right-2 p-1.5 rounded-full backdrop-blur-md transition-colors cursor-pointer ${
+                        isEnabled
+                          ? 'bg-[#1F7A4D] text-white hover:bg-[#18643F]'
+                          : 'bg-black/60 text-slate-400 hover:text-white'
+                      }`}
+                      title={isEnabled ? 'Enabled in Carousel (click to hide)' : 'Hidden (click to show in carousel)'}
+                    >
+                      {isEnabled ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+
+                  {/* Body Info */}
+                  <div className="p-3.5 flex-1 flex flex-col justify-between space-y-2">
+                    <div>
+                      <h5 className="font-serif text-sm font-bold text-white line-clamp-1">{slot.label}</h5>
+                      <p className="text-[11px] text-slate-300 font-light line-clamp-2 mt-0.5">{slot.description}</p>
+                    </div>
+
+                    {/* Individual Upload Controls */}
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+                      <input
+                        type="file"
+                        ref={(el) => {
+                          individualInputRefs.current[slot.id] = el;
+                        }}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) {
+                            handleSingleSlotUpload(slot.id, e.target.files[0]);
+                          }
+                        }}
                       />
-                      {/* Active Status Badge */}
-                      <div
-                        className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[9px] font-bold flex items-center gap-1 ${
-                          isEnabled
-                            ? 'bg-[#25D366] text-black'
-                            : 'bg-black/70 text-slate-400'
-                        }`}
+                      <button
+                        onClick={() => individualInputRefs.current[slot.id]?.click()}
+                        className="text-[11px] font-semibold text-[#D4AF37] hover:text-[#F3E5AB] transition-colors flex items-center gap-1 cursor-pointer"
                       >
-                        {isEnabled ? (
-                          <>
-                            <Eye className="w-2.5 h-2.5" />
-                            <span>Viewed</span>
-                          </>
-                        ) : (
-                          <>
-                            <EyeOff className="w-2.5 h-2.5" />
-                            <span>Hidden</span>
-                          </>
-                        )}
-                      </div>
+                        <Upload className="w-3 h-3" />
+                        <span>Change Photo</span>
+                      </button>
 
-                      {customImage && (
-                        <div className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-[#D4AF37] text-[#1B2B42] text-[8px] font-bold">
-                          Custom
-                        </div>
+                      {isCustom && (
+                        <button
+                          onClick={() => removeCustomPhoto(slot.id)}
+                          className="text-red-400 hover:text-red-300 p-1 rounded cursor-pointer"
+                          title="Delete custom view"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
                       )}
                     </div>
-
-                    {/* Information & Action Controls */}
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <h5 className="text-xs font-bold text-white truncate" title={slot.label}>
-                          {slot.label}
-                        </h5>
-                        <span className="text-[10px] text-[#D4AF37] font-semibold shrink-0">
-                          {slot.badge}
-                        </span>
-                      </div>
-
-                      <p className="text-[11px] text-slate-300 line-clamp-2 leading-tight">
-                        {slot.description}
-                      </p>
-
-                      {/* Toggles and Buttons */}
-                      <div className="flex items-center justify-between gap-2 pt-1.5">
-                        {/* Toggle Show / Hide in Moving Views */}
-                        <button
-                          id={`toggle-slot-view-${slot.id}`}
-                          onClick={() => toggleSlotVisibility(slot.id)}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-colors cursor-pointer ${
-                            isEnabled
-                              ? 'bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/50 hover:bg-[#25D366]/30'
-                              : 'bg-white/10 text-slate-400 border border-white/10 hover:text-white hover:bg-white/20'
-                          }`}
-                          title={isEnabled ? 'Click to hide from moving tour' : 'Click to include in moving tour'}
-                        >
-                          {isEnabled ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-                          <span>{isEnabled ? 'In Tour' : 'Hidden'}</span>
-                        </button>
-
-                        <div className="flex items-center gap-2">
-                          {/* File input for individual slot replacement */}
-                          <input
-                            ref={(el) => {
-                              individualInputRefs.current[slot.id] = el;
-                            }}
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleSingleUpload(slot.id, e)}
-                            className="hidden"
-                            id={`slot-file-${slot.id}`}
-                          />
-                          <button
-                            id={`btn-change-photo-${slot.id}`}
-                            onClick={() => individualInputRefs.current[slot.id]?.click()}
-                            className="inline-flex items-center gap-1 text-[11px] font-medium text-[#D4AF37] hover:underline cursor-pointer"
-                          >
-                            <Upload className="w-3 h-3" />
-                            <span>Replace</span>
-                          </button>
-
-                          {isCustomSlot && (
-                            <button
-                              onClick={() => removeCustomPhoto(slot.id)}
-                              className="p-1 rounded text-red-400 hover:text-red-300 hover:bg-red-500/20 cursor-pointer"
-                              title="Delete this custom view"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Modal Footer */}
-        <div className="px-6 py-4 border-t border-white/10 bg-[#121E2F] flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <button
-              id="btn-reset-photos-all"
-              onClick={async () => {
-                if (window.confirm('Reset all photos to original 7 venue photographs?')) {
-                  await resetPhotos();
-                  showToast('Restored original 7 venue photos!');
-                }
-              }}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-300 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset to Defaults</span>
-            </button>
-            <span className="text-[11px] text-slate-500 hidden sm:inline">•</span>
-            <span className="text-[11px] text-slate-400 hidden sm:inline">
-              Saved automatically in browser storage
-            </span>
-          </div>
-
+        {/* Footer Bar with Close */}
+        <div className="p-4 sm:p-5 border-t border-[#D4AF37]/30 bg-[#162234] flex items-center justify-between text-xs">
+          <span className="text-slate-400 text-[11px]">
+            Tip: Changes save instantly to your browser session &amp; moving carousel.
+          </span>
           <button
-            id="done-venue-photo-modal"
             onClick={() => setIsModalOpen(false)}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] text-[#1B2B42] text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-md cursor-pointer"
+            className="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-[#1B2B42] bg-[#D4AF37] hover:bg-[#F3E5AB] cursor-pointer shadow transition-all"
           >
-            Apply &amp; View Live Background
+            Done
           </button>
         </div>
       </div>

@@ -212,10 +212,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button
-              onClick={() => onNavigate('rates')}
+              onClick={() => onNavigate('treatments')}
               className="w-full sm:w-auto px-7 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 shadow-lg cursor-pointer transition-all"
             >
-              Experiences from R500
+              Treatments &amp; Prices
             </button>
             <a
               href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(

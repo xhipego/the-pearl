@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Hero } from '../components/Hero';
-import { TherapistGrid } from '../components/TherapistGrid';
 import { PageId } from '../components/Navbar';
-import { CONTACT_INFO, SPA_RATES } from '../data/spaData';
+import { CONTACT_INFO } from '../data/spaData';
+import { useVenuePhotos } from '../context/VenuePhotoContext';
 import {
   Sparkles,
   ArrowRight,
@@ -10,9 +10,12 @@ import {
   Award,
   MapPin,
   MessageCircle,
-  HeartHandshake,
-  UserCheck,
-  Heart,
+  Clock,
+  Check,
+  Waves,
+  Camera,
+  ChevronRight,
+  Maximize2,
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -24,260 +27,369 @@ export const HomePage: React.FC<HomePageProps> = ({
   onNavigate,
   onOpenBooking,
 }) => {
+  const { getPhoto, setIsModalOpen } = useVenuePhotos();
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
-      {/* 1. Cinematic Hero with Venue Snippets & Seamless Top Bar Integration */}
+    <div className="min-h-screen bg-[#ECEBE6] text-[#1A1F1C]">
+      {/* 1. Cinematic Hero with Moving Venue Views Carousel & Real Controls (Book Online removed) */}
       <Hero onOpenBooking={onOpenBooking} onNavigate={onNavigate} />
 
-      {/* 2. Welcome & Introduction Overview Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-[#C5A059] mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Polokwane&apos;s Discerning Sanctuary</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#1B2B42] tracking-wide">
-            A Haven of Sensual Elegance
+      {/* 2. After-Work Strip Banner */}
+      <div className="bg-[#27382F] text-[#E9E7E0] border-y border-[#D8B892]/30 py-4 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1160px] mx-auto flex flex-wrap items-center justify-between gap-4">
+          <p className="font-serif text-lg sm:text-xl font-normal text-white">
+            In by six, out by seven. We&apos;re open until 20:00, every day.
+          </p>
+          <span className="text-xs sm:text-sm text-[#D8B892] tracking-wider uppercase font-medium">
+            Mon – Sun &bull; 10:00 – 20:00 Daily
+          </span>
+        </div>
+      </div>
+
+      {/* 3. Three Treatments: Where Most Men Start */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-[1160px] mx-auto">
+        <div className="max-w-3xl mb-12">
+          <p className="text-xs tracking-widest uppercase text-[#9C6439] mb-2 font-semibold">
+            Where most men start
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1A1F1C]">
+            Three treatments, three kinds of tired.
           </h2>
-          <p className="font-serif italic text-lg sm:text-xl text-[#C5A059] mt-2 mb-4">
-            Uncomplicated Luxury • Unrivaled Discretion • Deep Bodily Release
-          </p>
-          <div className="flex items-center justify-center gap-3 w-48 mx-auto my-4">
-            <div className="h-[1px] flex-1 bg-[#D4AF37]/40" />
-            <div className="w-2.5 h-2.5 rounded-full pearl-sphere border border-[#D4AF37]" />
-            <div className="h-[1px] flex-1 bg-[#D4AF37]/40" />
-          </div>
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light">
-            Situated in the quiet, upscale suburb of Welgelen, Polokwane, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> is a bespoke adult wellness haven modeled after South Africa&apos;s most prestigious executive retreats. Experience therapeutic tension release, sensual touch, and total peace of mind.
-          </p>
         </div>
 
-        {/* 4 Feature Exploration Cards (Leading to Dedicated Pages) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Card 1: About */}
-          <div
-            onClick={() => onNavigate('about')}
-            className="group relative bg-white rounded-2xl p-7 border border-[#D4AF37]/30 hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {/* Card 1 */}
+          <article className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-7 flex flex-col justify-between shadow-sm hover:border-[#9C6439]/60 transition-colors">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#1B2B42] text-[#D4AF37] flex items-center justify-center mb-5 shadow-md group-hover:bg-[#D4AF37] group-hover:text-[#1B2B42] transition-colors">
-                <HeartHandshake className="w-6 h-6" />
+              <div className="flex items-baseline justify-between pb-3 border-b border-[#D3D4CD]">
+                <span className="text-xs text-[#58615C] uppercase font-medium">30 min</span>
+                <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R400</span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#1B2B42] mb-2 group-hover:text-[#C5A059] transition-colors">
-                About The Pearl
+              <h3 className="font-serif text-xl font-normal text-[#1A1F1C] mt-4 mb-2">
+                Back, Neck &amp; Shoulders
               </h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                Discover our luxury venue, private en-suite suites, sparkling swimming pool &amp; thatched lapa, and unwavering commitment to client discretion.
+              <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed">
+                For desk tension and long drives. A lunch-break reset that gets you back to work loose and mobile.
               </p>
             </div>
-            <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#C5A059] group-hover:text-[#1B2B42] transition-colors">
-              <span>Explore Sanctuary</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 2: Services & Rates */}
-          <div
-            onClick={() => onNavigate('rates')}
-            className="group relative bg-white rounded-2xl p-7 border border-[#D4AF37]/30 hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-[#1B2B42] text-[#D4AF37] flex items-center justify-center mb-5 shadow-md group-hover:bg-[#D4AF37] group-hover:text-[#1B2B42] transition-colors">
-                <Award className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-[#1B2B42] mb-2 group-hover:text-[#C5A059] transition-colors">
-                Services &amp; Rates
-              </h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                Transparent rates from R500. Full-body sensual massages, doubles (2 ladies), and custom pool sessions.
-              </p>
-            </div>
-            <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#C5A059] group-hover:text-[#1B2B42] transition-colors">
-              <span>View Rates Menu</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 3: The Girls / Hostesses */}
-          <div
-            onClick={() => onNavigate('hostesses')}
-            className="group relative bg-white rounded-2xl p-7 border border-[#D4AF37]/30 hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-[#1B2B42] text-[#D4AF37] flex items-center justify-center mb-5 shadow-md group-hover:bg-[#D4AF37] group-hover:text-[#1B2B42] transition-colors">
-                <Heart className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-[#1B2B42] mb-2 group-hover:text-[#C5A059] transition-colors">
-                The Girls
-              </h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                Meet our beautiful sensual hostesses. View photos, appearance details, stats, and real-time daily shift availability.
-              </p>
-            </div>
-            <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#C5A059] group-hover:text-[#1B2B42] transition-colors">
-              <span>View The Girls</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 4: Policies & Safety */}
-          <div
-            onClick={() => onNavigate('policies')}
-            className="group relative bg-white rounded-2xl p-7 border border-[#D4AF37]/30 hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-[#1B2B42] text-[#D4AF37] flex items-center justify-center mb-5 shadow-md group-hover:bg-[#D4AF37] group-hover:text-[#1B2B42] transition-colors">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-[#1B2B42] mb-2 group-hover:text-[#C5A059] transition-colors">
-                Policies &amp; Safety
-              </h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-light">
-                Strictly 18+ adult venue. No sexual intercourse or oral sex permitted. 100% confidential, clean, and safe.
-              </p>
-            </div>
-            <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-[#C5A059] group-hover:text-[#1B2B42] transition-colors">
-              <span>Read Code of Conduct</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Rates Spotlight Banner (Quick summary with link to full Rates Page) */}
-      <section className="py-16 bg-gradient-to-b from-[#142032] to-[#1B2B42] text-white border-y border-[#D4AF37]/30 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-            <div className="max-w-xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#D4AF37] mb-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Transparent Rates • No Hidden Fees</span>
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-                Experience Genuine Sensual Bodywork From R500
-              </h2>
-              <p className="text-sm text-slate-300 font-light leading-relaxed mb-6">
-                From express 30-minute stress-relief to our supreme 120-minute VIP relaxation journeys. Every session includes a private heated suite, en-suite shower, and organic botanical oils.
-              </p>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                <button
-                  onClick={() => onNavigate('rates')}
-                  className="px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 shadow-lg cursor-pointer transition-all"
-                >
-                  View Full Rates Page &amp; Calculator
-                </button>
-                <button
-                  onClick={onOpenBooking}
-                  className="px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase text-white bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition-all"
-                >
-                  Book Instant Session
-                </button>
-              </div>
-            </div>
-
-            {/* Quick Rates Snapshot Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto shrink-0">
-              {SPA_RATES.map((rate, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => onNavigate('rates')}
-                  className="bg-white/5 border border-white/10 hover:border-[#D4AF37]/80 rounded-xl p-3.5 sm:p-4 text-center cursor-pointer transition-all hover:scale-105 min-w-[110px]"
-                >
-                  <p className="text-[11px] text-slate-300 font-medium tracking-wider uppercase">{rate.duration}</p>
-                  <p className="font-serif text-xl sm:text-2xl font-bold text-[#F3E5AB] my-1">R{rate.price}</p>
-                  <p className="text-[10px] text-slate-400 truncate max-w-[120px] mx-auto">{rate.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Section for The Girls / Hostesses (Direct User Request) */}
-      <TherapistGrid
-        onSelectBooking={onOpenBooking}
-        title="Our Sensual Hostesses"
-        subtitle="Verified Photographs & Appearance Details"
-      />
-
-      {/* 5. Hostesses WhatsApp Inquiry Spotlight */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-r from-[#1B2B42] via-[#243B55] to-[#1B2B42] rounded-3xl p-8 sm:p-14 text-white border border-[#D4AF37]/40 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="max-w-3xl relative z-10 space-y-5">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#F3E5AB]">
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>Direct Reception Roster</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-              Instant Lineup &amp; Shift Confirmation
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-              Have specific preferences or want to know exactly which ladies are on shift this very moment? Contact our Welgelen reception concierge directly via WhatsApp or phone.
-            </p>
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div className="mt-6 pt-4 border-t border-[#D3D4CD] flex items-center justify-between">
+              <button
+                onClick={() => onNavigate('treatments')}
+                className="text-xs font-semibold text-[#9C6439] hover:text-[#1A1F1C] flex items-center gap-1 cursor-pointer"
+              >
+                <span>Full menu &rarr;</span>
+              </button>
               <a
                 href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                  'Hi The Pearl Wellness Spa, please confirm the active hostesses on shift right now.'
+                  "Hi, I'd like to book a Back, Neck & Shoulders massage (30 min)."
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-3.5 rounded-full text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 shadow-lg transition-all flex items-center justify-center gap-2 text-center"
+                className="text-xs font-medium text-[#1F7A4D] hover:underline"
               >
-                <MessageCircle className="w-4 h-4 text-[#1B2B42]" />
-                <span>Text WhatsApp Concierge (073 995 5927)</span>
+                Book WhatsApp
               </a>
+            </div>
+          </article>
+
+          {/* Card 2 */}
+          <article className="bg-[#F6F6F3] border-2 border-[#9C6439] rounded-2xl p-7 flex flex-col justify-between shadow-sm relative">
+            <span className="absolute -top-3 right-6 px-3 py-0.5 text-[10px] tracking-widest uppercase bg-[#9C6439] text-white font-semibold rounded-full">
+              Most Booked
+            </span>
+            <div>
+              <div className="flex items-baseline justify-between pb-3 border-b border-[#D3D4CD]">
+                <span className="text-xs text-[#58615C] uppercase font-medium">60 / 90 min</span>
+                <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R750</span>
+              </div>
+              <h3 className="font-serif text-xl font-normal text-[#1A1F1C] mt-4 mb-2">
+                Deep Tissue Massage
+              </h3>
+              <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed">
+                Firm pressure for chronic tightness, heavy lifting, gym days and sports recovery. Our premier treatment for gentlemen.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#D3D4CD] flex items-center justify-between">
+              <button
+                onClick={() => onNavigate('treatments')}
+                className="text-xs font-semibold text-[#9C6439] hover:text-[#1A1F1C] flex items-center gap-1 cursor-pointer"
+              >
+                <span>Full menu &rarr;</span>
+              </button>
               <a
-                href={`tel:${CONTACT_INFO.phone1}`}
-                className="px-8 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center justify-center gap-2 text-center"
+                href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
+                  "Hi, I'd like to book a Deep Tissue massage (60 min)."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[#1F7A4D] hover:underline"
               >
-                <span>Call 073 995 5927</span>
+                Book WhatsApp
               </a>
+            </div>
+          </article>
+
+          {/* Card 3 */}
+          <article className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-7 flex flex-col justify-between shadow-sm hover:border-[#9C6439]/60 transition-colors">
+            <div>
+              <div className="flex items-baseline justify-between pb-3 border-b border-[#D3D4CD]">
+                <span className="text-xs text-[#58615C] uppercase font-medium">30 min</span>
+                <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R350</span>
+              </div>
+              <h3 className="font-serif text-xl font-normal text-[#1A1F1C] mt-4 mb-2">
+                Foot Scrub &amp; Massage
+              </h3>
+              <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed">
+                A warm soak, exfoliating scrub and foot massage in Room 4 for feet that spend the day in boots or on site.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#D3D4CD] flex items-center justify-between">
+              <button
+                onClick={() => onNavigate('treatments')}
+                className="text-xs font-semibold text-[#9C6439] hover:text-[#1A1F1C] flex items-center gap-1 cursor-pointer"
+              >
+                <span>Full menu &rarr;</span>
+              </button>
+              <a
+                href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
+                  "Hi, I'd like to book a Foot Scrub & Massage (30 min)."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[#1F7A4D] hover:underline"
+              >
+                Book WhatsApp
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* 4. Four Reasons / Value Pillars */}
+      <section className="pb-20 px-4 sm:px-6 lg:px-8 max-w-[1160px] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-10 border-t border-[#D3D4CD]">
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-widest text-[#9C6439] font-semibold">Private</p>
+            <h3 className="font-serif text-xl font-normal text-[#1A1F1C]">Your own treatment room</h3>
+            <p className="text-xs sm:text-sm text-[#58615C] leading-relaxed font-light">
+              Freshen up in your room before your session. Fresh crisp linen, charcoal towels, and robes that fit.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-widest text-[#9C6439] font-semibold">Unhurried</p>
+            <h3 className="font-serif text-xl font-normal text-[#1A1F1C]">Stay after your massage</h3>
+            <p className="text-xs sm:text-sm text-[#58615C] leading-relaxed font-light">
+              30 minutes at the pool and thatched lapa with a coffee or cold drink. R250 with any treatment.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-widest text-[#9C6439] font-semibold">Easy</p>
+            <h3 className="font-serif text-xl font-normal text-[#1A1F1C]">Park behind the gate</h3>
+            <p className="text-xs sm:text-sm text-[#58615C] leading-relaxed font-light">
+              Secure off-street parking and a discreet entrance. We send gate directions when you book.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-widest text-[#9C6439] font-semibold">Professional</p>
+            <h3 className="font-serif text-xl font-normal text-[#1A1F1C]">Qualified therapists</h3>
+            <p className="text-xs sm:text-sm text-[#58615C] leading-relaxed font-light">
+              Therapists in uniform, a clear respectful draping policy, and a strict therapeutic code of conduct.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Venue Showcase Section Matching Layout with Curved Picture Outlines & Futuristic Hover Zoom */}
+      <section className="py-20 bg-[#1D2A24] text-[#E9E7E0] border-y border-white/10">
+        <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-white/10">
+            <div>
+              <p className="text-xs tracking-widest uppercase text-[#D8B892] font-semibold">THE VENUE</p>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-white mt-1">
+                A private spa in Welgelegen
+              </h2>
+              <p className="text-xs sm:text-sm text-[#A9B2AC] font-light mt-2 max-w-2xl leading-relaxed">
+                Four private treatment rooms, each named for a Limpopo tree, plus a pool, a thatched lapa and secure parking behind the gate.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={() => onNavigate('venue')}
+                className="px-5 py-2.5 text-xs font-semibold tracking-wider text-white border border-white/30 hover:bg-white/10 cursor-pointer transition-colors rounded-full"
+              >
+                View All Rooms &rarr;
+              </button>
+            </div>
+          </div>
+
+          {/* Top Wide Feature Card: The Baobab Suite with curved picture outline & futuristic hover zoom */}
+          <div className="bg-[#F6F6F3] text-[#1A1F1C] border border-[#D3D4CD] rounded-2xl grid grid-cols-1 md:grid-cols-12 overflow-hidden shadow-sm hover:border-[#9C6439]/60 transition-colors">
+            <div className="md:col-span-7 p-3 sm:p-4">
+              <div className="relative min-h-[280px] bg-[#2A352F] rounded-xl overflow-hidden group cursor-pointer border border-black/10">
+                <img
+                  src={getPhoto('room-1')}
+                  alt="The Baobab Suite"
+                  className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:brightness-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity pointer-events-none" />
+                <div className="absolute left-3.5 bottom-3.5 px-2.5 py-1 bg-black/65 backdrop-blur-md rounded text-white/95 text-[11px] tracking-[0.1em] uppercase font-medium border border-white/10">
+                  THE BAOBAB SUITE
+                </div>
+              </div>
+            </div>
+            <div className="md:col-span-5 p-6 sm:p-7 flex flex-col justify-between space-y-5">
+              <div>
+                <p className="text-xs font-semibold tracking-[0.18em] uppercase text-[#9C6439]">
+                  EXECUTIVE SUITE · FOR ONE
+                </p>
+                <h3 className="font-serif text-2xl font-normal text-[#1A1F1C] mt-1">
+                  The Baobab Suite
+                </h3>
+                <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed mt-2">
+                  Our largest and most private room, with its own bath and shower. Book it for a hot stone or a 90-minute massage when you want the afternoon to yourself.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-[#D3D4CD]">
+                <p className="text-xs text-[#9C6439] font-medium">
+                  Hot Stone · Swedish 90 · Deep Tissue 90
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom 3 Columns Row with curved outlines & futuristic hover zoom */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* The Marula Room */}
+            <div className="bg-[#F6F6F3] text-[#1A1F1C] border border-[#D3D4CD] rounded-2xl flex flex-col justify-between overflow-hidden shadow-sm hover:border-[#9C6439]/60 transition-colors">
+              <div className="p-3 sm:p-3.5">
+                <div className="relative aspect-[16/11] bg-[#2A352F] rounded-xl overflow-hidden group cursor-pointer border border-black/10">
+                  <img
+                    src={getPhoto('room-2-night')}
+                    alt="The Marula Room"
+                    className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-112 group-hover:brightness-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity pointer-events-none" />
+                  <div className="absolute left-3 bottom-3 px-2 py-0.5 bg-black/65 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.1em] uppercase font-medium border border-white/10">
+                    THE MARULA ROOM
+                  </div>
+                </div>
+              </div>
+              <div className="px-6 pb-6 pt-2 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9C6439]">
+                    MASSAGE · FOR ONE
+                  </p>
+                  <h4 className="font-serif text-xl font-normal text-[#1A1F1C] mt-1">
+                    The Marula Room
+                  </h4>
+                  <p className="text-xs text-[#58615C] font-light leading-relaxed mt-2">
+                    Quiet, warm and set up for proper work. Our everyday room for a full-body massage or a 30-minute reset between meetings.
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-[#D3D4CD]">
+                  <p className="text-xs text-[#9C6439] font-medium">
+                    Swedish · Deep Tissue · Aromatherapy · Back, Neck &amp; Shoulders
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* The Mopane Room */}
+            <div className="bg-[#F6F6F3] text-[#1A1F1C] border border-[#D3D4CD] rounded-2xl flex flex-col justify-between overflow-hidden shadow-sm hover:border-[#9C6439]/60 transition-colors">
+              <div className="p-3 sm:p-3.5">
+                <div className="relative aspect-[16/11] bg-[#2A352F] rounded-xl overflow-hidden group cursor-pointer border border-black/10">
+                  <img
+                    src={getPhoto('room-3-couples')}
+                    alt="The Mopane Room"
+                    className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-112 group-hover:brightness-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity pointer-events-none" />
+                  <div className="absolute left-3 bottom-3 px-2 py-0.5 bg-black/65 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.1em] uppercase font-medium border border-white/10">
+                    THE MOPANE ROOM
+                  </div>
+                </div>
+              </div>
+              <div className="px-6 pb-6 pt-2 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9C6439]">
+                    COUPLES · FOR TWO
+                  </p>
+                  <h4 className="font-serif text-xl font-normal text-[#1A1F1C] mt-1">
+                    The Mopane Room
+                  </h4>
+                  <p className="text-xs text-[#58615C] font-light leading-relaxed mt-2">
+                    Named for the mopane leaf, which grows in pairs. Two tables side by side for a massage you share with your partner.
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-[#D3D4CD]">
+                  <p className="text-xs text-[#9C6439] font-medium">
+                    Couples Massage
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* The Leadwood Room */}
+            <div className="bg-[#F6F6F3] text-[#1A1F1C] border border-[#D3D4CD] rounded-2xl flex flex-col justify-between overflow-hidden shadow-sm hover:border-[#9C6439]/60 transition-colors">
+              <div className="p-3 sm:p-3.5">
+                <div className="relative aspect-[16/11] bg-[#2A352F] rounded-xl overflow-hidden group cursor-pointer border border-black/10">
+                  <img
+                    src={getPhoto('room-4-footscrub')}
+                    alt="The Leadwood Room"
+                    className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-112 group-hover:brightness-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity pointer-events-none" />
+                  <div className="absolute left-3 bottom-3 px-2 py-0.5 bg-black/65 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.1em] uppercase font-medium border border-white/10">
+                    THE LEADWOOD ROOM
+                  </div>
+                </div>
+              </div>
+              <div className="px-6 pb-6 pt-2 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9C6439]">
+                    FEET · FOR ONE
+                  </p>
+                  <h4 className="font-serif text-xl font-normal text-[#1A1F1C] mt-1">
+                    The Leadwood Room
+                  </h4>
+                  <p className="text-xs text-[#58615C] font-light leading-relaxed mt-2">
+                    Named for the bushveld&apos;s toughest tree. A warm soak, scrub and foot massage for the feet that carry you through the week.
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-[#D3D4CD]">
+                  <p className="text-xs text-[#9C6439] font-medium">
+                    Foot Scrub &amp; Massage
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 6. Location & Concierge Quick Banner */}
-      <section className="pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#D4AF37]/40 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#C5A059] mb-2">
-              <MapPin className="w-3.5 h-3.5" />
-              <span>Welgelen, Polokwane</span>
-            </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1B2B42] mb-3">
-              Discrete, Private &amp; Open Daily (10:00 – 20:00)
-            </h2>
-            <p className="text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
-              Located at 112 Genl Beyers Street, Welgelen. Secure, unmarked private entrance with dedicated off-street parking. Contact our discreet concierge to reserve your sanctuary session.
+      {/* 6. Spa Policies callout */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1160px] mx-auto">
+        <div className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+          <div>
+            <p className="text-xs tracking-widest uppercase text-[#9C6439] font-semibold">
+              Code of Conduct &amp; Ethics
+            </p>
+            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C] mt-1">
+              Strictly therapeutic, private, and unhurried.
+            </h3>
+            <p className="text-xs sm:text-sm text-[#58615C] font-light mt-1 max-w-xl">
+              All treatments are strictly non-sexual. Private suites with en-suite bathrooms, professional draping, and secure parking behind the electronic gate.
             </p>
           </div>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-            <button
-              onClick={() => onNavigate('contact')}
-              className="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 border border-[#D4AF37] transition-all cursor-pointer"
-            >
-              Contact &amp; Map
-            </button>
-            <a
-              href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                'Hi The Pearl Wellness Spa, I would like to inquire about booking a session.'
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-white bg-[#1B2B42] hover:bg-[#152234] border border-[#25D366] transition-all flex items-center justify-center gap-2 shadow-md"
-            >
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>WhatsApp Concierge</span>
-            </a>
-          </div>
+          <button
+            onClick={() => onNavigate('policies')}
+            className="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#1A1F1C] border border-[#1A1F1C] hover:bg-[#1A1F1C] hover:text-white cursor-pointer whitespace-nowrap transition-colors rounded-full shrink-0"
+          >
+            View Policies &rarr;
+          </button>
         </div>
       </section>
     </div>
