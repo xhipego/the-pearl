@@ -3,6 +3,7 @@ import { Hero } from '../components/Hero';
 import { PageId } from '../components/Navbar';
 import { CONTACT_INFO } from '../data/spaData';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
+import { TREATMENT_IMAGES } from '../data/treatmentImages';
 import {
   Sparkles,
   ArrowRight,
@@ -13,7 +14,6 @@ import {
   Clock,
   Check,
   Waves,
-  Camera,
   ChevronRight,
   Maximize2,
 } from 'lucide-react';
@@ -27,7 +27,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onNavigate,
   onOpenBooking,
 }) => {
-  const { getPhoto, setIsModalOpen } = useVenuePhotos();
+  const { getPhoto } = useVenuePhotos();
 
   return (
     <div className="min-h-screen bg-[#ECEBE6] text-[#1A1F1C]">
@@ -38,11 +38,16 @@ export const HomePage: React.FC<HomePageProps> = ({
       <div className="bg-[#27382F] text-[#E9E7E0] border-y border-[#D8B892]/30 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1160px] mx-auto flex flex-wrap items-center justify-between gap-4">
           <p className="font-serif text-lg sm:text-xl font-normal text-white">
-            In by six, out by seven. We&apos;re open until 20:00, every day.
+            &ldquo;In by six, out by seven&rdquo;. We&apos;re open until 20:00, every day.
           </p>
-          <span className="text-xs sm:text-sm text-[#D8B892] tracking-wider uppercase font-medium">
-            Mon – Sun &bull; 10:00 – 20:00 Daily
-          </span>
+          <div className="text-right">
+            <span className="text-xs sm:text-sm text-[#D8B892] tracking-wider uppercase font-semibold block">
+              Private Sessions Daily
+            </span>
+            <span className="text-xs text-[#E9E7E0]/90 tracking-wider">
+              From 10h00 - 20h00
+            </span>
+          </div>
         </div>
       </div>
 
@@ -53,14 +58,30 @@ export const HomePage: React.FC<HomePageProps> = ({
             Where most men start
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1A1F1C]">
-            Three treatments, three kinds of tired.
+            3 Treatments; 3 Kinds of Tired
           </h2>
+          <p className="text-xs sm:text-sm text-[#58615C] font-light mt-3 leading-relaxed max-w-2xl">
+            Targeted relief for tight shoulders, deep muscle recovery for training strain, or dedicated foot care for long days on your feet. These three treatments address the most common types of fatigue, but please click on full menu to see our complete list of treatments.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {/* Card 1 */}
-          <article className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-7 flex flex-col justify-between shadow-sm hover:border-[#9C6439]/60 transition-colors">
+          {/* Card 1: Back, Neck & Shoulders */}
+          <article className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:border-[#9C6439]/60 transition-all duration-300 group">
             <div>
+              {/* Treatment Image with curved corners and futuristic hover zoom */}
+              <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden mb-5 bg-[#2A352F] border border-black/10">
+                <img
+                  src={TREATMENT_IMAGES['back-neck-shoulders']}
+                  alt="Back, Neck & Shoulders Massage"
+                  className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.04] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:brightness-105 animate-kenburns-1"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity pointer-events-none" />
+                <div className="absolute left-2.5 bottom-2.5 px-2 py-0.5 bg-black/70 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.12em] uppercase font-medium border border-white/10">
+                  Targeted Bodywork
+                </div>
+              </div>
+
               <div className="flex items-baseline justify-between pb-3 border-b border-[#D3D4CD]">
                 <span className="text-xs text-[#58615C] uppercase font-medium">30 min</span>
                 <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R400</span>
@@ -92,12 +113,25 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
           </article>
 
-          {/* Card 2 */}
-          <article className="bg-[#F6F6F3] border-2 border-[#9C6439] rounded-2xl p-7 flex flex-col justify-between shadow-sm relative">
-            <span className="absolute -top-3 right-6 px-3 py-0.5 text-[10px] tracking-widest uppercase bg-[#9C6439] text-white font-semibold rounded-full">
+          {/* Card 2: Deep Tissue Recovery */}
+          <article className="bg-[#F6F6F3] border-2 border-[#9C6439] rounded-2xl p-6 flex flex-col justify-between shadow-sm relative group">
+            <span className="absolute -top-3 right-6 px-3 py-0.5 text-[10px] tracking-widest uppercase bg-[#9C6439] text-white font-semibold rounded-full z-10 shadow-xs">
               Most Booked
             </span>
             <div>
+              {/* Treatment Image with curved corners and futuristic hover zoom */}
+              <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden mb-5 bg-[#2A352F] border border-black/10">
+                <img
+                  src={TREATMENT_IMAGES['deep-tissue-massage']}
+                  alt="Deep Tissue Massage"
+                  className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.04] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:brightness-105 animate-kenburns-2"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity pointer-events-none" />
+                <div className="absolute left-2.5 bottom-2.5 px-2 py-0.5 bg-black/70 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.12em] uppercase font-medium border border-white/10">
+                  Premier Bodywork
+                </div>
+              </div>
+
               <div className="flex items-baseline justify-between pb-3 border-b border-[#D3D4CD]">
                 <span className="text-xs text-[#58615C] uppercase font-medium">60 / 90 min</span>
                 <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R750</span>
@@ -129,18 +163,31 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
           </article>
 
-          {/* Card 3 */}
-          <article className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-7 flex flex-col justify-between shadow-sm hover:border-[#9C6439]/60 transition-colors">
+          {/* Card 3: Foot Scrub */}
+          <article className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:border-[#9C6439]/60 transition-all duration-300 group">
             <div>
+              {/* Treatment Image with curved corners and futuristic hover zoom */}
+              <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden mb-5 bg-[#2A352F] border border-black/10">
+                <img
+                  src={TREATMENT_IMAGES['foot-scrub']}
+                  alt="Foot Scrub"
+                  className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.04] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:brightness-105 animate-kenburns-3"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity pointer-events-none" />
+                <div className="absolute left-2.5 bottom-2.5 px-2 py-0.5 bg-black/70 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.12em] uppercase font-medium border border-white/10">
+                  Lower-Leg Relief
+                </div>
+              </div>
+
               <div className="flex items-baseline justify-between pb-3 border-b border-[#D3D4CD]">
                 <span className="text-xs text-[#58615C] uppercase font-medium">30 min</span>
                 <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R350</span>
               </div>
               <h3 className="font-serif text-xl font-normal text-[#1A1F1C] mt-4 mb-2">
-                Foot Scrub &amp; Massage
+                Foot Scrub
               </h3>
               <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed">
-                A warm soak, exfoliating scrub and foot massage in Room 4 for feet that spend the day in boots or on site.
+                A warm soak, exfoliating scrub and foot massage for feet that spend the day in boots or on site.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-[#D3D4CD] flex items-center justify-between">
@@ -152,7 +199,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
               <a
                 href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                  "Hi, I'd like to book a Foot Scrub & Massage (30 min)."
+                  "Hi, I'd like to book a Foot Scrub (30 min)."
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -163,6 +210,17 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
           </article>
         </div>
+
+        {/* View Full Menu Button Underneath the 3 Cards */}
+        <div className="mt-12 flex justify-center">
+          <button
+            onClick={() => onNavigate('treatments')}
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-xs font-semibold tracking-[0.14em] uppercase text-white bg-[#1B2B42] hover:bg-[#D4AF37] hover:text-[#1B2B42] shadow-md transition-all duration-300 cursor-pointer border border-[#D4AF37]/50"
+          >
+            <span>View Full Menu</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+          </button>
+        </div>
       </section>
 
       {/* 4. Four Reasons / Value Pillars */}
@@ -172,7 +230,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <p className="text-xs uppercase tracking-widest text-[#9C6439] font-semibold">Private</p>
             <h3 className="font-serif text-xl font-normal text-[#1A1F1C]">Your own treatment room</h3>
             <p className="text-xs sm:text-sm text-[#58615C] leading-relaxed font-light">
-              Freshen up in your room before your session. Fresh crisp linen, charcoal towels, and robes that fit.
+              Freshen up in your room before your session. Fresh crisp linen, clean towels, and robes that fit.
             </p>
           </div>
 
@@ -212,7 +270,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 A private spa in Welgelegen
               </h2>
               <p className="text-xs sm:text-sm text-[#A9B2AC] font-light mt-2 max-w-2xl leading-relaxed">
-                Four private treatment rooms, each named for a Limpopo tree, plus a pool, a thatched lapa and secure parking behind the gate.
+                Four private treatment rooms, each named after a well-known Limpopo tree, plus a pool, a thatched lapa and secure parking behind the gate.
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
@@ -235,6 +293,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:brightness-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity pointer-events-none" />
+
                 <div className="absolute left-3.5 bottom-3.5 px-2.5 py-1 bg-black/65 backdrop-blur-md rounded text-white/95 text-[11px] tracking-[0.1em] uppercase font-medium border border-white/10">
                   THE BAOBAB SUITE
                 </div>

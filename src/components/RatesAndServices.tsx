@@ -22,6 +22,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
   const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; title: string } | null>(null);
 
   // Enhanced detail items for each massage service with dedicated professional moving image
+  // Order: 1. Deep Tissue, 2. Swedish, 3. Hot Stone, 4. Aromatherapy, 5. Back & Neck, 6. Foot Scrub, 7. Couples at the end
   const massageServices = [
     {
       id: 'deep-tissue-massage',
@@ -41,7 +42,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
         'Accelerates recovery after intense gym workouts, sports, or physical labor',
         'Improves posture, mobility, and healthy arterial circulation',
       ],
-      includes: 'Private heated room, fresh linen, charcoal towels, en-suite shower freshen up',
+      includes: 'Private heated room, fresh linen, clean towels, en-suite shower freshen up',
       durations: [
         { time: '60 min', price: 750, popular: true },
         { time: '90 min', price: 1050, popular: false },
@@ -74,28 +75,28 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
       whatsappMsg: "Hi, I'd like to book a Swedish Full-Body massage. Which times are available?",
     },
     {
-      id: 'back-neck-shoulders',
-      badge: 'Lunch-Break Reset',
-      badgeColor: 'bg-[#27382F] text-[#D8B892]',
+      id: 'hot-stone-massage',
+      badge: 'Thermal Deep Release',
+      badgeColor: 'bg-[#9C6439] text-white',
       featured: false,
-      icon: <Compass className="w-5 h-5 text-[#D4AF37]" />,
-      name: 'Back, Neck & Shoulders',
-      image: TREATMENT_IMAGES['back-neck-shoulders'],
-      animClass: 'animate-kenburns-3',
-      tagline: 'Targeted focus for computer fatigue, driving tension, and upper-spine stiffness.',
+      icon: <Flame className="w-5 h-5 text-[#D4AF37]" />,
+      name: 'Hot Stone Massage',
+      image: TREATMENT_IMAGES['hot-stone-massage'],
+      animClass: 'animate-kenburns-2',
+      tagline: 'Smooth volcanic basalt stones delivering penetrating thermal muscle therapy.',
       description:
-        'An intensive 30-minute targeted session concentrated precisely where modern men hold the heaviest strain. Gets you off the table loose, relaxed, and recharged without taking up your entire afternoon.',
+        'Basalt river stones heated to the ideal therapeutic temperature are coated in warm botanical oil and massaged over tight muscular pathways. The radiant thermal energy penetrates deep into muscle fibers that standard hands-only pressure cannot reach.',
       benefits: [
-        'Dedicated release of cervical spine, neck stiffness, and shoulder knots',
-        'Counteracts hunched computer posture, mobile phone neck, and driving fatigue',
-        'Relieves tension headaches originating from tight occipital and suboccipital muscles',
-        'Fast, convenient 30-minute turnaround in private seclusion',
+        'Deep thermal heat softens chronic tension without painful heavy pressure',
+        'Dramatically accelerates vascular blood flow and cellular oxygenation',
+        'Sedates nervous system tension for an unforgettable state of serene stillness',
+        'Recommended for winter chills, chronic back stiffness, and deep physical fatigue',
       ],
-      includes: 'Private suite, targeted muscle balm, quick en-suite freshen up',
+      includes: 'Heated volcanic stones, essential oils, private en-suite shower access',
       durations: [
-        { time: '30 min', price: 400, popular: false },
+        { time: '60 min', price: 900, popular: false },
       ],
-      whatsappMsg: "Hi, I'd like to book a Back, Neck & Shoulders massage (30 min). Which times are available?",
+      whatsappMsg: "Hi, I'd like to book a Hot Stone massage (60 min). Which times are available?",
     },
     {
       id: 'aromatherapy-massage',
@@ -122,28 +123,76 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
       whatsappMsg: "Hi, I'd like to book an Aromatherapy massage (60 min). Which times are available?",
     },
     {
-      id: 'hot-stone-massage',
-      badge: 'Thermal Deep Release',
-      badgeColor: 'bg-[#9C6439] text-white',
+      id: 'back-neck-shoulders',
+      badge: 'Targeted Relief',
+      badgeColor: 'bg-[#27382F] text-[#D8B892]',
       featured: false,
-      icon: <Flame className="w-5 h-5 text-[#D4AF37]" />,
-      name: 'Hot Stone Massage',
-      image: TREATMENT_IMAGES['hot-stone-massage'],
-      animClass: 'animate-kenburns-2',
-      tagline: 'Smooth volcanic basalt stones delivering penetrating thermal muscle therapy.',
+      icon: <Compass className="w-5 h-5 text-[#D4AF37]" />,
+      name: 'Back, Neck & Shoulders',
+      image: TREATMENT_IMAGES['back-neck-shoulders'],
+      animClass: 'animate-kenburns-3',
+      tagline: 'Targeted focus for computer fatigue, driving tension, and upper-spine stiffness.',
       description:
-        'Basalt river stones heated to the ideal therapeutic temperature are coated in warm botanical oil and massaged over tight muscular pathways. The radiant thermal energy penetrates deep into muscle fibers that standard hands-only pressure cannot reach.',
+        'An intensive 30-minute targeted session concentrated precisely where modern men hold the heaviest strain. Gets you off the table loose, relaxed, and recharged without taking up your entire afternoon.',
       benefits: [
-        'Deep thermal heat softens chronic tension without painful heavy pressure',
-        'Dramatically accelerates vascular blood flow and cellular oxygenation',
-        'Sedates nervous system tension for an unforgettable state of serene stillness',
-        'Recommended for winter chills, chronic back stiffness, and deep physical fatigue',
+        'Dedicated release of cervical spine, neck stiffness, and shoulder knots',
+        'Counteracts hunched computer posture, mobile phone neck, and driving fatigue',
+        'Relieves tension headaches originating from tight occipital and suboccipital muscles',
+        'Fast, convenient 30-minute turnaround in private seclusion',
       ],
-      includes: 'Heated volcanic stones, essential oils, private en-suite shower access',
+      includes: 'Private suite, targeted muscle balm, quick en-suite freshen up',
       durations: [
-        { time: '60 min', price: 900, popular: false },
+        { time: '30 min', price: 400, popular: false },
       ],
-      whatsappMsg: "Hi, I'd like to book a Hot Stone massage (60 min). Which times are available?",
+      whatsappMsg: "Hi, I'd like to book a Back, Neck & Shoulders massage (30 min). Which times are available?",
+    },
+    {
+      id: 'foot-scrub',
+      badge: 'Lower-Leg Care',
+      badgeColor: 'bg-[#1D2A24] text-[#E9E7E0]',
+      featured: false,
+      icon: <Activity className="w-5 h-5 text-[#D4AF37]" />,
+      name: 'Foot Scrub',
+      image: TREATMENT_IMAGES['foot-scrub'],
+      animClass: 'animate-kenburns-3',
+      tagline: 'Warm mineral soak, exfoliating scrub, and a targeted foot & calf relief massage.',
+      description:
+        'Conducted in deep relaxation armchairs in the Leadwood Room. Crafted specifically for feet that spend long days in boots, on site, on construction visits, or standing on hard surfaces.',
+      benefits: [
+        'Warm copper basin mineral soak softens calluses',
+        'Natural volcanic exfoliating scrub revitalizes skin',
+        'Deep arch and heel acupressure relieves plantar strain',
+        'Lower-calf restorative draining eases heavy leg ache',
+      ],
+      includes: 'Warm herbal tea, private Leadwood suite',
+      durations: [
+        { time: '30 min', price: 350, popular: false },
+      ],
+      whatsappMsg: "Hi, I'd like to book a Foot Scrub (30 min). Which times are available?",
+    },
+    {
+      id: 'couples-massage',
+      badge: 'Side-by-Side Tables',
+      badgeColor: 'bg-[#1D2A24] text-[#E9E7E0]',
+      featured: false,
+      icon: <Layers className="w-5 h-5 text-[#D4AF37]" />,
+      name: 'Couples Massage',
+      image: TREATMENT_IMAGES['couples-massage'],
+      animClass: 'animate-kenburns-1',
+      tagline: 'Side-by-side synchronized treatment in the dedicated Mopane Room (Room 3).',
+      description:
+        'Two treatment tables positioned side-by-side with two qualified therapists working simultaneously. Each guest individually chooses Swedish relaxation or Aromatherapy pressure to match their preference.',
+      benefits: [
+        'Synchronized session in Room 3 for couples',
+        'Individual pressure choices (Swedish or Aromatherapy)',
+        'Includes complimentary refreshments for two',
+        'Option to add private pool & lapa time afterwards',
+      ],
+      includes: 'Two certified therapists, side-by-side Mopane suite, dual refreshments',
+      durations: [
+        { time: '60 min', price: 1300, popular: false },
+      ],
+      whatsappMsg: "Hi, I'd like to book a Couples Massage in Room 3 for two.",
     },
   ];
 
@@ -180,21 +229,22 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
         </div>
 
         {/* ============================================================== */}
-        {/* SEPARATE FULL-BODY & TARGETED MASSAGE SERVICES CARDS           */}
-        {/* Each service stands alone with moving photo, details & rates   */}
+        {/* FULL BODY MASSAGES - 7 TREATMENTS IN USER SPECIFIED ORDER      */}
+        {/* 1. Deep Tissue, 2. Swedish, 3. Hot Stone, 4. Aromatherapy,     */}
+        {/* 5. Back & Neck, 6. Foot Scrub, 7. Couples at the end           */}
         {/* ============================================================== */}
         <div className="space-y-8">
           <div className="pb-3 border-b border-[#D3D4CD] flex items-end justify-between">
             <div>
               <p className="text-xs font-semibold tracking-[0.16em] uppercase text-[#9C6439]">
-                PRIMARY BODYWORK
+                PRIMARY MENU
               </p>
               <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C] mt-0.5">
-                Full-Body &amp; Targeted Massage
+                Full Body Massages
               </h3>
             </div>
             <span className="text-xs text-[#58615C] font-light hidden sm:inline">
-              5 Dedicated Treatments
+              7 Dedicated Treatments
             </span>
           </div>
 
@@ -339,233 +389,6 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
         </div>
 
         {/* ============================================================== */}
-        {/* SEPARATE FEET & LOWER LEG SERVICE CARD WITH MOVING IMAGE       */}
-        {/* ============================================================== */}
-        <div className="space-y-6">
-          <div className="pb-3 border-b border-[#D3D4CD]">
-            <p className="text-xs font-semibold tracking-[0.16em] uppercase text-[#9C6439]">
-              FEET CARE · SUITE 04
-            </p>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C] mt-0.5">
-              Feet &amp; Lower-Leg Care
-            </h3>
-          </div>
-
-          <div className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl overflow-hidden shadow-sm p-5 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            {/* Moving Image for Foot Scrub */}
-            <div className="lg:col-span-4 flex flex-col justify-center">
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-full min-h-[220px] rounded-xl overflow-hidden group bg-[#2A352F] border border-black/10 shadow-inner">
-                <img
-                  src={TREATMENT_IMAGES['foot-scrub']}
-                  alt="Foot Scrub & Massage"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.04] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-115 group-hover:brightness-105 animate-kenburns-3"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
-
-                <div className="absolute left-3 bottom-3 px-2.5 py-1 bg-black/70 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.12em] uppercase font-medium border border-white/10">
-                  FOOT SCRUB &amp; MASSAGE
-                </div>
-
-                <button
-                  onClick={() =>
-                    setSelectedPhoto({
-                      src: TREATMENT_IMAGES['foot-scrub'],
-                      title: 'Foot Scrub & Massage',
-                    })
-                  }
-                  className="absolute top-3 right-3 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/15"
-                  title="Expand image"
-                >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C]">
-                    Foot Scrub &amp; Massage
-                  </h4>
-                  <span className="text-[10px] tracking-wider uppercase font-semibold px-2.5 py-0.5 rounded-full bg-[#1D2A24] text-[#E9E7E0]">
-                    Room 4 Dedicated
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-[#9C6439] font-medium mb-2">
-                  Warm mineral soak, exfoliating scrub, and a targeted foot &amp; calf relief massage.
-                </p>
-                <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed">
-                  Conducted in the Leadwood Room (Room 4) in specialized deep relaxation armchairs. Crafted specifically for feet that spend long days in boots, on site, on construction visits, or standing on hard surfaces.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 gap-1.5 pt-2 border-t border-[#D3D4CD]/60">
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Warm copper basin mineral soak softens calluses</span>
-                </div>
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Natural volcanic exfoliating scrub revitalizes skin</span>
-                </div>
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Deep arch and heel acupressure relieves plantar strain</span>
-                </div>
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Lower-calf restorative draining eases heavy leg ache</span>
-                </div>
-              </div>
-
-              <div className="pt-2 text-[11px] text-[#58615C] flex items-center gap-1.5">
-                <span className="font-medium text-[#1A1F1C]">Includes:</span>
-                <span>Warm herbal tea, en-suite shower access, private Leadwood suite</span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-3 bg-white/70 border border-[#D3D4CD] rounded-xl p-5 flex flex-col justify-between space-y-4 h-full">
-              <div>
-                <p className="text-[11px] font-semibold tracking-wider uppercase text-gray-500 mb-2">
-                  Duration &amp; Price
-                </p>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white border border-[#D3D4CD]">
-                  <span className="text-xs font-semibold text-[#1A1F1C]">30 min</span>
-                  <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R350</span>
-                </div>
-              </div>
-              <a
-                href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                  "Hi, I'd like to book a Foot Scrub & Massage (30 min)."
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-full text-xs font-semibold tracking-wider uppercase text-white bg-[#1F7A4D] hover:bg-[#18643F] transition-colors flex items-center justify-center gap-2 shadow-xs"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>Book on WhatsApp</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* ============================================================== */}
-        {/* SEPARATE COUPLES SERVICE CARD WITH MOVING IMAGE                */}
-        {/* ============================================================== */}
-        <div className="space-y-6">
-          <div className="pb-3 border-b border-[#D3D4CD]">
-            <p className="text-xs font-semibold tracking-[0.16em] uppercase text-[#9C6439]">
-              FOR TWO · SUITE 03
-            </p>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C] mt-0.5">
-              Couples Shared Massage
-            </h3>
-          </div>
-
-          <div className="bg-[#F6F6F3] border border-[#D3D4CD] rounded-2xl overflow-hidden shadow-sm p-5 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            {/* Moving Image for Couples Massage */}
-            <div className="lg:col-span-4 flex flex-col justify-center">
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-full min-h-[220px] rounded-xl overflow-hidden group bg-[#2A352F] border border-black/10 shadow-inner">
-                <img
-                  src={TREATMENT_IMAGES['couples-massage']}
-                  alt="Couples Massage"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.04] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-115 group-hover:brightness-105 animate-kenburns-1"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
-
-                <div className="absolute left-3 bottom-3 px-2.5 py-1 bg-black/70 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.12em] uppercase font-medium border border-white/10">
-                  COUPLES MASSAGE
-                </div>
-
-                <button
-                  onClick={() =>
-                    setSelectedPhoto({
-                      src: TREATMENT_IMAGES['couples-massage'],
-                      title: 'Couples Massage',
-                    })
-                  }
-                  className="absolute top-3 right-3 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/15"
-                  title="Expand image"
-                >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C]">
-                    Couples Massage
-                  </h4>
-                  <span className="text-[10px] tracking-wider uppercase font-semibold px-2.5 py-0.5 rounded-full bg-[#1D2A24] text-[#E9E7E0]">
-                    Side-by-Side Tables
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-[#9C6439] font-medium mb-2">
-                  Side-by-side synchronized treatment in the dedicated Mopane Room (Room 3).
-                </p>
-                <p className="text-xs sm:text-sm text-[#58615C] font-light leading-relaxed">
-                  Two treatment tables positioned side-by-side with two qualified therapists working simultaneously. Each guest individually chooses Swedish relaxation or Aromatherapy pressure to match their preference.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 gap-1.5 pt-2 border-t border-[#D3D4CD]/60">
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Synchronized session in Room 3 for couples</span>
-                </div>
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Individual pressure choices (Swedish or Aromatherapy)</span>
-                </div>
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Includes complimentary refreshments for two</span>
-                </div>
-                <div className="flex items-start gap-2 text-xs text-[#1A1F1C]">
-                  <Check className="w-3.5 h-3.5 text-[#9C6439] shrink-0 mt-0.5" />
-                  <span className="font-light">Option to add private pool &amp; lapa time afterwards</span>
-                </div>
-              </div>
-
-              <div className="pt-2 text-[11px] text-[#58615C] flex items-center gap-1.5">
-                <span className="font-medium text-[#1A1F1C]">Includes:</span>
-                <span>Two certified therapists, side-by-side Mopane suite, dual refreshments</span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-3 bg-white/70 border border-[#D3D4CD] rounded-xl p-5 flex flex-col justify-between space-y-4 h-full">
-              <div>
-                <p className="text-[11px] font-semibold tracking-wider uppercase text-gray-500 mb-2">
-                  Duration &amp; Price
-                </p>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white border border-[#D3D4CD]">
-                  <div>
-                    <span className="text-xs font-semibold text-[#1A1F1C] block">60 min</span>
-                    <span className="text-[10px] text-gray-500">for two people</span>
-                  </div>
-                  <span className="font-serif text-2xl font-normal text-[#1A1F1C]">R1,300</span>
-                </div>
-              </div>
-              <a
-                href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                  "Hi, I'd like to book a Couples Massage in Room 3 for two."
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-full text-xs font-semibold tracking-wider uppercase text-white bg-[#1F7A4D] hover:bg-[#18643F] transition-colors flex items-center justify-center gap-2 shadow-xs"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>Book on WhatsApp</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* ============================================================== */}
         {/* ADD TO ANY TREATMENT (Pool, Lapa & Hot Stone)                  */}
         {/* ============================================================== */}
         <div className="bg-[#1D2A24] text-[#E9E7E0] rounded-2xl p-8 sm:p-10 border border-white/10 space-y-6">
@@ -622,8 +445,11 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
             <span className="text-xs font-semibold tracking-[0.16em] uppercase text-[#9C6439]">
               NOT SURE WHAT TO BOOK?
             </span>
-            <h4 className="font-serif text-xl sm:text-2xl font-normal text-[#1A1F1C]">
-              Train, lift or carry tension? Book Deep Tissue 60. Just need to switch off? Book Swedish 60.
+            <h4 className="font-serif text-xl sm:text-2xl font-normal text-[#1A1F1C] leading-snug">
+              Train, lift or carry tension? <br className="hidden sm:inline" />
+              Book Deep Tissue 60. <br />
+              Just need to switch off? <br className="hidden sm:inline" />
+              Book Swedish 60.
             </h4>
             <p className="text-xs text-[#58615C] leading-relaxed font-light">
               Tell your therapist what&apos;s tight when you arrive. They&apos;ll adjust pressure, focus areas, and rhythm to suit your body perfectly.

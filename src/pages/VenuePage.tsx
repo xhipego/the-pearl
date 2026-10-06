@@ -72,9 +72,9 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
       title: 'The Leadwood Room',
       description:
         "Named for the bushveld's toughest tree. A warm soak, scrub and foot massage for the feet that carry you through the week.",
-      uses: 'Foot Scrub & Massage',
+      uses: 'Foot Scrub',
       photoCaption: 'THE LEADWOOD ROOM',
-      whatsappMsg: "Hi, I'd like to book The Leadwood Room (Foot Scrub & Massage).",
+      whatsappMsg: "Hi, I'd like to book The Leadwood Room (Foot Scrub).",
     },
   ];
 
@@ -85,7 +85,7 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
       eyebrow: 'EN-SUITE · PRIVATE BATHROOM',
       title: 'Room 1 En-Suite Bath & Shower',
       description:
-        'Directly connected to Room 1. Full deep-soaking bathtub, high-pressure rainfall shower, plush robes, and clean charcoal towels to freshen up in total seclusion.',
+        'Directly connected to Room 1. Full deep-soaking bathtub, high-pressure rainfall shower, plush robes, and clean towels to freshen up in total seclusion.',
       uses: 'Private Deep Soak · Rainfall Shower · Robes',
       photoCaption: 'ROOM 1 EN-SUITE BATH',
       whatsappMsg: "Hi, I'd like to book Room 1 with the private en-suite bathroom.",
@@ -125,16 +125,18 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
 
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-12">
         {/* Intro Header */}
-        <div className="pb-6 border-b border-[#D3D4CD]">
-          <p className="text-xs font-semibold tracking-[0.16em] uppercase text-[#9C6439] mb-1">
-            THE VENUE
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#1A1F1C]">
-            A private spa in Welgelegen
-          </h2>
-          <p className="text-sm text-[#58615C] font-light mt-1.5 max-w-2xl leading-relaxed">
-            Four private treatment rooms, each named for a Limpopo tree, plus an en-suite bath and shower, a pool, a thatched lapa and secure parking behind the gate.
-          </p>
+        <div className="pb-6 border-b border-[#D3D4CD] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div>
+            <p className="text-xs font-semibold tracking-[0.16em] uppercase text-[#9C6439] mb-1">
+              THE VENUE
+            </p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#1A1F1C]">
+              A private spa in Welgelegen
+            </h2>
+            <p className="text-sm text-[#58615C] font-light mt-1.5 max-w-2xl leading-relaxed">
+              Four private treatment rooms, each named after a well-known Limpopo tree, plus an en-suite bath and shower, a pool, a thatched lapa and secure parking behind the gate.
+            </p>
+          </div>
         </div>
 
         {/* ============================================================== */}
@@ -157,19 +159,21 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
               </div>
 
               {/* Expand Image Button */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedPhoto({
-                    src: getPhoto(baobabRoom.id),
-                    title: baobabRoom.title,
-                  });
-                }}
-                className="absolute top-3.5 right-3.5 p-2 rounded-full bg-black/55 hover:bg-black/80 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/15 shadow-md"
-                title="Expand photo"
-              >
-                <Maximize2 className="w-3.5 h-3.5" />
-              </button>
+              <div className="absolute top-3.5 right-3.5 flex items-center gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedPhoto({
+                      src: getPhoto(baobabRoom.id),
+                      title: baobabRoom.title,
+                    });
+                  }}
+                  className="p-2 rounded-full bg-black/65 hover:bg-black/85 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/20 shadow-md"
+                  title="Expand photo"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -235,20 +239,22 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
                     {room.photoCaption}
                   </div>
 
-                  {/* Expand Image Button */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedPhoto({
-                        src: getPhoto(room.id),
-                        title: room.title,
-                      });
-                    }}
-                    className="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/55 hover:bg-black/80 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/15"
-                    title="Expand photo"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </button>
+                  {/* Expand Photo Button */}
+                  <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedPhoto({
+                          src: getPhoto(room.id),
+                          title: room.title,
+                        });
+                      }}
+                      className="p-1.5 rounded-full bg-black/60 hover:bg-black/85 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/20 shadow-md"
+                      title="Expand photo"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -324,19 +330,23 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
                     <div className="absolute left-3 bottom-3 z-10 px-2 py-0.5 bg-black/65 backdrop-blur-md rounded text-white/95 text-[10px] tracking-[0.1em] uppercase font-medium border border-white/10">
                       {facility.photoCaption}
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedPhoto({
-                          src: getPhoto(facility.id),
-                          title: facility.title,
-                        });
-                      }}
-                      className="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/55 hover:bg-black/80 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/15"
-                      title="Expand photo"
-                    >
-                      <Maximize2 className="w-3.5 h-3.5" />
-                    </button>
+
+                    {/* Expand Photo Button */}
+                    <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedPhoto({
+                            src: getPhoto(facility.id),
+                            title: facility.title,
+                          });
+                        }}
+                        className="p-1.5 rounded-full bg-black/60 hover:bg-black/85 text-white/90 hover:text-white transition-all backdrop-blur-md cursor-pointer border border-white/20 shadow-md"
+                        title="Expand photo"
+                      >
+                        <Maximize2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
 

@@ -13,14 +13,16 @@ export interface TreatmentMenuItem {
 
 export const TREATMENT_MENU: TreatmentMenuItem[] = [
   {
-    id: 'back-neck-shoulders',
+    id: 'deep-tissue-massage',
     category: 'massage',
-    name: 'Back, Neck & Shoulders',
+    name: 'Deep Tissue Massage',
+    tag: 'Most booked',
     durations: [
-      { time: '30 min', minutes: 30, price: 400 },
+      { time: '60 min', minutes: 60, price: 750 },
+      { time: '90 min', minutes: 90, price: 1050 },
     ],
-    description: 'Desk tension, long drives, a lunch-break reset that gets you back to work loose and revitalized.',
-    whatsAppMsg: "Hi, I'd like to book a Back, Neck & Shoulders massage (30 min). Which times are available?",
+    description: 'Firm, slow, focused pressure for chronic tightness, gym workouts, heavy lifting, and sports recovery. Our premier treatment for gentlemen.',
+    whatsAppMsg: "Hi, I'd like to book a Deep Tissue massage. Which times are available?",
   },
   {
     id: 'swedish-massage',
@@ -34,28 +36,6 @@ export const TREATMENT_MENU: TreatmentMenuItem[] = [
     whatsAppMsg: "Hi, I'd like to book a Swedish Full-Body massage. Which times are available?",
   },
   {
-    id: 'aromatherapy-massage',
-    category: 'massage',
-    name: 'Aromatherapy Massage',
-    durations: [
-      { time: '60 min', minutes: 60, price: 700 },
-    ],
-    description: 'Deep relaxation infused with therapeutic botanical essential oils. Choose cedarwood, eucalyptus, or citrus.',
-    whatsAppMsg: "Hi, I'd like to book an Aromatherapy massage (60 min). Which times are available?",
-  },
-  {
-    id: 'deep-tissue-massage',
-    category: 'massage',
-    name: 'Deep Tissue Massage',
-    tag: 'Most booked',
-    durations: [
-      { time: '60 min', minutes: 60, price: 750 },
-      { time: '90 min', minutes: 90, price: 1050 },
-    ],
-    description: 'Firm, slow, focused pressure for chronic tightness, gym workouts, heavy lifting, and sports recovery. Our premier treatment for gentlemen.',
-    whatsAppMsg: "Hi, I'd like to book a Deep Tissue massage. Which times are available?",
-  },
-  {
     id: 'hot-stone-massage',
     category: 'massage',
     name: 'Hot Stone Massage',
@@ -66,14 +46,34 @@ export const TREATMENT_MENU: TreatmentMenuItem[] = [
     whatsAppMsg: "Hi, I'd like to book a Hot Stone massage (60 min). Which times are available?",
   },
   {
-    id: 'foot-scrub-massage',
+    id: 'aromatherapy-massage',
+    category: 'massage',
+    name: 'Aromatherapy Massage',
+    durations: [
+      { time: '60 min', minutes: 60, price: 700 },
+    ],
+    description: 'Deep relaxation infused with therapeutic botanical essential oils. Choose cedarwood, eucalyptus, or citrus.',
+    whatsAppMsg: "Hi, I'd like to book an Aromatherapy massage (60 min). Which times are available?",
+  },
+  {
+    id: 'back-neck-shoulders',
+    category: 'massage',
+    name: 'Back, Neck & Shoulders',
+    durations: [
+      { time: '30 min', minutes: 30, price: 400 },
+    ],
+    description: 'Desk tension, long drives, a lunch-break reset that gets you back to work loose and revitalized.',
+    whatsAppMsg: "Hi, I'd like to book a Back, Neck & Shoulders massage (30 min). Which times are available?",
+  },
+  {
+    id: 'foot-scrub',
     category: 'feet',
-    name: 'Foot Scrub & Massage',
+    name: 'Foot Scrub',
     durations: [
       { time: '30 min', minutes: 30, price: 350 },
     ],
-    description: 'Warm soak, exfoliating scrub, and a targeted foot and calf massage. Crafted specifically for feet that spend the day in boots, on site, or on the move.',
-    whatsAppMsg: "Hi, I'd like to book a Foot Scrub & Massage (30 min). Which times are available?",
+    description: 'Warm soak, exfoliating scrub, and a targeted foot and calf massage in the Leadwood Room. Crafted specifically for feet that spend the day in boots or on site.',
+    whatsAppMsg: "Hi, I'd like to book a Foot Scrub (30 min). Which times are available?",
   },
   {
     id: 'couples-massage',
@@ -106,30 +106,6 @@ export const ADDONS_MENU = [
 
 export const SPA_RATES: RateItem[] = [
   {
-    duration: '30 min',
-    minutes: 30,
-    price: 400,
-    label: 'Back, Neck & Shoulders',
-    features: [
-      'Targeted desk & driving tension relief',
-      'Upper back, trapezius & cervical spine release',
-      'Warm botanical massage oils',
-      'Private room & en-suite freshen up',
-    ],
-  },
-  {
-    duration: '30 min',
-    minutes: 30,
-    price: 350,
-    label: 'Foot Scrub & Massage',
-    features: [
-      'Warm soothing mineral soak',
-      'Invigorating exfoliating scrub',
-      'Foot & calf acupressure massage',
-      'Tailored for active boots & site workers',
-    ],
-  },
-  {
     duration: '60 min',
     minutes: 60,
     price: 750,
@@ -157,18 +133,6 @@ export const SPA_RATES: RateItem[] = [
   {
     duration: '60 min',
     minutes: 60,
-    price: 700,
-    label: 'Aromatherapy Massage',
-    features: [
-      'Deep relaxation with essential oils',
-      'Cedarwood, eucalyptus, or citrus blends',
-      'Nervous system reset & gentle rhythm',
-      'Private climate-controlled suite',
-    ],
-  },
-  {
-    duration: '60 min',
-    minutes: 60,
     price: 900,
     label: 'Hot Stone Massage',
     features: [
@@ -179,15 +143,39 @@ export const SPA_RATES: RateItem[] = [
     ],
   },
   {
-    duration: '90 min',
-    minutes: 90,
-    price: 1050,
-    label: 'Executive Deep Tissue 90',
+    duration: '60 min',
+    minutes: 60,
+    price: 700,
+    label: 'Aromatherapy Massage',
     features: [
-      'Extended unhurried therapeutic recovery',
-      'Complete full-body restoration',
-      'Comprehensive focus on problem areas',
-      'Full private suite time to unwind',
+      'Deep relaxation with essential oils',
+      'Cedarwood, eucalyptus, or citrus blends',
+      'Nervous system reset & gentle rhythm',
+      'Private climate-controlled suite',
+    ],
+  },
+  {
+    duration: '30 min',
+    minutes: 30,
+    price: 400,
+    label: 'Back, Neck & Shoulders',
+    features: [
+      'Targeted desk & driving tension relief',
+      'Upper back, trapezius & cervical spine release',
+      'Warm botanical massage oils',
+      'Private room & en-suite freshen up',
+    ],
+  },
+  {
+    duration: '30 min',
+    minutes: 30,
+    price: 350,
+    label: 'Foot Scrub',
+    features: [
+      'Warm soothing mineral soak',
+      'Invigorating exfoliating scrub',
+      'Foot & calf acupressure massage',
+      'Tailored for active boots & site workers',
     ],
   },
   {
@@ -200,6 +188,18 @@ export const SPA_RATES: RateItem[] = [
       'Choice of Swedish or Aromatherapy each',
       'Two qualified therapists working simultaneously',
       'Includes refreshments for both guests',
+    ],
+  },
+  {
+    duration: '90 min',
+    minutes: 90,
+    price: 1050,
+    label: 'Executive Deep Tissue 90',
+    features: [
+      'Extended unhurried therapeutic recovery',
+      'Complete full-body restoration',
+      'Comprehensive focus on problem areas',
+      'Full private suite time to unwind',
     ],
   },
 ];
@@ -280,8 +280,8 @@ export const POLICY_STATEMENT = {
 };
 
 export const CONTACT_INFO = {
-  name: 'The Pearl Wellness Spa',
-  subtitle: 'Wellness Spa · For Gentlemen',
+  name: "The Pearl Men's Day Spa",
+  subtitle: "Men's Day Spa",
   tagline: 'Private Massage & Recovery for Men in Welgelegen, Polokwane',
   phone1: '0739955927',
   phone1Formatted: '073 995 5927',
@@ -319,14 +319,14 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'room-1-ensuite',
     title: 'Room 1 En-Suite Bathroom',
     subtitle: 'Private luxury bath, shower & grooming vanity',
-    image: VENUE_IMAGES.mahogany,
+    image: VENUE_IMAGES.bath,
     badge: 'Room 1 En-Suite',
     videoLabel: 'View 2 • Room 1 Private Bath',
     description:
       'Directly connected to Room 1, this private en-suite bathroom allows you to freshen up in total privacy before and after your massage session.',
     highlights: [
       'Full en-suite deep soaking bath & rainfall shower',
-      'Charcoal luxury cotton towels & oversized robes',
+      'Clean luxury cotton towels & oversized robes',
       'Natural botanical body wash & grooming amenities',
       '100% private and enclosed within Room 1',
     ],
@@ -383,7 +383,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'room-4-ensuite',
     title: 'Room 4 En-Suite Shower',
     subtitle: 'Modern tiled private shower for quick refreshing',
-    image: VENUE_IMAGES.entrance,
+    image: VENUE_IMAGES.bath,
     badge: 'Room 4 En-Suite Shower',
     videoLabel: 'View 6 • Room 4 En-Suite Shower',
     description:
@@ -415,7 +415,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'secure-parking',
     title: 'Secure Off-Street Parking & Gate',
     subtitle: 'Discreet residential entrance at 112 Genl Beyers Street',
-    image: VENUE_IMAGES.entrance,
+    image: VENUE_IMAGES.garden,
     badge: 'Parking & Gate',
     videoLabel: 'View 8 • Secure Parking',
     description:

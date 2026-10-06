@@ -42,6 +42,21 @@ function savePhotosPlugin(): Plugin {
         next();
       });
 
+      server.middlewares.use('/api/get-synced-photos', (_req, res) => {
+        try {
+          const configPath = path.resolve(process.cwd(), 'src/data/savedVenueConfig.json');
+          if (fs.existsSync(configPath)) {
+            const raw = fs.readFileSync(configPath, 'utf-8');
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            return res.end(raw);
+          }
+        } catch {
+          // ignore
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ photos: {} }));
+      });
+
       server.middlewares.use('/api/save-synced-photos', (req, res) => {
         if (req.method === 'POST') {
           const chunks: Buffer[] = [];
@@ -53,6 +68,14 @@ function savePhotosPlugin(): Plugin {
               const { photos, enabledSlotIds, customSlots, slotOrder } = data;
 
               const slotToFileMap: Record<string, string> = {
+                'room-1': 'venue_champagne_suite.jpg',
+                'room-1-ensuite': 'venue_suite_bath.jpg',
+                'room-2-night': 'venue_sapphire_suite.jpg',
+                'room-3-couples': 'venue_atrium_entrance.jpg',
+                'room-4-footscrub': 'venue_grand_lounge.jpg',
+                'room-4-ensuite': 'venue_suite_bath.jpg',
+                'pool-lapa': 'venue_pool_lapa.jpg',
+                'secure-parking': 'venue_garden_grounds.jpg',
                 entrance: 'venue_front_entrance.jpg',
                 atrium: 'venue_atrium_entrance.jpg',
                 pool: 'venue_pool_lapa.jpg',
@@ -60,11 +83,17 @@ function savePhotosPlugin(): Plugin {
                 champagne: 'venue_champagne_suite.jpg',
                 sapphire: 'venue_sapphire_suite.jpg',
                 mahogany: 'venue_mahogany_suite.jpg',
+                bath: 'venue_suite_bath.jpg',
+                garden: 'venue_garden_grounds.jpg',
               };
 
               const imagesDir = path.resolve(process.cwd(), 'public/images');
+              const srcVenueDir = path.resolve(process.cwd(), 'src/assets/venue');
               if (!fs.existsSync(imagesDir)) {
                 fs.mkdirSync(imagesDir, { recursive: true });
+              }
+              if (!fs.existsSync(srcVenueDir)) {
+                fs.mkdirSync(srcVenueDir, { recursive: true });
               }
 
               let savedCount = 0;
@@ -87,14 +116,20 @@ function savePhotosPlugin(): Plugin {
                       `venue_${slotId.replace(/[^a-zA-Z0-9_-]/g, '_')}.jpg`;
                     const targetFile = path.join(imagesDir, filename);
                     fs.writeFileSync(targetFile, buffer);
+
+                    // Also save to src/assets/venue so Vite bundling picks it up immediately
+                    const srcTargetFile = path.join(srcVenueDir, filename);
+                    fs.writeFileSync(srcTargetFile, buffer);
+
                     savedCount++;
                   }
                 }
               }
 
-              // Update savedVenueConfig.json
+              // Update savedVenueConfig.json with persistent photos map
               const configPath = path.resolve(process.cwd(), 'src/data/savedVenueConfig.json');
               const configData = {
+                photos: photos || {},
                 enabledSlotIds: enabledSlotIds || Object.keys(slotToFileMap),
                 customSlots: bakedCustomSlots,
                 slotOrder: slotOrder || Object.keys(slotToFileMap),
@@ -243,6 +278,7 @@ function savePhotosPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [react(), tailwindcss(), savePhotosPlugin()],
     resolve: {
       alias: {

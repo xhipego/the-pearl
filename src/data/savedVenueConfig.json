@@ -1,4 +1,5 @@
 {
+  "photos": {},
   "enabledSlotIds": [
     "room-1",
     "room-1-ensuite",
@@ -7,7 +8,16 @@
     "room-4-footscrub",
     "room-4-ensuite",
     "pool-lapa",
-    "secure-parking"
+    "secure-parking",
+    "entrance",
+    "atrium",
+    "pool",
+    "lounge",
+    "champagne",
+    "sapphire",
+    "mahogany",
+    "bath",
+    "garden"
   ],
   "customSlots": [],
   "slotOrder": [
@@ -18,7 +28,17 @@
     "room-4-footscrub",
     "room-4-ensuite",
     "pool-lapa",
-    "secure-parking"
+    "secure-parking",
+    "entrance",
+    "atrium",
+    "pool",
+    "lounge",
+    "champagne",
+    "sapphire",
+    "mahogany",
+    "bath",
+    "garden"
   ],
-  "lastBakedAt": null
+  "lastBakedAt": "2026-10-06T22:04:38.297Z",
+  "savedPhotoCount": 0
 }

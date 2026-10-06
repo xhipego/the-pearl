@@ -89,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Right: Direct Call & Session Booking Button (removed top WhatsApp Booking button) */}
+        {/* Right: Direct Call & Session Booking Button */}
         <div className="hidden lg:flex items-center gap-3 shrink-0">
           <a
             href={`tel:${CONTACT_INFO.phone1}`}

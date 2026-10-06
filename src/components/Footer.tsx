@@ -93,13 +93,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Direct Contacts */}
           <div className="md:col-span-4 space-y-3 text-xs">
             <h4 className="font-serif text-sm font-bold text-white uppercase tracking-widest">
-              Visit &amp; Contact
+              Contact
             </h4>
             <div className="space-y-2 text-slate-300">
-              <p className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>112 Genl Beyers Street, Welgelegen, Polokwane, 0699</span>
-              </p>
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
                 <span>073 995 5927 (Calls &amp; Inquiries)</span>
@@ -136,13 +132,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-3">
-          <p>
-            &copy; {new Date().getFullYear()} {CONTACT_INFO.name}. All rights reserved.
-          </p>
-          <p className="flex items-center gap-3">
-            <span>112 Genl Beyers Street, Welgelegen, Polokwane</span>
-          </p>
+        <div className="pt-6 flex flex-col items-center justify-center text-center text-[11px] text-slate-400 gap-0.5">
+          <p>&copy; 2026 {CONTACT_INFO.name}</p>
+          <p>All rights reserved.</p>
         </div>
       </div>
     </footer>

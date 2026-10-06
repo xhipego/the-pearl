@@ -36,11 +36,12 @@ export const RatesPage: React.FC<RatesPageProps> = ({
           <span className="font-mono text-xs tracking-widest uppercase text-[#F3E5AB]">
             Ready to book your session?
           </span>
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold">
-            Private Sessions Daily from 10:00 to 20:00
+          <h3 className="font-serif text-2xl sm:text-3xl font-bold leading-tight">
+            <span>Private Sessions Daily</span>
+            <span className="block mt-1">From 10h00 - 20h00</span>
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-light">
-            In by six, out by seven. Contact our Welgelegen reception directly on WhatsApp or book online to receive instant confirmation and gate directions.
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-light leading-relaxed">
+            &ldquo;In by six, out by seven&rdquo;. We&apos;re open until 20:00, every day. Contact our Welgelegen reception directly on WhatsApp or book online to receive instant confirmation and gate directions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
             <a

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Shield,
   MapPin,
   Clock,
-  Sparkles,
   MessageCircle,
 } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
@@ -35,7 +33,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] flex flex-col justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#162234]"
+      className="relative min-h-[90vh] flex flex-col justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#162234]"
     >
       {/* Background Moving Views Carousel with continuous cinematic Ken Burns animation */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -73,14 +71,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
         <div className="absolute inset-0 z-20 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.14)_0%,transparent_75%)] pointer-events-none" />
       </div>
 
-      {/* Top Banner Tag */}
-      <div className="relative z-30 max-w-7xl mx-auto w-full flex items-center justify-between">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/40 text-[#F3E5AB] text-xs tracking-widest uppercase">
-          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span>Men&apos;s Day Spa &bull; Welgelegen, Polokwane</span>
-        </div>
-      </div>
-
       {/* Central Content Container */}
       <div className="relative z-30 max-w-4xl mx-auto text-center flex flex-col items-center my-auto py-6">
         {/* Central Logo Motif */}
@@ -97,7 +87,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
         <p
           className="font-serif italic text-xl sm:text-2xl md:text-3xl text-[#F3E5AB] tracking-widest mt-1 mb-4 drop-shadow"
         >
-          Wellness Spa &bull; For Gentlemen
+          Men&apos;s Day Spa
         </p>
 
         {/* Artistic Gold Divider */}
@@ -112,21 +102,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
           Private massage and recovery for men in Polokwane.
         </h2>
         <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-200 font-light max-w-2xl leading-relaxed drop-shadow">
-          For the man who carries the load all week. Qualified therapists, private treatment rooms, en-suite facilities, and a secluded turquoise pool and thatched lapa to unwind at afterwards.
+          <span>For the man who carries the load all week.</span>
+          <span className="block mt-1">Qualified therapists, private treatment rooms, en-suite..</span>
         </p>
 
         {/* Key Highlights Micro-Bar */}
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-slate-300">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-[#D4AF37]" /> Open Daily Until 20:00
+            <Clock className="w-4 h-4 text-[#D4AF37]" /> Open Daily From 10:00 - 20:00
           </span>
           <span className="hidden sm:inline text-[#D4AF37]">&bull;</span>
           <span className="flex items-center gap-1.5">
-            <Shield className="w-4 h-4 text-[#D4AF37]" /> Secure Off-Street Parking Behind Gate
-          </span>
-          <span className="hidden sm:inline text-[#D4AF37]">&bull;</span>
-          <span className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-[#D4AF37]" /> Discreet &amp; Strictly Therapeutic
+            <MapPin className="w-4 h-4 text-[#D4AF37]" /> Discreet &amp; Therapeutic
           </span>
         </div>
 

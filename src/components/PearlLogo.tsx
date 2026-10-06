@@ -15,7 +15,7 @@ export const PearlLogo: React.FC<PearlLogoProps> = ({
   showText = true,
   lightText = false,
   layout = 'horizontal',
-  subtitle = 'Wellness Spa',
+  subtitle = "Men's Day Spa",
 }) => {
   const iconSizes = {
     sm: 'w-8 h-8',

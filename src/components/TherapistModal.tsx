@@ -12,11 +12,10 @@ import {
   ChevronRight,
   Maximize2,
   Image as ImageIcon,
-  Camera,
 } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 import { safeOpenUrl } from '../utils/safeNavigation';
-import { normalizeTherapistPhotos, useTherapists } from '../context/TherapistContext';
+import { normalizeTherapistPhotos } from '../context/TherapistContext';
 
 interface TherapistModalProps {
   therapist: Therapist | null;
@@ -31,7 +30,6 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
   onSelectBooking,
   initialPhotoIndex = 0,
 }) => {
-  const { openAttachPhotosModal } = useTherapists();
   const [activePhotoIdx, setActivePhotoIdx] = useState(initialPhotoIndex);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -116,21 +114,8 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
                 </div>
               </div>
 
-              {/* Top Right Zoom and Attach Buttons */}
+              {/* Top Right Zoom Button */}
               <div className="absolute top-4 right-16 z-20 flex items-center gap-1.5">
-                {isEditableNew && (
-                  <button
-                    onClick={() => {
-                      onClose();
-                      openAttachPhotosModal(therapist.id);
-                    }}
-                    className="p-1.5 rounded-full bg-[#1B2B42]/85 text-[#F3E5AB] hover:bg-[#1B2B42] border border-[#D4AF37] text-xs backdrop-blur-md transition-colors cursor-pointer"
-                    title={`Attach or change photos for ${therapist.name}`}
-                  >
-                    <Camera className="w-4 h-4 text-[#D4AF37]" />
-                  </button>
-                )}
-
                 <button
                   onClick={() => setLightboxOpen(true)}
                   className="p-1.5 rounded-full bg-[#1B2B42]/80 text-white hover:text-[#F3E5AB] border border-[#D4AF37]/50 text-xs backdrop-blur-md transition-colors cursor-pointer"
