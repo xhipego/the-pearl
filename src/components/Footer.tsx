@@ -37,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </p>
             <div className="flex items-center gap-2 text-xs text-[#D4AF37]">
               <Shield className="w-4 h-4" />
-              <span>Strictly Professional &bull; Confidential &bull; Non-Sexual Therapeutic Spa</span>
+              <span>Professional &bull; Confidential</span>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Code of Conduct Bar */}
         <div className="py-6 border-b border-white/5 text-[11px] text-slate-400 text-center space-y-2">
           <p className="font-serif italic text-slate-300">
-            &ldquo;All treatments are strictly therapeutic and non-sexual. Any sexual comment, request, or inappropriate behaviour ends the treatment immediately.&rdquo;
+            &ldquo;All treatments adhere to strict professional ethics and standard clinical draping protocols. Total privacy with secure gated parking.&rdquo;
           </p>
           <p className="text-slate-400">
             Open Monday – Sunday, 10:00 – 20:00 &bull; Secure off-street parking behind the gate &bull; Strictly 18+

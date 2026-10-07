@@ -29,7 +29,7 @@ export const VENUE_PHOTO_SLOTS: VenuePhotoSlot[] = [
     exactFileName: 'room_1_ensuite.jpg',
     fileMatcher: /room[_\-\s]*1[_\-\s]*(en-?suite|bath)/i,
     description: 'En-suite bathroom with deep soaking bathtub, shower, and grooming amenities.',
-    defaultSrc: VENUE_IMAGES.bath,
+    defaultSrc: VENUE_IMAGES['room-1-ensuite'],
     badge: 'Room 1 En-Suite',
   },
   {
@@ -69,7 +69,7 @@ export const VENUE_PHOTO_SLOTS: VenuePhotoSlot[] = [
     exactFileName: 'room_4_ensuite_shower.jpg',
     fileMatcher: /room[_\-\s]*4[_\-\s]*(en-?suite|shower)/i,
     description: 'Enclosed private rainfall shower directly inside Room 4 for quick freshening up.',
-    defaultSrc: VENUE_IMAGES.bath,
+    defaultSrc: VENUE_IMAGES['room-4-ensuite'],
     badge: 'Room 4 En-Suite Shower',
   },
   {

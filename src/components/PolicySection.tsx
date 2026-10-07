@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  AlertTriangle,
   ShieldCheck,
   ShowerHead,
   Lock,
@@ -10,15 +9,14 @@ import {
   UserCheck,
   CreditCard,
 } from 'lucide-react';
-import { POLICY_STATEMENT } from '../data/spaData';
 
 export const PolicySection: React.FC = () => {
   const policies = [
     {
       icon: ShieldCheck,
-      title: '1. Strictly Therapeutic & Non-Sexual',
-      desc: 'All services provided at The Pearl Wellness Spa are strictly professional, therapeutic, and non-sexual. Our certified therapists specialize in deep tissue, muscular relief, and authentic body relaxation. Any suggestive remark, proposition, or inappropriate conduct terminates the session immediately without refund.',
-      tag: 'Zero Tolerance',
+      title: '1. Professional Therapeutic Focus',
+      desc: 'All services provided at The Pearl Wellness Spa adhere to strict professional ethics and authentic body relaxation. Our certified therapists specialize in deep tissue, muscular relief, and sports recovery. Any suggestive remark, proposition, or inappropriate conduct terminates the session immediately.',
+      tag: 'Professional Standards',
     },
     {
       icon: Sparkles,
@@ -87,39 +85,6 @@ export const PolicySection: React.FC = () => {
           <p className="text-xs sm:text-sm text-gray-600 font-light max-w-xl mx-auto">
             These guidelines protect both our guests and our certified therapists, ensuring each visit is restorative, professional, and entirely discreet.
           </p>
-        </div>
-
-        {/* PROMINENT MANDATORY ALERT BANNER matching flyer */}
-        <div
-          id="policy-compliance-alert"
-          className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-10 bg-gradient-to-br from-[#1B2B42] via-[#243B55] to-[#142032] text-white border-2 border-[#D4AF37] shadow-2xl overflow-hidden mb-14"
-        >
-          {/* Subtle gold glow ornamentation */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-60 h-60 bg-[#D4AF37]/10 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
-            <div className="w-16 h-16 sm:w-20 sm:resp-20 rounded-2xl bg-[#D4AF37]/20 border-2 border-[#D4AF37] flex items-center justify-center shrink-0 shadow-lg">
-              <AlertTriangle className="w-8 h-8 sm:w-10 sm:h-10 text-[#F3E5AB]" />
-            </div>
-
-            <div className="flex-1 text-center md:text-left space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D4AF37] text-[#1B2B42] text-[11px] font-extrabold uppercase tracking-[0.2em] shadow-sm">
-                <span>** MANDATORY POLICY &bull; STRICTLY ENFORCED **</span>
-              </div>
-              <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-wide">
-                Strictly Therapeutic &bull; Zero Tolerance
-              </h3>
-              <blockquote className="border-l-0 md:border-l-4 md:border-[#D4AF37] md:pl-5 py-1">
-                <p className="font-serif text-base sm:text-lg text-[#F5EFEB] leading-relaxed font-normal italic">
-                  &ldquo;{POLICY_STATEMENT.exactText}&rdquo;
-                </p>
-              </blockquote>
-              <p className="text-xs text-slate-300 font-light leading-relaxed">
-                We thank our esteemed patrons for upholding these mutual boundaries, preserving a premier standard of therapeutic massage, recovery, and uncompromised privacy.
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* 8 Core Etiquette & Safety Pillars */}

@@ -50,17 +50,29 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       if (bulk) {
         const parsed = JSON.parse(bulk);
         if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+          delete parsed['room-4-footscrub'];
+          if (parsed['room-1-ensuite'] && parsed['room-1-ensuite'] === parsed['room-4-ensuite']) {
+            delete parsed['room-1-ensuite'];
+          }
           return parsed;
         }
       }
     } catch {}
 
     try {
+      localStorage.removeItem('venue_photo_room-4-footscrub');
+      const r1 = localStorage.getItem('venue_photo_room-1-ensuite');
+      const r4 = localStorage.getItem('venue_photo_room-4-ensuite');
+      if (r1 && r4 && r1 === r4) {
+        localStorage.removeItem('venue_photo_room-1-ensuite');
+      }
       const individual: Record<string, string> = {};
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key && key.startsWith('venue_photo_')) {
           const slotId = key.replace('venue_photo_', '');
+          if (slotId === 'room-4-footscrub') continue;
+          if (slotId === 'room-1-ensuite' && localStorage.getItem('venue_photo_room-1-ensuite') === localStorage.getItem('venue_photo_room-4-ensuite')) continue;
           const val = localStorage.getItem(key);
           if (val) individual[slotId] = val;
         }
@@ -117,7 +129,22 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     // 1. Load from IndexedDB / localStorage
     getAllVenuePhotos().then((stored) => {
       if (stored && Object.keys(stored).length > 0) {
-        setPhotos((prev) => ({ ...prev, ...stored }));
+        if (stored['room-4-footscrub']) {
+          delete stored['room-4-footscrub'];
+          deleteVenuePhoto('room-4-footscrub').catch(() => {});
+        }
+        if (stored['room-1-ensuite'] && stored['room-1-ensuite'] === stored['room-4-ensuite']) {
+          delete stored['room-1-ensuite'];
+          deleteVenuePhoto('room-1-ensuite').catch(() => {});
+        }
+        setPhotos((prev) => {
+          const next = { ...prev, ...stored };
+          delete next['room-4-footscrub'];
+          if (next['room-1-ensuite'] && next['room-1-ensuite'] === next['room-4-ensuite']) {
+            delete next['room-1-ensuite'];
+          }
+          return next;
+        });
       }
     });
 
@@ -126,7 +153,20 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       .then((res) => res.json())
       .then((data) => {
         if (data && data.photos && Object.keys(data.photos).length > 0) {
-          setPhotos((prev) => ({ ...prev, ...data.photos }));
+          if (data.photos['room-4-footscrub']) {
+            delete data.photos['room-4-footscrub'];
+          }
+          if (data.photos['room-1-ensuite'] && data.photos['room-1-ensuite'] === data.photos['room-4-ensuite']) {
+            delete data.photos['room-1-ensuite'];
+          }
+          setPhotos((prev) => {
+            const next = { ...prev, ...data.photos };
+            delete next['room-4-footscrub'];
+            if (next['room-1-ensuite'] && next['room-1-ensuite'] === next['room-4-ensuite']) {
+              delete next['room-1-ensuite'];
+            }
+            return next;
+          });
         }
       })
       .catch(() => {});

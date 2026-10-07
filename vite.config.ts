@@ -69,21 +69,21 @@ function savePhotosPlugin(): Plugin {
 
               const slotToFileMap: Record<string, string> = {
                 'room-1': 'venue_champagne_suite.jpg',
-                'room-1-ensuite': 'venue_suite_bath.jpg',
+                'room-1-ensuite': 'venue_room1_ensuite_bath.jpg',
                 'room-2-night': 'venue_sapphire_suite.jpg',
                 'room-3-couples': 'venue_atrium_entrance.jpg',
-                'room-4-footscrub': 'venue_grand_lounge.jpg',
+                'room-4-footscrub': 'venue_leadwood_footscrub.jpg',
                 'room-4-ensuite': 'venue_suite_bath.jpg',
                 'pool-lapa': 'venue_pool_lapa.jpg',
                 'secure-parking': 'venue_garden_grounds.jpg',
                 entrance: 'venue_front_entrance.jpg',
                 atrium: 'venue_atrium_entrance.jpg',
                 pool: 'venue_pool_lapa.jpg',
-                lounge: 'venue_grand_lounge.jpg',
+                lounge: 'venue_leadwood_footscrub.jpg',
                 champagne: 'venue_champagne_suite.jpg',
                 sapphire: 'venue_sapphire_suite.jpg',
                 mahogany: 'venue_mahogany_suite.jpg',
-                bath: 'venue_suite_bath.jpg',
+                bath: 'venue_room1_ensuite_bath.jpg',
                 garden: 'venue_garden_grounds.jpg',
               };
 

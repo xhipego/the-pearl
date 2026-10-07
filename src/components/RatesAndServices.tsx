@@ -289,18 +289,24 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                   {/* Column 2: Title, Description, Benefits & Inclusions */}
                   <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
                     <div>
-                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <span className="p-1.5 rounded-lg bg-white border border-[#D3D4CD] shadow-xs">
-                          {service.icon}
-                        </span>
-                        <h4 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C]">
-                          {service.name}
-                        </h4>
-                        <span
-                          className={`text-[10px] tracking-wider uppercase font-semibold px-2.5 py-0.5 rounded-full ${service.badgeColor}`}
-                        >
-                          {service.badge}
-                        </span>
+                      <div className="mb-2">
+                        <div className="flex items-center gap-2.5">
+                          <span className="p-1.5 rounded-lg bg-white border border-[#D3D4CD] shadow-xs">
+                            {service.icon}
+                          </span>
+                          <h4 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C]">
+                            {service.name}
+                          </h4>
+                        </div>
+                        {service.badge && (
+                          <div className="mt-1.5">
+                            <span
+                              className={`inline-block text-[10px] tracking-wider uppercase font-semibold px-2.5 py-0.5 rounded-full ${service.badgeColor}`}
+                            >
+                              {service.badge}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <p className="text-xs sm:text-sm text-[#9C6439] font-medium mb-2">
                         {service.tagline}

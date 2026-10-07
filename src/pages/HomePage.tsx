@@ -34,24 +34,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 1. Cinematic Hero with Moving Venue Views Carousel & Real Controls (Book Online removed) */}
       <Hero onOpenBooking={onOpenBooking} onNavigate={onNavigate} />
 
-      {/* 2. After-Work Strip Banner */}
-      <div className="bg-[#27382F] text-[#E9E7E0] border-y border-[#D8B892]/30 py-4 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1160px] mx-auto flex flex-wrap items-center justify-between gap-4">
-          <p className="font-serif text-lg sm:text-xl font-normal text-white">
-            &ldquo;In by six, out by seven&rdquo;. We&apos;re open until 20:00, every day.
-          </p>
-          <div className="text-right">
-            <span className="text-xs sm:text-sm text-[#D8B892] tracking-wider uppercase font-semibold block">
-              Private Sessions Daily
-            </span>
-            <span className="text-xs text-[#E9E7E0]/90 tracking-wider">
-              From 10h00 - 20h00
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. Three Treatments: Where Most Men Start */}
+      {/* 2. Three Treatments: Where Most Men Start */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-[1160px] mx-auto">
         <div className="max-w-3xl mb-12">
           <p className="text-xs tracking-widest uppercase text-[#9C6439] mb-2 font-semibold">
@@ -261,7 +244,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* 5. Venue Showcase Section Matching Layout with Curved Picture Outlines & Futuristic Hover Zoom */}
-      <section className="py-20 bg-[#1D2A24] text-[#E9E7E0] border-y border-white/10">
+      <section className="py-20 bg-[#1B2B42] text-[#E9E7E0] border-y border-white/10">
         <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-white/10">
             <div>
@@ -437,10 +420,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               Code of Conduct &amp; Ethics
             </p>
             <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1A1F1C] mt-1">
-              Strictly therapeutic, private, and unhurried.
+              Therapeutic, private, and unhurried.
             </h3>
             <p className="text-xs sm:text-sm text-[#58615C] font-light mt-1 max-w-xl">
-              All treatments are strictly non-sexual. Private suites with en-suite bathrooms, professional draping, and secure parking behind the electronic gate.
+              All treatments adhere to strict professional ethics and standard clinical draping protocols. Enjoy total privacy in custom en-suite suites with secure, gated parking.
             </p>
           </div>
           <button

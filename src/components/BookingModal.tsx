@@ -219,7 +219,7 @@ Please confirm availability and send secure gate directions.`;
 
             <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-gray-500">
               <Shield className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>100% confidential &bull; Strictly therapeutic non-sexual environment</span>
+              <span>100% confidential &bull; Professional &bull; Therapeutic environment</span>
             </div>
           </form>
         )}

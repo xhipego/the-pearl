@@ -102,8 +102,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onNavigate }) => {
           Private massage and recovery for men in Polokwane.
         </h2>
         <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-200 font-light max-w-2xl leading-relaxed drop-shadow">
-          <span>For the man who carries the load all week.</span>
-          <span className="block mt-1">Qualified therapists, private treatment rooms, en-suite..</span>
+          Tailored for the gentleman managing demanding responsibilities throughout the week. Step into a tranquil, refined sanctuary designed to help you decompress, release stress, and unwind in complete comfort.
         </p>
 
         {/* Key Highlights Micro-Bar */}

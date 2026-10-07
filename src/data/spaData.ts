@@ -250,10 +250,10 @@ export const SIGNATURE_PACKAGES: PackageItem[] = [
 export const POLICY_STATEMENT = {
   headline: 'CODE OF CONDUCT & PROFESSIONAL ETHICS',
   exactText:
-    'All treatments at The Pearl Wellness Spa are strictly therapeutic and non-sexual. Any sexual comment, request, or inappropriate behavior will terminate the treatment immediately, charged in full, and the individual will not be permitted to return.',
+    'All treatments adhere to strict professional ethics and standard clinical draping protocols. Enjoy total privacy in custom en-suite suites with secure, gated parking.',
   rules: [
     {
-      title: 'Strictly Therapeutic & Non-Sexual',
+      title: 'Professional Therapeutic Focus',
       desc: 'Our certified therapists adhere to a strict professional code of conduct. We provide authentic bodywork, deep tissue, and relaxation therapies focused entirely on physical wellness and recovery.',
     },
     {
@@ -319,7 +319,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'room-1-ensuite',
     title: 'Room 1 En-Suite Bathroom',
     subtitle: 'Private luxury bath, shower & grooming vanity',
-    image: VENUE_IMAGES.bath,
+    image: VENUE_IMAGES['room-1-ensuite'],
     badge: 'Room 1 En-Suite',
     videoLabel: 'View 2 • Room 1 Private Bath',
     description:
@@ -367,7 +367,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'room-4-footscrub',
     title: 'Room 4 (Foot Scrub / The Leadwood Room)',
     subtitle: 'Dedicated foot soak, exfoliating scrub & reflexology chairs',
-    image: VENUE_IMAGES.lounge,
+    image: VENUE_IMAGES['room-4-footscrub'],
     badge: 'Room 4 (Foot Scrub)',
     videoLabel: 'View 5 • Room 4 Foot Care',
     description:
@@ -383,7 +383,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     id: 'room-4-ensuite',
     title: 'Room 4 En-Suite Shower',
     subtitle: 'Modern tiled private shower for quick refreshing',
-    image: VENUE_IMAGES.bath,
+    image: VENUE_IMAGES['room-4-ensuite'],
     badge: 'Room 4 En-Suite Shower',
     videoLabel: 'View 6 • Room 4 En-Suite Shower',
     description:
