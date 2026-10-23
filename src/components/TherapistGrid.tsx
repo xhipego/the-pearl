@@ -228,7 +228,7 @@ export const TherapistGrid: React.FC<TherapistGridProps> = ({
         <div className="mt-12 p-4 rounded-xl bg-[#F5EFEB] border border-[#D4AF37]/40 text-center max-w-2xl mx-auto flex items-center justify-center gap-3">
           <ShieldCheck className="w-5 h-5 text-[#C5A059] shrink-0" />
           <p className="text-xs text-[#1B2B42]/80">
-            Hostess sessions are strictly confidential and private. WhatsApp us at <strong>073 995 5927</strong> to reserve your session with Bliss, Faith, KitKate, Kylie, or Barbie.
+            Hostess sessions are strictly confidential and private. WhatsApp us at <strong>063 551 9026</strong> to reserve your session with Bliss, Faith, KitKate, Kylie, or Barbie.
           </p>
 
         </div>

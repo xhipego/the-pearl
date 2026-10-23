@@ -53,7 +53,7 @@ export const RatesPage: React.FC<RatesPageProps> = ({
               className="w-full sm:w-auto px-8 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-white bg-[#1F7A4D] hover:bg-[#18643F] shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>Book on WhatsApp (073 995 5927)</span>
+              <span>Book on WhatsApp (063 551 9026)</span>
             </a>
             <button
               onClick={onOpenBooking}

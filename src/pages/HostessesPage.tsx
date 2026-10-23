@@ -66,7 +66,7 @@ export const HostessesPage: React.FC<HostessesPageProps> = ({
               className="py-3 px-6 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] text-[#1B2B42] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg transition-all flex items-center gap-2"
             >
               <MessageCircle className="w-4 h-4 text-[#1B2B42]" />
-              <span>WhatsApp Concierge (073 995 5927)</span>
+              <span>WhatsApp Concierge (063 551 9026)</span>
             </a>
 
             <button

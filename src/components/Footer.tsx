@@ -98,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <div className="space-y-2 text-slate-300">
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>073 995 5927 (Calls &amp; Inquiries)</span>
+                <span>063 551 9026 (Calls &amp; Inquiries)</span>
               </p>
               <p className="flex items-center gap-2">
                 <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0" />
@@ -110,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   rel="noopener noreferrer"
                   className="hover:underline text-emerald-400"
                 >
-                  WhatsApp: 073 995 5927
+                  WhatsApp: 063 551 9026
                 </a>
               </p>
               <p className="flex items-center gap-2">

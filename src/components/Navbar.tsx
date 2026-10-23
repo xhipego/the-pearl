@@ -95,10 +95,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             href={`tel:${CONTACT_INFO.phone1}`}
             id="nav-call-btn"
             className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-100 hover:text-white transition-all rounded-full border border-white/20 hover:border-[#D4AF37] bg-white/10 backdrop-blur-sm whitespace-nowrap shrink-0 shadow-sm"
-            title="Call The Pearl: 073 995 5927"
+            title={`Call The Pearl: ${CONTACT_INFO.phone1Formatted}`}
           >
             <Phone className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-            <span className="whitespace-nowrap font-medium select-all">073&nbsp;995&nbsp;5927</span>
+            <span className="whitespace-nowrap font-medium select-all">063&nbsp;551&nbsp;9026</span>
           </a>
 
           <button
@@ -116,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             href={`tel:${CONTACT_INFO.phone1}`}
             className="p-2 rounded-full bg-white/10 text-white border border-white/20 hover:border-[#D4AF37]"
             aria-label="Call Concierge"
-            title="Call 073 995 5927"
+            title={`Call ${CONTACT_INFO.phone1Formatted}`}
           >
             <Phone className="w-4 h-4 text-[#D4AF37]" />
           </a>

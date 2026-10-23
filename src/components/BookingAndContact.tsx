@@ -203,7 +203,7 @@ Please confirm therapist availability and private gate entry directions.`;
                       rel="noopener noreferrer"
                       className="font-semibold text-[#1B2B42] hover:text-[#25D366] flex items-center gap-1.5 mt-0.5"
                     >
-                      <span>+27 73 995 5927</span>
+                      <span>+27 63 551 9026</span>
                       <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-700 font-bold uppercase">
                         Instant
                       </span>
@@ -365,7 +365,7 @@ Please confirm therapist availability and private gate entry directions.`;
                       <input
                         type="tel"
                         required
-                        placeholder="e.g. 073 995 5927"
+                        placeholder="e.g. 063 551 9026"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] bg-[#FDFBF7] text-[#1B2B42] outline-none"
