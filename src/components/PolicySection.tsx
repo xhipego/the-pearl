@@ -33,7 +33,7 @@ export const PolicySection: React.FC = () => {
     {
       icon: Lock,
       title: '4. 100% Confidentiality & Private Motorized Gate',
-      desc: 'Your identity and privacy are guaranteed. Situated at 112 Genl Beyers Street, Welgelegen, our unmarked residential facade and motorized electronic security gate provide private off-street parking inside the perimeter. No client data is logged or shared.',
+      desc: 'Your identity and privacy are guaranteed. Our unmarked facade and motorized electronic security gate provide private off-street parking inside the perimeter, with arrival access shared only upon confirmed appointment.',
       tag: 'Total Discretion',
     },
     {

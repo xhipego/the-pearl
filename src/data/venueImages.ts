@@ -1,4 +1,4 @@
-// Direct bundled imports for venue photos ensuring zero-cache issues on GitHub/Netlify/production
+// Direct bundled imports for permanent venue & hero photos ready for GitHub & production builds
 import frontEntrance from '../assets/venue/venue_front_entrance.jpg';
 import atriumEntrance from '../assets/venue/venue_atrium_entrance.jpg';
 import poolLapa from '../assets/venue/venue_pool_lapa.jpg';
@@ -11,6 +11,16 @@ import gardenGrounds from '../assets/venue/venue_garden_grounds.jpg';
 import galaxySuite from '../assets/venue/venue_galaxy_suite.jpg';
 import leadwoodFootScrub from '../assets/venue/venue_leadwood_footscrub.jpg';
 import room1EnsuiteBath from '../assets/venue/venue_room1_ensuite_bath.jpg';
+import customVenueSuite from '../assets/venue/venue_custom_suite.jpg';
+import heroFeatured1 from '../assets/venue/hero_featured_1.jpg';
+import heroFeatured2 from '../assets/venue/hero_featured_2.jpg';
+import heroFeatured3 from '../assets/venue/hero_featured_3.jpg';
+
+export const HERO_FEATURED_IMAGES: string[] = [
+  heroFeatured1,
+  heroFeatured2,
+  heroFeatured3,
+];
 
 export const VENUE_IMAGES: Record<string, string> = {
   entrance: frontEntrance,
@@ -31,6 +41,7 @@ export const VENUE_IMAGES: Record<string, string> = {
   'room-4-ensuite': suiteBath,
   'pool-lapa': poolLapa,
   'secure-parking': gardenGrounds,
+  'custom-suite': customVenueSuite,
 };
 
 export {
@@ -46,4 +57,8 @@ export {
   room1EnsuiteBath,
   gardenGrounds,
   galaxySuite,
+  customVenueSuite,
+  heroFeatured1,
+  heroFeatured2,
+  heroFeatured3,
 };

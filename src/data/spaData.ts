@@ -1,5 +1,12 @@
-import { RateItem, PackageItem, VenueSnippet } from '../types';
+import { RateItem, PackageItem, VenueSnippet, DurationRate } from '../types';
 import { VENUE_IMAGES } from './venueImages';
+
+export const DURATION_RATES: DurationRate[] = [
+  { duration: '30 min', price: 600, formattedPrice: 'R600' },
+  { duration: '45 min', price: 800, formattedPrice: 'R800' },
+  { duration: '1 hour', price: 1000, formattedPrice: 'R1000' },
+  { duration: '90 min', price: 1300, formattedPrice: 'R1300' },
+];
 
 export interface TreatmentMenuItem {
   id: string;
@@ -282,19 +289,19 @@ export const POLICY_STATEMENT = {
 export const CONTACT_INFO = {
   name: "The Pearl Men's Day Spa",
   subtitle: "Men's Day Spa",
-  tagline: 'Private Massage & Recovery for Men in Welgelegen, Polokwane',
+  tagline: 'Private Sanctuary for Discerning Gentlemen',
   phone1: '0635519026',
   phone1Formatted: '063 551 9026',
   whatsappNumber: '27635519026',
   whatsappUrl: 'https://wa.me/27635519026',
   email: 'thepearlwellnessspa@gmail.com',
-  address: '112 Genl Beyers Street, Welgelegen, Polokwane',
-  city: 'Polokwane',
-  suburb: 'Welgelegen',
-  postalCode: '0699',
-  province: 'Limpopo',
+  address: 'Private by Appointment',
+  city: '',
+  suburb: '',
+  postalCode: '',
+  province: '',
   website: 'www.thepearlspa.co.za',
-  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=112+Genl+Beyers+Street+Welgelegen+Polokwane',
+  googleMapsUrl: 'https://wa.me/27635519026',
   operatingHours: 'Monday – Sunday: 10:00 – 20:00 (Open 7 Days a Week)',
 };
 
@@ -414,7 +421,7 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
   {
     id: 'secure-parking',
     title: 'Secure Off-Street Parking & Gate',
-    subtitle: 'Discreet residential entrance at 112 Genl Beyers Street',
+    subtitle: 'Discreet private entrance behind closed gates',
     image: VENUE_IMAGES.garden,
     badge: 'Parking & Gate',
     videoLabel: 'View 8 • Secure Parking',
@@ -423,8 +430,8 @@ export const VENUE_SNIPPETS: VenueSnippet[] = [
     highlights: [
       'Motorized security gate with private access',
       'Dedicated off-street parking bays inside the property',
-      'Discreet, dignified residential facade',
-      'Gate access directions sent immediately upon booking',
+      'Discreet, dignified private facade',
+      'Arrival confirmation sent immediately upon booking',
     ],
   },
 ];

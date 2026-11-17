@@ -3,18 +3,26 @@ export interface Therapist {
   name: string;
   age: number;
   height: string;
-  eyes: string;
+  bodyType: string;
+  sexyQuote: string;
+  eyes?: string;
   hair?: string;
   bustOrBody?: string;
-  lookDescription: string;
-  specialties: string[];
-  bio: string;
-  image: string; // Cover photo
-  photos?: string[]; // Up to 4 photos: [coverPhoto, photo2, photo3, photo4]
+  lookDescription?: string;
+  specialties?: string[];
+  bio?: string;
+  image: string; // Main cover photo
+  photos: string[]; // 5 photos: [mainPhoto, photo2, photo3, photo4, photo5]
   featured?: boolean;
   availableToday: boolean;
   vipHostess?: boolean;
   languages?: string[];
+}
+
+export interface DurationRate {
+  duration: string;
+  price: number;
+  formattedPrice: string;
 }
 
 export interface RateItem {

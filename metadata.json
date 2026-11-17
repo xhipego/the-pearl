@@ -1,6 +1,6 @@
 {
   "name": "The Pearl Wellness Spa",
-  "description": "Private massage and recovery for men in Welgelegen, Polokwane. Qualified therapists, private treatment rooms, pool and thatched lapa.",
+  "description": "Private gentlemen's sanctuary with en-suite treatment rooms, attentive company, pool and thatched lapa.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -19,7 +19,7 @@ export const PageBanner: React.FC<PageBannerProps> = ({
   currentPageName,
 }) => {
   return (
-    <div className="relative pt-32 pb-16 sm:pt-36 sm:pb-20 bg-gradient-to-b from-[#0F172A] via-[#1B2B42] to-[#142032] text-white overflow-hidden border-b border-[#D4AF37]/30">
+    <div className="relative pt-28 pb-10 sm:pt-32 sm:pb-12 bg-gradient-to-b from-[#0B121E] via-[#121C2B] to-[#162336] text-white overflow-hidden border-b border-[#D4AF37]/25">
       {/* Ambient background gold glow & blur orbs */}
       <div className="absolute -top-16 -right-16 w-80 h-80 bg-[#D4AF37]/15 rounded-full filter blur-3xl pointer-events-none" />
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#D4AF37]/10 rounded-full filter blur-3xl pointer-events-none" />

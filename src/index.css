@@ -8,11 +8,10 @@
 
   body {
     font-family: var(--font-sans);
-    color: #111827;
-    background-color: #FDFBF7;
-    background-image: 
-      radial-gradient(at 15% 20%, rgba(212, 175, 55, 0.04) 0px, transparent 50%),
-      radial-gradient(at 85% 80%, rgba(27, 43, 66, 0.04) 0px, transparent 50%);
+    color: #121C2B;
+    background-color: #F6F3ED;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, .font-display, .font-serif {

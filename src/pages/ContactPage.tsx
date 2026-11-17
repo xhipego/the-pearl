@@ -16,11 +16,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({
     <div className="min-h-screen bg-[#FDFBF7]">
       {/* Page Banner Header */}
       <PageBanner
-        title="Contact &amp; Location"
-        subtitle="Discreetly Situated in Welgelegen, Polokwane • Open Daily 10:00 – 20:00"
-        badge="Concierge &bull; Private Map &bull; Bookings"
+        title="Contact &amp; Reservations"
+        subtitle="By Private Appointment • Open Daily 10:00 – 20:00"
+        badge="Concierge &bull; Discreet Access &bull; Bookings"
         onNavigate={onNavigate}
-        currentPageName="Contact & Location"
+        currentPageName="Contact"
       />
 
       {/* Main Booking & Contact Information Component */}

@@ -23,7 +23,7 @@ export const About: React.FC = () => {
             Welcome to The Pearl
           </h2>
           <p className="font-serif italic text-lg sm:text-xl text-[#C5A059] mt-2 mb-4">
-            Polokwane&apos;s Premier Sensual Wellness Venue
+            A Premier Luxury Wellness Venue
           </p>
           <div className="flex items-center justify-center gap-3 w-48 mx-auto my-4">
             <div className="h-[1px] flex-1 bg-[#D4AF37]/40" />
@@ -31,7 +31,7 @@ export const About: React.FC = () => {
             <div className="h-[1px] flex-1 bg-[#D4AF37]/40" />
           </div>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-2xl mx-auto font-light">
-            Nestled in the prestigious and quiet suburb of Welgelen, Polokwane, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> offers discerning gentlemen a tranquil retreat designed for supreme tactile indulgence, unhurried attention, and deep bodily release.
+            Designed as a tranquil private retreat, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> offers discerning gentlemen understated indulgence, unhurried attention, and deep relaxation.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export const About: React.FC = () => {
             <div className="relative rounded-2xl overflow-hidden border border-[#D4AF37]/40 shadow-xl group">
               <img
                 src={loungeImage}
-                alt="The Pearl Welgelen Grand Lounge"
+                alt="The Pearl Grand Lounge"
                 referrerPolicy="no-referrer"
                 className="w-full h-[400px] object-cover filter brightness-[0.95] group-hover:scale-105 transition-transform duration-700"
               />
@@ -50,7 +50,7 @@ export const About: React.FC = () => {
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] px-2 py-0.5 rounded-full bg-[#1B2B42]/80 border border-[#D4AF37]/50">
-                    Real Venue • Welgelen
+                    Authentic Sanctuary
                   </span>
                 </div>
                 <p className="font-serif italic text-lg sm:text-xl text-[#F3E5AB]">
@@ -68,8 +68,8 @@ export const About: React.FC = () => {
                 <Award className="w-5 h-5 text-[#D4AF37]" />
               </div>
               <div>
-                <p className="font-serif text-sm font-bold text-[#1B2B42]">112 Genl Beyers Street</p>
-                <p className="text-[11px] text-gray-500">Welgelen, Polokwane &bull; Total Discretion</p>
+                <p className="font-serif text-sm font-bold text-[#1B2B42]">Private Gate Access</p>
+                <p className="text-[11px] text-gray-500">By Appointment &bull; Total Discretion</p>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@ export const About: React.FC = () => {
                     Total Discretion &amp; Private Parking
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    Your confidentiality is sacred. Located discreetly in Welgelen with unmarked premises and private secured off-street parking. You enter and exit in complete comfort and privacy.
+                    Your confidentiality is sacred. Unmarked private premises and secured off-street parking ensure you enter and exit in complete comfort and privacy.
                   </p>
                 </div>
               </div>

@@ -6,18 +6,9 @@
     "room-2-night",
     "room-3-couples",
     "room-4-footscrub",
-    "room-4-ensuite",
     "pool-lapa",
     "secure-parking",
-    "entrance",
-    "atrium",
-    "pool",
-    "lounge",
-    "champagne",
-    "sapphire",
-    "mahogany",
-    "bath",
-    "garden"
+    "custom-suite"
   ],
   "customSlots": [],
   "slotOrder": [
@@ -26,19 +17,10 @@
     "room-2-night",
     "room-3-couples",
     "room-4-footscrub",
-    "room-4-ensuite",
     "pool-lapa",
     "secure-parking",
-    "entrance",
-    "atrium",
-    "pool",
-    "lounge",
-    "champagne",
-    "sapphire",
-    "mahogany",
-    "bath",
-    "garden"
+    "custom-suite"
   ],
-  "lastBakedAt": "2026-10-06T22:04:38.297Z",
-  "savedPhotoCount": 0
+  "lastBakedAt": "2026-11-17T13:00:00.000Z",
+  "savedPhotoCount": 8
 }

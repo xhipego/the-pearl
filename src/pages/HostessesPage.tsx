@@ -2,7 +2,7 @@ import React from 'react';
 import { PageBanner } from '../components/PageBanner';
 import { TherapistGrid } from '../components/TherapistGrid';
 import { PageId } from '../components/Navbar';
-import { MessageCircle, ShieldCheck, Sparkles, Heart } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 
 interface HostessesPageProps {
@@ -17,63 +17,50 @@ export const HostessesPage: React.FC<HostessesPageProps> = ({
   onOpenBooking,
 }) => {
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
-      {/* Banner */}
+    <div className="min-h-screen bg-[#F5F2EC]">
+      {/* Page Banner */}
       <PageBanner
-        title="Our Sensual Hostesses"
-        subtitle="Elegance, Warmth & Intuitive Touch • Meet The Ladies of The Pearl"
-        badge="Discreet &bull; Verified &bull; Welgelen, Polokwane"
+        title="Our Ladies"
+        subtitle="Discreet, Attentive & Unhurried Company"
+        badge="Private by Appointment"
         onNavigate={onNavigate}
-        currentPageName="The Girls"
+        currentPageName="Our Ladies"
       />
 
-      {/* Intro Context Banner */}
-      <div className="bg-[#F5EFEB]/70 border-b border-[#D4AF37]/30 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#C5A059] flex items-center justify-center gap-1.5">
-            <Heart className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>Gentlemen&apos;s Sanctuary Companions</span>
-          </span>
-          <p className="text-xs sm:text-sm text-gray-700 font-light leading-relaxed">
-            Every hostess at The Pearl is personally selected for her warmth, genuine feminine grace, conversational charm, and attentive touch. Browse each profile to see their look descriptions, physical attributes, and specialty sessions.
-          </p>
-        </div>
-      </div>
-
-      {/* Hostesses Grid */}
+      {/* Ladies Grid */}
       <TherapistGrid
         onSelectBooking={onSelectBooking}
         title="Meet Our Ladies"
-        subtitle="Verified Photographs &amp; Appearance Details"
+        subtitle="Select any portrait to view all 5 photos and private booking options"
       />
 
-      {/* Bottom CTA Banner */}
-      <div className="bg-[#1B2B42] text-white py-16 border-t border-[#D4AF37]/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#F3E5AB]">
-            Reserve Your Preferred Hostess Today
+      {/* Discreet Concierge CTA Banner */}
+      <div className="bg-[#121C2B] text-white py-16 border-t border-[#D4AF37]/25">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
+          <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#F3E5AB]">
+            Private Appointments by Reservation
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-light">
-            Shifts and availability update throughout the day. Contact our discreet concierge directly via WhatsApp or phone to confirm her immediate schedule.
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-light leading-relaxed">
+            Confirm today&apos;s schedule directly with our concierge via WhatsApp or submit a quiet request online.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-1">
             <a
               href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
-                'Hi The Pearl Wellness Spa, I would like to check availability for the hostesses on shift today.'
+                'Hi The Pearl, I would like to check availability for the ladies today.'
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-3 px-6 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] text-[#1B2B42] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg transition-all flex items-center gap-2"
+              className="py-3 px-6 rounded bg-[#1F7A4D] hover:bg-[#18643F] text-white font-semibold text-xs uppercase tracking-[0.14em] transition-colors flex items-center gap-2"
             >
-              <MessageCircle className="w-4 h-4 text-[#1B2B42]" />
-              <span>WhatsApp Concierge (063 551 9026)</span>
+              <MessageCircle className="w-4 h-4" />
+              <span>WhatsApp Reception (063 551 9026)</span>
             </a>
 
             <button
               onClick={onOpenBooking}
-              className="py-3 px-6 rounded-full bg-white/10 hover:bg-white/20 border border-[#D4AF37] text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+              className="py-3 px-6 rounded bg-[#D4AF37] hover:bg-[#E5C55C] text-[#121C2B] font-semibold text-xs uppercase tracking-[0.14em] transition-colors cursor-pointer"
             >
-              Online Reservation Form
+              Book Privately
             </button>
           </div>
         </div>

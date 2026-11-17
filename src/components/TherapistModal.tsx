@@ -3,19 +3,14 @@ import { Therapist } from '../types';
 import {
   X,
   MessageCircle,
-  Heart,
-  Star,
-  Sparkles,
-  Check,
-  Globe,
   ChevronLeft,
   ChevronRight,
   Maximize2,
-  Image as ImageIcon,
+  Images,
 } from 'lucide-react';
-import { CONTACT_INFO } from '../data/spaData';
+import { CONTACT_INFO, DURATION_RATES } from '../data/spaData';
 import { safeOpenUrl } from '../utils/safeNavigation';
-import { normalizeTherapistPhotos } from '../context/TherapistContext';
+import { useTherapists } from '../context/TherapistContext';
 
 interface TherapistModalProps {
   therapist: Therapist | null;
@@ -30,10 +25,10 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
   onSelectBooking,
   initialPhotoIndex = 0,
 }) => {
+  const { getVisibleLadyPhotos } = useTherapists();
   const [activePhotoIdx, setActivePhotoIdx] = useState(initialPhotoIndex);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  // Sync to initialPhotoIndex or reset to cover photo whenever therapist or initial index updates
   useEffect(() => {
     setActivePhotoIdx(initialPhotoIndex || 0);
     setLightboxOpen(false);
@@ -41,9 +36,9 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
 
   if (!therapist) return null;
 
-  const photos = normalizeTherapistPhotos(therapist);
-  const currentPhoto = photos[activePhotoIdx] || therapist.image;
-  const isEditableNew = therapist.id === 'kylie' || therapist.id === 'barbie';
+  const photos = getVisibleLadyPhotos(therapist).map((item) => item.src);
+  const safeIdx = activePhotoIdx % photos.length;
+  const currentPhoto = photos[safeIdx] || therapist.image;
 
   const handleNextPhoto = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -56,42 +51,46 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
   };
 
   const handleWhatsAppBooking = () => {
-    const msg = `Hi The Pearl Wellness Spa, I would like to book a session with ${therapist.name}. Please confirm her available time slots today.`;
+    const msg = `Hi The Pearl, I would like to book a session with ${therapist.name}. Please confirm her available time slots today.`;
     safeOpenUrl(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(msg)}`);
   };
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#1B2B42]/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#0E1622]/80 backdrop-blur-sm animate-in fade-in duration-200"
+        onClick={onClose}
+      >
         <div
-          className="relative w-full max-w-2xl bg-[#FDFBF7] rounded-3xl border-2 border-[#D4AF37] shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+          className="relative w-full max-w-2xl bg-[#F9F6F0] rounded-2xl border border-[#D4AF37]/50 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-30 p-2 rounded-full bg-[#1B2B42]/85 text-white hover:bg-[#1B2B42] border border-[#D4AF37] transition-all shadow-md cursor-pointer"
+            className="absolute top-4 right-4 z-30 p-2 rounded-full bg-black/55 text-white hover:bg-black/80 border border-white/25 transition-colors cursor-pointer"
             aria-label="Close profile modal"
           >
             <X className="w-5 h-5" />
           </button>
 
           <div className="overflow-y-auto">
-            {/* Interactive Photo Viewer - Original Size with object-contain (No Zoom In / Crop) */}
-            <div className="relative h-84 sm:h-[430px] w-full overflow-hidden bg-[#0B132B] flex items-center justify-center group">
+            {/* Main Interactive Photo Viewer */}
+            <div className="relative h-84 sm:h-[440px] w-full overflow-hidden bg-[#0E1622] flex items-center justify-center">
               <img
                 src={currentPhoto}
-                alt={therapist.name}
+                alt={`${therapist.name} — Photo ${safeIdx + 1}`}
+                referrerPolicy="no-referrer"
                 onClick={() => setLightboxOpen(true)}
-                className="w-full h-full max-h-[430px] object-contain transition-all duration-300 cursor-zoom-in p-1"
+                className="w-full h-full max-h-[440px] object-contain transition-all duration-300 cursor-zoom-in p-1"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1B2B42] via-transparent to-transparent pointer-events-none opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0E1622] via-transparent to-transparent pointer-events-none opacity-85" />
 
-              {/* Next & Previous Arrow Controls */}
+              {/* Previous / Next Controls */}
               <button
                 type="button"
                 onClick={handlePrevPhoto}
-                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-[#1B2B42]/80 hover:bg-[#1B2B42] text-white border border-[#D4AF37]/60 shadow-lg transition-transform active:scale-90 cursor-pointer z-20"
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/50 hover:bg-black/75 text-white border border-white/25 transition-transform active:scale-95 cursor-pointer z-20"
                 title="Previous photo"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -100,80 +99,63 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
               <button
                 type="button"
                 onClick={handleNextPhoto}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-[#1B2B42]/80 hover:bg-[#1B2B42] text-white border border-[#D4AF37]/60 shadow-lg transition-transform active:scale-90 cursor-pointer z-20"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/50 hover:bg-black/75 text-white border border-white/25 transition-transform active:scale-95 cursor-pointer z-20"
                 title="Next photo"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
 
-              {/* Top Left Pills */}
-              <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2 z-20">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#D4AF37] text-[#1B2B42] text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md">
-                  <Star className="w-3.5 h-3.5 fill-[#1B2B42]" />
-                  <span>{isEditableNew ? 'New Hostess' : 'VIP Hostess'}</span>
-                </div>
-              </div>
+              {/* Top Left Zoom Button */}
+              <button
+                onClick={() => setLightboxOpen(true)}
+                className="absolute top-4 left-4 z-20 p-2 rounded-full bg-black/50 text-white hover:text-[#F3E5AB] border border-white/25 transition-colors cursor-pointer"
+                title="View Fullscreen"
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
 
-              {/* Top Right Zoom Button */}
-              <div className="absolute top-4 right-16 z-20 flex items-center gap-1.5">
-                <button
-                  onClick={() => setLightboxOpen(true)}
-                  className="p-1.5 rounded-full bg-[#1B2B42]/80 text-white hover:text-[#F3E5AB] border border-[#D4AF37]/50 text-xs backdrop-blur-md transition-colors cursor-pointer"
-                  title="Zoom Fullscreen"
-                >
-                  <Maximize2 className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Profile Name on banner */}
-              <div className="absolute bottom-3 left-5 right-5 text-white z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+              {/* Name, Unboxed Metadata & Photo Counter */}
+              <div className="absolute bottom-4 left-5 right-5 text-white z-10 flex items-end justify-between gap-3">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-serif text-3xl font-bold tracking-wide text-white">
-                      {therapist.name}
-                    </h3>
-                    {therapist.vipHostess && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#D4AF37] text-[#1B2B42] text-[10px] font-bold uppercase tracking-wider">
-                        <Star className="w-3 h-3 fill-[#1B2B42]" /> VIP Hostess
-                      </span>
-                    )}
-                  </div>
-                  <p className="font-serif italic text-xs sm:text-sm text-[#F3E5AB]">
-                    Sensual Massage &amp; Girlfriend Experience Specialist
+                  <h3 className="font-serif text-3xl sm:text-4xl font-normal tracking-wide text-white">
+                    {therapist.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#E5C55C] mt-0.5 tabular-nums">
+                    {therapist.age} yrs &middot; {therapist.height} &middot; {therapist.bodyType}
                   </p>
                 </div>
 
-                <div className="px-3 py-1 rounded-full bg-[#1B2B42]/90 border border-[#D4AF37] text-white text-[11px] font-semibold flex items-center gap-1.5 backdrop-blur-md self-start sm:self-auto shrink-0 shadow-md">
-                  <ImageIcon className="w-3 h-3 text-[#D4AF37]" />
+                <div className="px-2.5 py-1 rounded bg-black/60 border border-white/20 text-white text-[11px] font-medium flex items-center gap-1.5 backdrop-blur-sm shrink-0 tabular-nums">
+                  <Images className="w-3.5 h-3.5 text-[#D4AF37]" />
                   <span>
-                    {activePhotoIdx + 1} / {photos.length}
+                    {safeIdx + 1} / {photos.length}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* 4 Thumbnails Strip - Pure Photos (No Text Badges, Original Proportions) */}
-            <div className="bg-[#142132] px-4 py-3 border-b border-[#D4AF37]/30">
-              <div className="grid grid-cols-4 gap-2.5">
+            {/* All 5 Thumbnails Strip */}
+            <div className="bg-[#121C2B] px-4 py-3 border-b border-[#D4AF37]/25">
+              <div className="grid grid-cols-5 gap-2">
                 {photos.map((p, idx) => {
-                  const isActive = idx === activePhotoIdx;
-
+                  const isActive = idx === safeIdx;
                   return (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => setActivePhotoIdx(idx)}
-                      className={`relative h-20 sm:h-24 rounded-xl overflow-hidden bg-[#0B132B] flex items-center justify-center border-2 transition-all cursor-pointer group ${
+                      className={`relative aspect-[3/4] sm:h-22 rounded-lg overflow-hidden bg-[#0E1622] border-2 transition-all cursor-pointer ${
                         isActive
-                          ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/60 shadow-lg scale-102'
-                          : 'border-white/20 opacity-75 hover:opacity-100 hover:border-white/50'
+                          ? 'border-[#D4AF37] opacity-100 scale-[1.02]'
+                          : 'border-white/15 opacity-65 hover:opacity-100 hover:border-white/40'
                       }`}
-                      title="Click to view"
+                      title={`Photo ${idx + 1}`}
                     >
                       <img
                         src={p}
-                        alt=""
-                        className="w-full h-full object-contain p-0.5"
+                        alt={`${therapist.name} thumbnail ${idx + 1}`}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover object-top"
                       />
                     </button>
                   );
@@ -181,94 +163,46 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
               </div>
             </div>
 
-            {/* Stats Bar - Age, Height, Eye Color (Hair removed) */}
-            <div className="grid grid-cols-3 gap-2.5 p-4 bg-[#F5EFEB] border-b border-[#D4AF37]/30 text-center">
-              <div className="p-2 rounded-lg bg-white border border-[#D4AF37]/20">
-                <span className="text-[10px] uppercase font-bold text-gray-400 block">Age</span>
-                <span className="font-serif text-base font-bold text-[#1B2B42]">{therapist.age} yrs</span>
-              </div>
-              <div className="p-2 rounded-lg bg-white border border-[#D4AF37]/20">
-                <span className="text-[10px] uppercase font-bold text-gray-400 block">Height</span>
-                <span className="font-serif text-base font-bold text-[#1B2B42]">{therapist.height}</span>
-              </div>
-              <div className="p-2 rounded-lg bg-white border border-[#D4AF37]/20">
-                <span className="text-[10px] uppercase font-bold text-gray-400 block">Eye Color</span>
-                <span className="font-serif text-base font-bold text-[#1B2B42]">{therapist.eyes}</span>
-              </div>
-            </div>
-
-            {/* Body Content */}
-            <div className="p-6 space-y-6">
-              {/* Appearance & How She Looks Box */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#F5EFEB] to-white border border-[#D4AF37]/60 shadow-sm">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C5A059]">
-                    <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                    <span>Appearance &amp; How She Looks</span>
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {therapist.bustOrBody && (
-                      <span className="text-[11px] font-semibold text-[#1B2B42] bg-white px-2 py-0.5 rounded-full border border-[#D4AF37]/30">
-                        {therapist.bustOrBody}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <p className="font-serif italic text-sm sm:text-base text-[#1B2B42] leading-relaxed">
-                  &ldquo;{therapist.lookDescription}&rdquo;
+            {/* Clean Editorial Quote & Compact Rates Summary */}
+            <div className="p-6 sm:p-7 space-y-6">
+              <div className="text-center space-y-2">
+                <p className="font-serif italic text-lg sm:text-xl text-[#121C2B] leading-relaxed">
+                  &ldquo;{therapist.sexyQuote}&rdquo;
                 </p>
               </div>
 
-              {/* Bio */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-serif text-sm font-bold text-[#1B2B42] tracking-wider uppercase flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                    <span>About {therapist.name}</span>
-                  </h4>
-                </div>
-                <p className="text-sm text-gray-700 leading-relaxed font-light">
-                  {therapist.bio}
+              {/* Duration & Rates */}
+              <div className="pt-5 border-t border-[#D8D1C5]">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-[#9A7440] font-medium text-center mb-3">
+                  Duration &amp; Rates
                 </p>
-              </div>
-
-              {/* Specialties */}
-              <div>
-                <h4 className="font-serif text-sm font-bold text-[#1B2B42] tracking-wider uppercase mb-2.5 flex items-center gap-2">
-                  <Heart className="w-4 h-4 text-[#C5A059]" />
-                  <span>Speciality Experiences</span>
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {therapist.specialties.map((spec, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1.5 rounded-full bg-[#1B2B42]/5 border border-[#D4AF37]/50 text-xs font-semibold text-[#1B2B42] flex items-center gap-1.5"
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center">
+                  {DURATION_RATES.map((rate) => (
+                    <div
+                      key={rate.duration}
+                      className="py-2.5 px-3 rounded-lg bg-white border border-[#D8D1C5]"
                     >
-                      <Check className="w-3 h-3 text-[#D4AF37]" />
-                      {spec}
-                    </span>
+                      <span className="block text-[11px] uppercase tracking-wider text-[#6B7280]">
+                        {rate.duration}
+                      </span>
+                      <span className="font-serif text-base font-semibold text-[#121C2B] tabular-nums">
+                        {rate.formattedPrice}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
-
-              {/* Languages */}
-              {therapist.languages && (
-                <div className="flex items-center gap-2 text-xs text-gray-500">
-                  <Globe className="w-4 h-4 text-[#C5A059]" />
-                  <span>Fluent in: {therapist.languages.join(', ')}</span>
-                </div>
-              )}
             </div>
           </div>
 
-          {/* Modal Bottom Fixed Actions */}
-          <div className="p-4 sm:p-5 bg-white border-t border-[#D4AF37]/30 flex flex-col sm:flex-row items-center gap-3">
+          {/* Modal Bottom Actions */}
+          <div className="p-4 sm:p-5 bg-white border-t border-[#D8D1C5] flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={handleWhatsAppBooking}
-              className="w-full sm:flex-1 py-3 px-6 rounded-xl bg-[#1B2B42] text-white hover:bg-[#152234] border border-[#D4AF37] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+              className="w-full sm:flex-1 py-3 px-6 rounded bg-[#1F7A4D] hover:bg-[#18643F] text-white text-xs font-semibold uppercase tracking-[0.14em] flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>Quick Book {therapist.name} via WhatsApp</span>
+              <MessageCircle className="w-4 h-4" />
+              <span>Book {therapist.name} via WhatsApp</span>
             </button>
 
             <button
@@ -276,9 +210,9 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
                 onClose();
                 onSelectBooking(therapist.name);
               }}
-              className="w-full sm:w-auto py-3 px-5 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/35 border border-[#D4AF37] text-[#1B2B42] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+              className="w-full sm:w-auto py-3 px-5 rounded border border-[#121C2B]/30 hover:border-[#121C2B] text-[#121C2B] text-xs font-semibold uppercase tracking-[0.14em] transition-colors cursor-pointer"
             >
-              Online Booking Form
+              Online Request
             </button>
           </div>
         </div>
@@ -297,18 +231,17 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
             <X className="w-6 h-6" />
           </button>
 
-          {/* Lightbox Main Image - Original Size Proportions */}
           <div
             className="relative max-w-4xl max-h-[82vh] flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={currentPhoto}
-              alt={therapist.name}
-              className="max-h-[80vh] max-w-full rounded-2xl object-contain shadow-2xl border border-white/20"
+              alt={`${therapist.name} fullscreen`}
+              referrerPolicy="no-referrer"
+              className="max-h-[80vh] max-w-full rounded-xl object-contain shadow-2xl border border-white/15"
             />
 
-            {/* Arrows */}
             <button
               onClick={handlePrevPhoto}
               className="absolute -left-12 sm:left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 hover:bg-black/80 text-white border border-white/30 cursor-pointer"
@@ -323,13 +256,12 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
             </button>
           </div>
 
-          {/* Lightbox Caption */}
           <div className="mt-4 text-center text-white space-y-1" onClick={(e) => e.stopPropagation()}>
-            <p className="font-serif text-lg font-bold">
-              {therapist.name} &bull; {activePhotoIdx + 1} of {photos.length}
+            <p className="font-serif text-lg font-normal">
+              {therapist.name} &middot; {safeIdx + 1} of {photos.length}
             </p>
-            <p className="font-serif italic text-xs text-[#F3E5AB]">
-              {therapist.lookDescription}
+            <p className="font-serif italic text-xs text-[#E5C55C]">
+              &ldquo;{therapist.sexyQuote}&rdquo;
             </p>
           </div>
         </div>

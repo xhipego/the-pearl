@@ -504,7 +504,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                     {selectedPhoto.title}
                   </h4>
                   <p className="text-xs text-[#D8B892]">
-                    The Pearl Wellness Spa &bull; Polokwane
+                    The Pearl Men&apos;s Day Spa
                   </p>
                 </div>
                 <button

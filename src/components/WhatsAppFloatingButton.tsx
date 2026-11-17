@@ -25,7 +25,7 @@ export const WhatsAppFloatingButton: React.FC = () => {
             <span>The Pearl Concierge</span>
           </div>
           <p className="text-xs text-gray-700 leading-snug">
-            Need discreet booking or today&apos;s available therapist lineup in Polokwane?
+            Need discreet booking or today&apos;s available ladies lineup?
           </p>
           <a
             href={whatsappUrl}

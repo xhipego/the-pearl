@@ -2,7 +2,7 @@ import React from 'react';
 import { PageBanner } from '../components/PageBanner';
 import { RatesAndServices } from '../components/RatesAndServices';
 import { PageId } from '../components/Navbar';
-import { MessageCircle, Calendar, ShieldCheck, MapPin, Clock } from 'lucide-react';
+import { MessageCircle, Calendar } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 
 interface RatesPageProps {
@@ -41,7 +41,7 @@ export const RatesPage: React.FC<RatesPageProps> = ({
             <span className="block mt-1">From 10h00 - 20h00</span>
           </h3>
           <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-light leading-relaxed">
-            &ldquo;In by six, out by seven&rdquo;. We&apos;re open until 20:00, every day. Contact our Welgelegen reception directly on WhatsApp or book online to receive instant confirmation and gate directions.
+            &ldquo;In by six, out by seven&rdquo;. We&apos;re open until 20:00, every day. Contact our reception directly on WhatsApp or book online for instant confirmation.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
             <a

@@ -14,7 +14,7 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({ onNavigate, onOpenBo
   const faqs = [
     {
       q: 'How does the arrival and private entrance procedure work?',
-      a: 'Upon confirming your reservation, you receive discreet GPS directions to 112 Genl Beyers Street, Welgelegen. Our quiet residential premises feature an unmarked facade. Pull up to the electronic security gate where access is provided immediately, allowing you to park safely inside the property before being shown directly into your private suite.',
+      a: 'Upon confirming your reservation, private arrival details are shared directly with you. Pull up to our electronic security gate where access is provided immediately, allowing you to park safely inside the property before being shown directly into your private suite.',
     },
     {
       q: 'What payment methods do you accept?',

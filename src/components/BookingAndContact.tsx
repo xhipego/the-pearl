@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Phone,
   MessageCircle,
-  MapPin,
   Mail,
   Clock,
   Calendar,
@@ -13,6 +12,7 @@ import {
   ExternalLink,
   Copy,
   Check,
+  Lock,
 } from 'lucide-react';
 import { CONTACT_INFO, TREATMENT_MENU, ADDONS_MENU } from '../data/spaData';
 import { safeOpenUrl } from '../utils/safeNavigation';
@@ -68,7 +68,7 @@ Service: ${selectedService.name} (${formData.duration})
 Date: ${formData.preferredDate}
 Time: ${formData.preferredTime}${addOnsText}${notesText}
 
-Please confirm therapist availability and private gate entry directions.`;
+Please confirm therapist availability and private arrival confirmation.`;
 
     safeOpenUrl(`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(message)}`);
     setBookingSuccess(true);
@@ -81,13 +81,13 @@ Please confirm therapist availability and private gate entry directions.`;
         <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-[#C5A059] mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Private Sanctuary &bull; Polokwane</span>
+            <span>Private Sanctuary</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#1B2B42] tracking-wide">
             Contact &amp; Reservations
           </h2>
           <p className="font-serif italic text-lg sm:text-xl text-[#C5A059] mt-2 mb-4">
-            Discreetly Situated at 112 Genl Beyers Street, Welgelegen
+            Private, Discreet &amp; By Appointment Only
           </p>
           <div className="flex items-center justify-center gap-3 w-48 mx-auto my-3">
             <div className="h-[1px] flex-1 bg-[#D4AF37]/50" />
@@ -95,7 +95,7 @@ Please confirm therapist availability and private gate entry directions.`;
             <div className="h-[1px] flex-1 bg-[#D4AF37]/50" />
           </div>
           <p className="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto font-light">
-            Advance reservations are essential to ensure uninterrupted privacy and guarantee your room and certified therapist. Contact us directly or submit your booking inquiry below.
+            Advance reservations are essential to ensure uninterrupted privacy and guarantee your room and hostess. Contact us directly or submit your booking inquiry below.
           </p>
         </div>
 
@@ -106,8 +106,8 @@ Please confirm therapist availability and private gate entry directions.`;
             <div className="rounded-2xl p-6 sm:p-8 border border-[#D4AF37]/40 bg-white shadow-sm space-y-6">
               <div className="flex items-center justify-between border-b border-[#D4AF37]/20 pb-4">
                 <h3 className="font-serif text-xl font-bold text-[#1B2B42] flex items-center gap-2.5">
-                  <MapPin className="w-5 h-5 text-[#D4AF37]" />
-                  <span>Reception &amp; Location</span>
+                  <ShieldCheck className="w-5 h-5 text-[#D4AF37]" />
+                  <span>Reception &amp; Bookings</span>
                 </h3>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                   Open Today
@@ -115,20 +115,20 @@ Please confirm therapist availability and private gate entry directions.`;
               </div>
 
               <div className="space-y-5 text-xs sm:text-sm">
-                {/* Physical Address */}
+                {/* Private Appointment Notice */}
                 <div className="flex items-start gap-3.5">
                   <div className="p-2.5 rounded-xl bg-[#1B2B42] text-[#D4AF37] shrink-0 mt-0.5 border border-[#D4AF37]/30">
-                    <MapPin className="w-4 h-4" />
+                    <Lock className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">
-                      Physical Address
+                      Private Entry
                     </span>
                     <span className="font-semibold text-[#1B2B42] block text-sm">
-                      {CONTACT_INFO.address}
+                      By Confirmed Appointment Only
                     </span>
                     <span className="text-xs text-gray-500 block">
-                      Welgelegen, Polokwane, Limpopo, 0699
+                      Discreet entry details are shared directly once confirmed
                     </span>
                   </div>
                 </div>
@@ -239,7 +239,7 @@ Please confirm therapist availability and private gate entry directions.`;
                       Parking &amp; Security
                     </span>
                     <span className="text-xs text-gray-700 block font-light leading-relaxed">
-                      Secure off-street bays behind our motorized electronic security gate. Gate access instructions sent immediately upon booking.
+                      Secure off-street bays behind our motorized electronic security gate. Exact gate details are sent privately upon booking.
                     </span>
                   </div>
                 </div>
@@ -269,42 +269,46 @@ Please confirm therapist availability and private gate entry directions.`;
               </a>
 
               <a
-                href={CONTACT_INFO.googleMapsUrl}
+                href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
+                  'Hi The Pearl, I would like to confirm an appointment today.'
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                id="contact-directions-btn"
+                id="contact-booking-btn"
                 className="py-3 px-2 rounded-xl bg-white border border-[#D4AF37] text-center hover:bg-[#FDFBF7] shadow-sm transition-all flex flex-col items-center justify-center gap-1 group"
               >
-                <MapPin className="w-5 h-5 text-[#C5A059] group-hover:scale-110 transition-transform" />
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#1B2B42]">Directions</span>
+                <ShieldCheck className="w-5 h-5 text-[#C5A059] group-hover:scale-110 transition-transform" />
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#1B2B42]">Reserve</span>
               </a>
             </div>
 
-            {/* Location Map Preview Card */}
+            {/* Discreet Private Access Card */}
             <div className="rounded-2xl p-6 bg-[#1B2B42] text-white border border-[#D4AF37]/35 shadow-md flex flex-col justify-between space-y-4">
               <div className="flex items-start justify-between">
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#F3E5AB]">
-                    Location Map
+                    Private Access
                   </span>
                   <h4 className="font-serif text-lg font-bold text-white mt-0.5">
-                    112 Genl Beyers Street
+                    Behind Closed Gates
                   </h4>
                   <p className="text-xs text-slate-300 font-light mt-1">
-                    Welgelegen, Polokwane. Quiet residential street with secure behind-the-gate parking.
+                    Unmarked private grounds with behind-the-gate parking. Access confirmation is shared exclusively upon booking.
                   </p>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white/10 text-[#D4AF37] shrink-0 border border-white/20">
-                  <MapPin className="w-5 h-5" />
+                  <Lock className="w-5 h-5" />
                 </div>
               </div>
               <a
-                href={CONTACT_INFO.googleMapsUrl}
+                href={`${CONTACT_INFO.whatsappUrl}?text=${encodeURIComponent(
+                  'Hi The Pearl, please confirm availability so I can finalize my private appointment.'
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow"
               >
-                <span>Open in Google Maps</span>
+                <span>Confirm Appointment via WhatsApp</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -331,7 +335,7 @@ Please confirm therapist availability and private gate entry directions.`;
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider">Booking Request Dispatched</h4>
                     <p className="text-xs mt-0.5">
-                      Your reservation request has been prepared for WhatsApp. Our receptionist in Welgelegen is reviewing your slot now!
+                      Your reservation request has been prepared for WhatsApp. Our reception team is reviewing your slot now!
                     </p>
                   </div>
                 </div>
@@ -510,7 +514,7 @@ Please confirm therapist availability and private gate entry directions.`;
                 </button>
 
                 <p className="text-[11px] text-gray-500 text-center font-light">
-                  Strictly 18+ &bull; 100% confidential &bull; No public registries &bull; Unmarked Welgelegen entrance
+                  Strictly 18+ &bull; 100% confidential &bull; No public registries &bull; Unmarked private entrance
                 </p>
               </form>
             </div>

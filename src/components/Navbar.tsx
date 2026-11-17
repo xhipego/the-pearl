@@ -3,7 +3,7 @@ import { PearlLogo } from './PearlLogo';
 import { Phone, Menu, X } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 
-export type PageId = 'home' | 'treatments' | 'venue' | 'policies' | 'contact';
+export type PageId = 'home' | 'venue' | 'ladies' | 'policies' | 'contact';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -29,8 +29,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks: { id: PageId; name: string }[] = [
     { id: 'home', name: 'Home' },
-    { id: 'treatments', name: 'Treatments & Prices' },
     { id: 'venue', name: 'The Venue' },
+    { id: 'ladies', name: 'Our Ladies' },
     { id: 'policies', name: 'Policies' },
     { id: 'contact', name: 'Contact' },
   ];
@@ -49,24 +49,24 @@ export const Navbar: React.FC<NavbarProps> = ({
       id="main-header"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isTransparentHero
-          ? 'bg-gradient-to-b from-[#0F172A]/90 via-[#1B2B42]/80 to-[#1B2B42]/50 backdrop-blur-md border-b border-[#D4AF37]/25 py-3.5'
-          : 'bg-[#1B2B42]/95 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl py-3'
+          ? 'bg-gradient-to-b from-[#0E1622]/90 via-[#141F30]/75 to-transparent backdrop-blur-sm border-b border-white/10 py-3.5'
+          : 'bg-[#121C2B]/95 backdrop-blur-xl border-b border-[#D4AF37]/25 shadow-xl py-3'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 xl:gap-4">
-        {/* Left: Brand Logo */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
+        {/* Zone 1: Brand Wordmark */}
         <div className="flex items-center shrink-0">
           <button
             onClick={(e) => handleLinkClick('home', e)}
             id="nav-brand-logo"
-            className="hover:opacity-95 transition-opacity text-left cursor-pointer focus:outline-none flex items-center shrink-0"
+            className="hover:opacity-90 transition-opacity text-left cursor-pointer focus:outline-none flex items-center shrink-0 whitespace-nowrap"
           >
             <PearlLogo size="md" lightText={true} />
           </button>
         </div>
 
-        {/* Center: Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8 mx-auto shrink-0">
+        {/* Zone 2: 5 Single-Line Navigation Links */}
+        <nav className="hidden lg:flex items-center justify-center gap-7 xl:gap-9 mx-auto shrink-0">
           {navLinks.map((link) => {
             const isActive = currentPage === link.id;
             return (
@@ -74,47 +74,49 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.id}
                 onClick={(e) => handleLinkClick(link.id, e)}
                 id={`nav-link-${link.id}`}
-                className={`text-xs xl:text-sm tracking-[0.12em] uppercase font-medium transition-all relative py-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+                className={`text-xs xl:text-[13px] tracking-[0.16em] uppercase font-medium transition-colors relative py-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'text-[#F3E5AB] font-bold'
-                    : 'text-slate-200 hover:text-[#D4AF37]'
+                    ? 'text-[#F3E5AB]'
+                    : 'text-slate-200 hover:text-white'
                 }`}
               >
                 {link.name}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] shadow-[0_0_8px_rgba(212,175,55,0.8)] rounded-full" />
-                )}
+                <span
+                  className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#D4AF37] transition-transform duration-200 origin-left ${
+                    isActive ? 'scale-x-100' : 'scale-x-0'
+                  }`}
+                />
               </button>
             );
           })}
         </nav>
 
-        {/* Right: Direct Call & Session Booking Button */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        {/* Zone 3: Discreet Call & Primary Action */}
+        <div className="hidden lg:flex items-center gap-4 shrink-0">
           <a
             href={`tel:${CONTACT_INFO.phone1}`}
             id="nav-call-btn"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-100 hover:text-white transition-all rounded-full border border-white/20 hover:border-[#D4AF37] bg-white/10 backdrop-blur-sm whitespace-nowrap shrink-0 shadow-sm"
-            title={`Call The Pearl: ${CONTACT_INFO.phone1Formatted}`}
+            className="flex items-center gap-1.5 text-xs font-medium text-slate-200 hover:text-[#F3E5AB] transition-colors whitespace-nowrap shrink-0 tabular-nums"
+            title={`Call ${CONTACT_INFO.phone1Formatted}`}
           >
             <Phone className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-            <span className="whitespace-nowrap font-medium select-all">063&nbsp;551&nbsp;9026</span>
+            <span className="whitespace-nowrap">063&nbsp;551&nbsp;9026</span>
           </a>
 
           <button
             onClick={onOpenBooking}
             id="nav-book-modal-trigger"
-            className="px-4 py-1.5 text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] hover:brightness-110 border border-[#F3E5AB] rounded-full transition-all shadow-md cursor-pointer whitespace-nowrap shrink-0"
+            className="px-5 py-2 text-xs font-semibold tracking-[0.14em] uppercase text-[#121C2B] bg-[#D4AF37] hover:bg-[#E5C55C] rounded transition-colors cursor-pointer whitespace-nowrap shrink-0"
           >
-            Book Session
+            Book Privately
           </button>
         </div>
 
         {/* Mobile Controls */}
-        <div className="flex lg:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2 shrink-0">
           <a
             href={`tel:${CONTACT_INFO.phone1}`}
-            className="p-2 rounded-full bg-white/10 text-white border border-white/20 hover:border-[#D4AF37]"
+            className="p-2.5 rounded-full bg-white/10 text-white border border-white/15 hover:border-[#D4AF37]"
             aria-label="Call Concierge"
             title={`Call ${CONTACT_INFO.phone1Formatted}`}
           >
@@ -123,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             id="nav-mobile-menu-btn"
-            className="p-2 text-white hover:text-[#D4AF37] focus:outline-none cursor-pointer"
+            className="p-2.5 text-white hover:text-[#D4AF37] focus:outline-none cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -133,29 +135,29 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#1B2B42] border-t border-[#D4AF37]/30 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
+        <div className="lg:hidden bg-[#121C2B] border-t border-[#D4AF37]/25 px-4 pt-4 pb-6 space-y-2 shadow-2xl">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={(e) => handleLinkClick(link.id, e)}
-              className={`block w-full text-left py-2.5 px-3 rounded-lg text-sm uppercase tracking-wider font-medium transition-colors ${
+              className={`block w-full text-left py-2.5 px-3 rounded text-xs uppercase tracking-[0.15em] font-medium transition-colors ${
                 currentPage === link.id
-                  ? 'bg-gradient-to-r from-[#D4AF37]/20 to-transparent text-[#F3E5AB] font-bold border-l-4 border-[#D4AF37]'
+                  ? 'bg-white/10 text-[#F3E5AB]'
                   : 'text-slate-300 hover:text-white hover:bg-white/5'
               }`}
             >
               {link.name}
             </button>
           ))}
-          <div className="pt-3 border-t border-white/10 space-y-2">
+          <div className="pt-3 border-t border-white/10">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenBooking();
               }}
-              className="w-full py-3 text-xs font-bold tracking-wider uppercase text-[#1B2B42] bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C5A059] rounded-full shadow-md"
+              className="w-full py-3 text-xs font-semibold tracking-[0.14em] uppercase text-[#121C2B] bg-[#D4AF37] hover:bg-[#E5C55C] rounded transition-colors cursor-pointer"
             >
-              Book Appointment
+              Book Privately
             </button>
           </div>
         </div>
