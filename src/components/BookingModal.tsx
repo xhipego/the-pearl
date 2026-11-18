@@ -57,7 +57,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     const notesText = notes.trim() ? `\nNotes: ${notes.trim()}` : '';
 
     const message = `*Private Reservation Request - The Pearl*
-Name / Alias: ${name || 'Gentleman Guest'}
+Name / Alias: ${name || 'Valued Guest'}
 Phone: ${phone || 'Provided on chat'}
 Preferred Lady: ${preferredLady}
 Session & Rate: ${selectedRate}
@@ -157,6 +157,9 @@ Please confirm availability and private entry details.`;
                       </option>
                     );
                   })}
+                  <option value="Pool Session (1 hour with one lady) — R500">
+                    Pool Session (1 hour with one lady) — R500
+                  </option>
                 </select>
               </div>
 

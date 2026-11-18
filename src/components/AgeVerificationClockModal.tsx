@@ -167,7 +167,7 @@ export const AgeVerificationClockModal: React.FC<AgeVerificationClockModalProps>
 
             {/* Bottom Discreet Legal note */}
             <p className="text-[10px] text-neutral-500 pt-1">
-              The Pearl Men&apos;s Day Spa &bull; Strictly 18+ Consenting Adults
+              The Pearl Wellness Spa &bull; Strictly 18+ Consenting Adults
             </p>
           </div>
         )}

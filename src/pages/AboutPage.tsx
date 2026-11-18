@@ -29,7 +29,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
       {/* Page Banner Header */}
       <PageBanner
         title="About The Pearl"
-        subtitle="A Private Sanctuary for Discerning Gentlemen"
+        subtitle="A Private Sanctuary of Rest &amp; Discretion"
         badge="Discreet &bull; Serene &bull; Unhurried"
         onNavigate={onNavigate}
         currentPageName="About Us"
@@ -44,11 +44,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenBooking 
               <span>A Dedicated Adult Oasis</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#1B2B42] leading-tight">
-              Crafted for Gentlemen Seeking True Bodily Release &amp; Tactile Mastery
+              Crafted for Guests Seeking True Bodily Release &amp; Tactile Mastery
             </h2>
             <div className="h-[2px] w-20 bg-[#D4AF37]" />
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light">
-              Designed for quiet seclusion, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> was established to provide discerning gentlemen with a refined, private alternative to ordinary spas.
+              Designed for quiet seclusion, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> was established to provide discerning guests with a refined, private alternative to ordinary spas.
             </p>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-light">
               Modeled after the opulent aesthetic and executive privacy standards of South Africa’s premier adult venues, our sanctuary is designed from the ground up for full sensory indulgence: unhurried sessions, temperature-controlled private suites, deeply intuitive touch, and unwavering confidentiality.

@@ -50,10 +50,10 @@ export const HostessesPage: React.FC<HostessesPageProps> = ({
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-3 px-6 rounded bg-[#1F7A4D] hover:bg-[#18643F] text-white font-semibold text-xs uppercase tracking-[0.14em] transition-colors flex items-center gap-2"
+              className="py-3 px-6 rounded bg-[#1F7A4D] hover:bg-[#18643F] text-white font-semibold text-xs uppercase tracking-[0.14em] transition-colors flex items-center gap-2 whitespace-nowrap"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>WhatsApp Reception (063 551 9026)</span>
+              <span>WhatsApp Reception</span>
             </a>
 
             <button

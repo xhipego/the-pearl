@@ -30,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <PearlLogo size="lg" lightText={true} />
             </button>
             <p className="text-xs text-slate-400 leading-relaxed font-light max-w-sm mt-3">
-              A private, understated gentlemen&apos;s sanctuary. Discreet en-suite suites, attentive company, and secure parking behind closed gates.
+              A private, understated sanctuary. Discreet en-suite suites, attentive company, and secure parking behind closed gates.
             </p>
             <div className="flex items-center gap-2 text-xs text-[#D4AF37]">
               <Shield className="w-4 h-4" />
@@ -70,18 +70,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={(e) => handleNav('policies', e)}
+                  onClick={(e) => handleNav('become-a-pearl', e)}
                   className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left"
                 >
-                  Policies
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={(e) => handleNav('contact', e)}
-                  className="hover:text-[#D4AF37] transition-colors cursor-pointer text-left"
-                >
-                  Contact
+                  Become a Pearl
                 </button>
               </li>
             </ul>
@@ -90,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Direct Contacts */}
           <div className="md:col-span-4 space-y-3 text-xs">
             <h4 className="font-serif text-sm font-semibold text-white uppercase tracking-widest">
-              Contact
+              Concierge
             </h4>
             <div className="space-y-2.5 text-slate-300">
               <p className="flex items-center gap-2">
@@ -109,7 +101,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   rel="noopener noreferrer"
                   className="hover:underline text-emerald-400 tabular-nums"
                 >
-                  WhatsApp: 063 551 9026
+                  WhatsApp Reception
                 </a>
               </p>
               <p className="flex items-center gap-2">
@@ -120,16 +112,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Code of Conduct Bar */}
+        {/* Operating Hours Bar */}
         <div className="py-6 border-b border-white/5 text-[11px] text-slate-400 text-center space-y-1.5">
           <p className="text-slate-300">
             Open Monday – Sunday, 10:00 – 20:00 &middot; Private by Appointment &middot; Strictly 18+
           </p>
         </div>
 
-        {/* Copyright */}
-        <div className="pt-6 flex flex-col items-center justify-center text-center text-[11px] text-slate-400 gap-0.5">
-          <p>&copy; 2026 {CONTACT_INFO.name}. All rights reserved.</p>
+        {/* Copyright & Powered By Fine Print */}
+        <div className="pt-6 flex flex-col items-center justify-center text-center gap-1.5">
+          <p className="text-[11px] text-slate-400">
+            &copy; 2026 The Pearl Wellness Spa. All rights reserved.
+          </p>
+          <p className="text-[10px] text-slate-500 tracking-wide">
+            Powered by LumeCarCare
+          </p>
         </div>
       </div>
     </footer>

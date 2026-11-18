@@ -168,7 +168,7 @@ export const TherapistGrid: React.FC<TherapistGridProps> = ({
         {/* Discreet Notice */}
         <div className="mt-10 p-5 rounded-2xl bg-white border border-[#E4DDD1] text-center max-w-2xl mx-auto shadow-xs">
           <p className="text-xs sm:text-sm text-[#5A626A] font-light leading-relaxed">
-            Private appointments with Kylie, Bliss, Kitkate, Faith, Barbie, or Channel are strictly confidential.
+            Private appointments with our therapists are strictly confidential.
             WhatsApp reception directly on <strong className="text-[#121C2B] font-semibold">063 551 9026</strong>.
           </p>
         </div>

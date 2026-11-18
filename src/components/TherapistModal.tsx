@@ -191,6 +191,12 @@ export const TherapistModal: React.FC<TherapistModalProps> = ({
                     </div>
                   ))}
                 </div>
+                <p className="mt-3 text-[11px] font-medium text-center text-[#121C2B]">
+                  Pool Session &mdash; R500 / hour (with one lady)
+                </p>
+                <p className="mt-1 text-[11px] italic text-center text-[#7D664B]">
+                  * Enquire with reception for Double Massages &amp; Bachelor Parties rates.
+                </p>
               </div>
             </div>
           </div>

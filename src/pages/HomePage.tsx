@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Hero } from '../components/Hero';
 import { PageId } from '../components/Navbar';
 import { CONTACT_INFO, DURATION_RATES } from '../data/spaData';
+import { EXPERIENCE_ITEMS } from '../data/experiencesData';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
 import { useTherapists } from '../context/TherapistContext';
 import {
@@ -22,7 +23,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onNavigate,
   onOpenBooking,
 }) => {
-  const { getPhoto, movingSnippets } = useVenuePhotos();
+  const { getPhoto, movingSnippets, getExperiencePhoto } = useVenuePhotos();
   const { groupPhotos } = useTherapists();
 
   const [activeVenueIdx, setActiveVenueIdx] = useState(0);
@@ -42,90 +43,71 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <div className="min-h-screen bg-[#F6F3ED] text-[#141C24]">
-      {/* 1. Hero with Permanent Moving Imagery */}
+      {/* 1. Opening Page (Hero) */}
       <Hero onOpenBooking={() => onOpenBooking()} onNavigate={onNavigate} />
 
-      {/* 2. Home Showcase Section */}
-      <section className="py-16 sm:py-22 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-20">
-        {/* Part A: Our Ladies Together — 1 Big Main Photo + 2 Complementary Photos */}
-        <div className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[#E4DDD1]">
-            <div>
-              <p className="text-[11px] tracking-[0.24em] uppercase text-[#9A7440] font-semibold">
-                The Company
-              </p>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#121C2B] mt-1 tracking-tight">
-                Our Ladies Together
-              </h2>
-              <p className="text-xs sm:text-sm text-[#6B7280] mt-1 font-light tracking-wide">
-                Kylie &middot; Bliss &middot; Kitkate &middot; Faith &middot; Barbie &middot; Channel
-              </p>
-            </div>
-          </div>
-
-          {/* Asymmetric 1 Big Photo + 2 Complementary Photos Grid */}
-          <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-[540px] gap-4">
-            {/* Big Showcase Group Photo (8 cols) */}
-            <div
-              onClick={() => setGroupLightboxIdx(0)}
-              className="lg:col-span-8 relative h-[340px] sm:h-[420px] lg:h-[540px] min-h-0 min-w-0 rounded-2xl overflow-hidden bg-[#0E1622] border border-[#E4DDD1] shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer group"
-            >
-              <img
-                src={groupPhotos[0]}
-                alt="The Pearl Ladies 1"
-                referrerPolicy="no-referrer"
-                className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B121E]/25 via-transparent to-transparent pointer-events-none" />
-
-              <div className="absolute top-3.5 right-3.5 z-10">
-                <span className="p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md inline-flex">
-                  <Maximize2 className="w-4 h-4" />
-                </span>
-              </div>
-            </div>
-
-            {/* 2 Complementary Stacked Photos (4 cols) */}
-            <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[minmax(0,1fr)_minmax(0,1fr)] gap-4 h-[200px] sm:h-[250px] lg:h-[540px] min-h-0 min-w-0 overflow-hidden">
-              {[1, 2].map((groupIdx) => (
-                <div
-                  key={groupIdx}
-                  onClick={() => setGroupLightboxIdx(groupIdx)}
-                  className="relative w-full h-full min-h-0 min-w-0 rounded-2xl overflow-hidden bg-[#0E1622] border border-[#E4DDD1] shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer group"
-                >
-                  <img
-                    src={groupPhotos[groupIdx]}
-                    alt={`The Pearl Ladies ${groupIdx + 1}`}
-                    referrerPolicy="no-referrer"
-                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B121E]/20 via-transparent to-transparent pointer-events-none" />
-
-                  <div className="absolute top-3 right-3 z-10">
-                    <span className="p-1.5 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md inline-flex">
-                      <Maximize2 className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Clean Action CTA to View Ladies Individually */}
-          <div className="flex justify-center pt-2">
-            <button
-              type="button"
-              onClick={() => onNavigate('ladies')}
-              id="home-view-ladies-individually-btn"
-              className="px-9 py-4 rounded-lg text-xs font-semibold tracking-[0.18em] uppercase text-[#121C2B] bg-gradient-to-r from-[#D4AF37] via-[#E8CC75] to-[#C8A45D] hover:brightness-105 transition-all inline-flex items-center gap-3 shadow-md hover:shadow-lg cursor-pointer"
-            >
-              <span>View Ladies Individually</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+      {/* 2. Our Experiences Section */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[#E4DDD1] mb-10">
+          <div>
+            <p className="text-[11px] tracking-[0.24em] uppercase text-[#9A7440] font-semibold">
+              Curated Sessions
+            </p>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#121C2B] mt-1 tracking-tight">
+              Our Experiences
+            </h2>
           </div>
         </div>
 
-        {/* Part B: Moving Venue Gallery Showcase */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {EXPERIENCE_ITEMS.map((item) => {
+            const imgSrc = getExperiencePhoto(item.id, item.defaultImage);
+            return (
+              <article
+                key={item.id}
+                onClick={() => onOpenBooking()}
+                className="bg-white rounded-2xl overflow-hidden border border-[#E4DDD1] hover:border-[#9A7440]/70 transition-all duration-300 flex flex-col shadow-xs hover:shadow-lg cursor-pointer group"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-[#0E1622]">
+                  <img
+                    src={imgSrc}
+                    alt={item.title}
+                    referrerPolicy="no-referrer"
+                    className={`w-full h-full object-cover ${
+                      item.objectPositionClass || 'object-center'
+                    } group-hover:scale-105 transition-transform duration-700`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B121E]/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                  <div>
+                    <h3 className="font-serif text-xl font-normal text-[#121C2B]">
+                      {item.title}
+                    </h3>
+                    {item.priceNote && (
+                      <p className="mt-1 text-xs font-semibold text-[#9A7440] tabular-nums">
+                        {item.priceNote}
+                      </p>
+                    )}
+                    <p className="mt-2 text-xs text-[#5A626A] font-light leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <span className="pt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#9A7440] group-hover:text-[#121C2B] transition-colors">
+                    <span>Enquire Privately</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 3. Moving Venue Gallery Showcase */}
+      <section className="pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[#E4DDD1]">
             <div>
@@ -139,7 +121,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <button
               onClick={() => onNavigate('venue')}
-              className="self-start sm:self-auto inline-flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-[#121C2B] hover:text-[#9A7440] transition-colors cursor-pointer"
+              className="self-start sm:self-auto inline-flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-[#121C2B] hover:text-[#9A7440] transition-colors cursor-pointer whitespace-nowrap"
             >
               <span>Explore Full Venue</span>
               <ArrowRight className="w-4 h-4" />
@@ -210,7 +192,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 3. Discrete Duration & Rates Section */}
+      {/* 4. Discrete Duration & Rates Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0E1622] text-white border-y border-[#D4AF37]/25">
         <div className="max-w-xl mx-auto">
           <div className="bg-[#FAF8F4] text-[#121C2B] rounded-2xl p-8 sm:p-12 border border-[#D4AF37]/50 shadow-2xl text-center">
@@ -240,7 +222,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               ))}
             </ul>
 
-            <p className="mt-7 text-xs text-[#6B7280] font-light leading-relaxed">
+            {/* Pool Session Rate & Doubles / Bachelor Parties Disclaimer */}
+            <div className="mt-5 pt-4 border-t border-[#E4DDD1] space-y-2">
+              <p className="text-xs font-semibold text-[#121C2B] tabular-nums">
+                Pool Session &mdash; R500 per hour (with one lady)
+              </p>
+              <p className="text-xs italic text-[#7D664B] font-medium">
+                * Please enquire with reception for Double Massages &amp; Bachelor Parties rates.
+              </p>
+            </div>
+
+            <p className="mt-4 text-xs text-[#6B7280] font-light leading-relaxed">
               Private en-suite suites &middot; Complimentary refreshments &middot; Discreet gated parking
             </p>
 
@@ -251,14 +243,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3 rounded-lg text-xs font-semibold tracking-[0.14em] uppercase text-white bg-[#1F7A4D] hover:bg-[#18643F] transition-colors flex items-center justify-center gap-2 shadow-sm"
+                className="w-full sm:w-auto px-6 py-3 rounded-lg text-xs font-semibold tracking-[0.14em] uppercase text-white bg-[#1F7A4D] hover:bg-[#18643F] transition-colors flex items-center justify-center gap-2 shadow-sm whitespace-nowrap"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Book on WhatsApp</span>
               </a>
               <button
                 onClick={() => onOpenBooking()}
-                className="w-full sm:w-auto px-6 py-3 rounded-lg text-xs font-semibold tracking-[0.14em] uppercase text-[#121C2B] border border-[#121C2B]/25 hover:border-[#121C2B] transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 rounded-lg text-xs font-semibold tracking-[0.14em] uppercase text-[#121C2B] border border-[#121C2B]/25 hover:border-[#121C2B] transition-colors cursor-pointer whitespace-nowrap"
               >
                 Online Request
               </button>
@@ -267,39 +259,130 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 4. Discrete Sanctuary Pillars & Policies Callout */}
-      <section className="py-18 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Private</p>
-            <h3 className="font-serif text-xl font-normal text-[#121C2B]">En-suite seclusion</h3>
-            <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
-              Every session takes place in an enclosed suite with private shower facilities and crisp linen.
-            </p>
+      {/* 5. Our Ladies Section (Moved Down Below Duration & Rates) */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[#E4DDD1]">
+            <div>
+              <p className="text-[11px] tracking-[0.24em] uppercase text-[#9A7440] font-semibold">
+                The Company
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#121C2B] mt-1 tracking-tight">
+                Our Ladies Together
+              </h2>
+              <p className="text-xs sm:text-sm text-[#6B7280] mt-1 font-light tracking-wide">
+                Discreet, warm, and attentive company tailored to your comfort
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Discreet</p>
-            <h3 className="font-serif text-xl font-normal text-[#121C2B]">Unmarked arrival</h3>
-            <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
-              Quiet private setting with exact gate access shared directly once your booking is confirmed.
-            </p>
+          {/* Asymmetric 1 Big Photo + 2 Complementary Photos Grid */}
+          <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-[540px] gap-4">
+            {/* Big Showcase Group Photo (8 cols) */}
+            <div
+              onClick={() => setGroupLightboxIdx(0)}
+              className="lg:col-span-8 relative h-[340px] sm:h-[420px] lg:h-[540px] min-h-0 min-w-0 rounded-2xl overflow-hidden bg-[#0E1622] border border-[#E4DDD1] shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer group"
+            >
+              <img
+                src={groupPhotos[0]}
+                alt="The Pearl Ladies 1"
+                referrerPolicy="no-referrer"
+                className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B121E]/25 via-transparent to-transparent pointer-events-none" />
+
+              <div className="absolute top-3.5 right-3.5 z-10">
+                <span className="p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md inline-flex">
+                  <Maximize2 className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+
+            {/* 2 Complementary Stacked Photos (4 cols) */}
+            <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[minmax(0,1fr)_minmax(0,1fr)] gap-4 h-[200px] sm:h-[250px] lg:h-[540px] min-h-0 min-w-0 overflow-hidden">
+              {[1, 2].map((groupIdx) => (
+                <div
+                  key={groupIdx}
+                  onClick={() => setGroupLightboxIdx(groupIdx)}
+                  className="relative w-full h-full min-h-0 min-w-0 rounded-2xl overflow-hidden bg-[#0E1622] border border-[#E4DDD1] shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer group"
+                >
+                  <img
+                    src={groupPhotos[groupIdx]}
+                    alt={`The Pearl Ladies ${groupIdx + 1}`}
+                    referrerPolicy="no-referrer"
+                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B121E]/20 via-transparent to-transparent pointer-events-none" />
+
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="p-1.5 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md inline-flex">
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Unhurried</p>
-            <h3 className="font-serif text-xl font-normal text-[#121C2B]">By appointment</h3>
-            <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
-              Staggered booking slots ensure total privacy from arrival behind the gate to departure.
+          {/* Clean Action CTA to View Ladies Individually */}
+          <div className="flex justify-center pt-2">
+            <button
+              type="button"
+              onClick={() => onNavigate('ladies')}
+              id="home-view-ladies-individually-btn"
+              className="px-9 py-4 rounded-lg text-xs font-semibold tracking-[0.18em] uppercase text-[#121C2B] bg-gradient-to-r from-[#D4AF37] via-[#E8CC75] to-[#C8A45D] hover:brightness-105 transition-all inline-flex items-center gap-3 shadow-md hover:shadow-lg cursor-pointer"
+            >
+              <span>View Ladies Individually</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Our Promise Section */}
+      <section className="pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-12">
+        <div className="space-y-8">
+          <div className="pb-5 border-b border-[#E4DDD1]">
+            <p className="text-[11px] tracking-[0.24em] uppercase text-[#9A7440] font-semibold">
+              Our Standards
             </p>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal text-[#121C2B] mt-1 tracking-tight">
+              Our Promise
+            </h2>
           </div>
 
-          <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Confidential</p>
-            <h3 className="font-serif text-xl font-normal text-[#121C2B]">Strict discretion</h3>
-            <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
-              No public registries or shared records. Open daily from 10:00 until 20:00.
-            </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Private</p>
+              <h3 className="font-serif text-xl font-normal text-[#121C2B]">En-suite seclusion</h3>
+              <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
+                Every session takes place in an enclosed suite with private shower facilities and crisp linen.
+              </p>
+            </div>
+
+            <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Discreet</p>
+              <h3 className="font-serif text-xl font-normal text-[#121C2B]">Unmarked arrival</h3>
+              <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
+                Quiet private setting with exact gate access shared directly once your booking is confirmed.
+              </p>
+            </div>
+
+            <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Unhurried</p>
+              <h3 className="font-serif text-xl font-normal text-[#121C2B]">By appointment</h3>
+              <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
+                Staggered booking slots ensure total privacy from arrival behind the gate to departure.
+              </p>
+            </div>
+
+            <div className="space-y-2 border-t border-[#D4AF37]/30 pt-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Confidential</p>
+              <h3 className="font-serif text-xl font-normal text-[#121C2B]">Strict discretion</h3>
+              <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
+                No public registries or shared records. Open daily from 10:00 until 20:00.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -313,10 +396,10 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h3>
           </div>
           <button
-            onClick={() => onNavigate('policies')}
-            className="px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#121C2B] border border-[#121C2B]/30 hover:bg-[#121C2B] hover:text-white cursor-pointer whitespace-nowrap transition-colors rounded-lg shrink-0"
+            onClick={() => onOpenBooking()}
+            className="px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#121C2B] bg-[#D4AF37] hover:bg-[#E5C55C] cursor-pointer whitespace-nowrap transition-colors rounded-lg shrink-0"
           >
-            View Policies &rarr;
+            Book Privately
           </button>
         </div>
       </section>

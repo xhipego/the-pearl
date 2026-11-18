@@ -10,29 +10,32 @@ import { BookingModal } from './components/BookingModal';
 import { HomePage } from './pages/HomePage';
 import { VenuePage } from './pages/VenuePage';
 import { HostessesPage } from './pages/HostessesPage';
-import { PoliciesPage } from './pages/PoliciesPage';
-import { ContactPage } from './pages/ContactPage';
+import { BecomeAPearlPage } from './pages/BecomeAPearlPage';
 import { VenuePhotoProvider } from './context/VenuePhotoContext';
 import { TherapistProvider } from './context/TherapistContext';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const [selectedDuration, setSelectedDuration] = useState('1 hour');
+  const [selectedDuration] = useState('1 hour');
   const [selectedLadyName, setSelectedLadyName] = useState('');
 
   // Sync with browser URL hash for clean navigation & back/forward button support
   useEffect(() => {
     const parseHash = (): PageId => {
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      const validPages: PageId[] = ['home', 'venue', 'ladies', 'policies', 'contact'];
+      const validPages: PageId[] = [
+        'home',
+        'venue',
+        'ladies',
+        'become-a-pearl',
+      ];
       if (validPages.includes(hash as PageId)) {
         return hash as PageId;
       }
-      // Backwards compatibility for previous hashes
       if (hash === 'girls' || hash === 'hostesses' || hash === 'therapists') return 'ladies';
+      if (hash === 'apply' || hash === 'careers' || hash === 'join') return 'become-a-pearl';
       if (hash === 'about') return 'venue';
-      if (hash === 'visit') return 'policies';
       return 'home';
     };
 
@@ -62,7 +65,7 @@ export default function App() {
     <VenuePhotoProvider>
       <TherapistProvider>
         <div className="min-h-screen bg-[#F5F2EC] text-[#121C2B] flex flex-col font-sans selection:bg-[#D4AF37]/30 selection:text-[#121C2B]">
-          {/* Top Navigation Bar: Home - The Venue - Our Ladies - Policies - Contact */}
+          {/* Top Navigation Bar: Home - The Venue - Our Ladies - Become a Pearl */}
           <Navbar
             currentPage={currentPage}
             onNavigate={handleNavigate}
@@ -93,22 +96,12 @@ export default function App() {
               />
             )}
 
-            {currentPage === 'policies' && (
-              <PoliciesPage
-                onNavigate={handleNavigate}
-                onOpenBooking={() => handleOpenBookingWithLady()}
-              />
-            )}
-
-            {currentPage === 'contact' && (
-              <ContactPage
-                onNavigate={handleNavigate}
-                initialDuration={selectedDuration}
-              />
+            {currentPage === 'become-a-pearl' && (
+              <BecomeAPearlPage onNavigate={handleNavigate} />
             )}
           </main>
 
-          {/* Discreet Gentleman Sanctuary Footer */}
+          {/* Discreet Sanctuary Footer */}
           <Footer onNavigate={handleNavigate} />
 
           {/* Global Interactive Booking Dialog */}

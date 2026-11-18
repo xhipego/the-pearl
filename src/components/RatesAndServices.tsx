@@ -26,7 +26,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
   const massageServices = [
     {
       id: 'deep-tissue-massage',
-      badge: 'Most Booked by Men',
+      badge: 'Most Booked',
       badgeColor: 'bg-[#9C6439] text-white',
       featured: true,
       icon: <Activity className="w-5 h-5 text-[#D4AF37]" />,
@@ -35,7 +35,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
       animClass: 'animate-kenburns-1',
       tagline: 'Firm, concentrated trigger-point pressure for athletic recovery & chronic stiffness.',
       description:
-        'Our premier and most requested bodywork session for gentlemen. Your qualified therapist applies deliberate, slow, firm strokes using forearms, knuckles, and thumbs to reach deep muscle layers and connective tissue.',
+        'Our signature and most requested bodywork session. Your qualified therapist applies deliberate, slow, firm strokes using forearms, knuckles, and thumbs to reach deep muscle layers and connective tissue.',
       benefits: [
         'Breaks up rigid scar tissue, locked knots, and chronic desk tightness',
         'Targets trapezius, lower back, hamstrings, and shoulder blade strain',
@@ -65,7 +65,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
         'Medium, balanced pressure that releases mental stress and bodily fatigue',
         'Enhances blood oxygenation and stimulates lymphatic detoxification',
         'Eases mild muscle aches while promoting deep sleep and calm',
-        'Ideal first massage for gentlemen seeking to unplug and switch off',
+        'Ideal first massage for guests seeking to unplug and switch off',
       ],
       includes: 'Full-body coverage with professional draping, warm botanical oil, private room',
       durations: [
@@ -133,7 +133,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
       animClass: 'animate-kenburns-3',
       tagline: 'Targeted focus for computer fatigue, driving tension, and upper-spine stiffness.',
       description:
-        'An intensive 30-minute targeted session concentrated precisely where modern men hold the heaviest strain. Gets you off the table loose, relaxed, and recharged without taking up your entire afternoon.',
+        'An intensive 30-minute targeted session concentrated precisely where busy schedules hold the heaviest strain. Gets you off the table loose, relaxed, and recharged without taking up your entire afternoon.',
       benefits: [
         'Dedicated release of cervical spine, neck stiffness, and shoulder knots',
         'Counteracts hunched computer posture, mobile phone neck, and driving fatigue',
@@ -504,7 +504,7 @@ export const RatesAndServices: React.FC<RatesAndServicesProps> = ({ onSelectBook
                     {selectedPhoto.title}
                   </h4>
                   <p className="text-xs text-[#D8B892]">
-                    The Pearl Men&apos;s Day Spa
+                    The Pearl Wellness Spa
                   </p>
                 </div>
                 <button

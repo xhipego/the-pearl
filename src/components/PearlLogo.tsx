@@ -15,7 +15,7 @@ export const PearlLogo: React.FC<PearlLogoProps> = ({
   showText = true,
   lightText = false,
   layout = 'horizontal',
-  subtitle = "Men's Day Spa",
+  subtitle = '',
 }) => {
   const iconSizes = {
     sm: 'w-8 h-8',
@@ -337,7 +337,7 @@ export const PearlLogo: React.FC<PearlLogoProps> = ({
         </svg>
       </div>
 
-      {/* Typography: THE PEARL (Serif) + Wellness Spa (Italic) */}
+      {/* Typography: THE PEARL (Serif) */}
       {showText && (
         <div
           className={`flex flex-col ${
@@ -352,14 +352,16 @@ export const PearlLogo: React.FC<PearlLogoProps> = ({
           >
             THE PEARL
           </span>
-          <span
-            className={`font-serif italic font-normal ${subtitleSizes[size]} ${
-              lightText ? 'text-[#F3E5AB]' : 'text-[#1B2B42]'
-            } mt-1 drop-shadow-sm select-none`}
-            style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
-          >
-            {subtitle}
-          </span>
+          {subtitle ? (
+            <span
+              className={`font-serif italic font-normal ${subtitleSizes[size]} ${
+                lightText ? 'text-[#F3E5AB]' : 'text-[#1B2B42]'
+              } mt-1 drop-shadow-sm select-none`}
+              style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
+            >
+              {subtitle}
+            </span>
+          ) : null}
         </div>
       )}
     </div>

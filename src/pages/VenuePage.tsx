@@ -71,7 +71,8 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
       />
 
       {/* Editorial Bento Gallery — Compact & Zero White Gaps */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 space-y-8">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 space-y-6">
+
         {/* Pure Photography Grid — No Descriptions & Zero White Gaps */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:auto-rows-[220px] lg:auto-rows-[245px]">
           {activeSlots.map((slot, idx) => {

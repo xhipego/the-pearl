@@ -3,7 +3,11 @@ import { PearlLogo } from './PearlLogo';
 import { Phone, Menu, X } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
 
-export type PageId = 'home' | 'venue' | 'ladies' | 'policies' | 'contact';
+export type PageId =
+  | 'home'
+  | 'venue'
+  | 'ladies'
+  | 'become-a-pearl';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -31,8 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'home', name: 'Home' },
     { id: 'venue', name: 'The Venue' },
     { id: 'ladies', name: 'Our Ladies' },
-    { id: 'policies', name: 'Policies' },
-    { id: 'contact', name: 'Contact' },
+    { id: 'become-a-pearl', name: 'Become a Pearl' },
   ];
 
   const handleLinkClick = (id: PageId, e: React.MouseEvent) => {
@@ -65,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
 
-        {/* Zone 2: 5 Single-Line Navigation Links */}
+        {/* Zone 2: Single-Line Navigation Links */}
         <nav className="hidden lg:flex items-center justify-center gap-7 xl:gap-9 mx-auto shrink-0">
           {navLinks.map((link) => {
             const isActive = currentPage === link.id;
@@ -74,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.id}
                 onClick={(e) => handleLinkClick(link.id, e)}
                 id={`nav-link-${link.id}`}
-                className={`text-xs xl:text-[13px] tracking-[0.16em] uppercase font-medium transition-colors relative py-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+                className={`text-xs xl:text-[13px] tracking-[0.15em] uppercase font-medium transition-colors relative py-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'text-[#F3E5AB]'
                     : 'text-slate-200 hover:text-white'
@@ -140,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               key={link.id}
               onClick={(e) => handleLinkClick(link.id, e)}
-              className={`block w-full text-left py-2.5 px-3 rounded text-xs uppercase tracking-[0.15em] font-medium transition-colors ${
+              className={`block w-full text-left py-2.5 px-3 rounded text-xs uppercase tracking-[0.15em] font-medium transition-colors cursor-pointer ${
                 currentPage === link.id
                   ? 'bg-white/10 text-[#F3E5AB]'
                   : 'text-slate-300 hover:text-white hover:bg-white/5'

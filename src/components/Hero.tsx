@@ -1,71 +1,37 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, Clock, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { CONTACT_INFO } from '../data/spaData';
-import { VENUE_IMAGES, HERO_FEATURED_IMAGES } from '../data/venueImages';
 import { PearlLogo } from './PearlLogo';
 import { PageId } from './Navbar';
 import { useVenuePhotos } from '../context/VenuePhotoContext';
-import { useTherapists, normalizeTherapistPhotos } from '../context/TherapistContext';
 
 interface HeroProps {
   onOpenBooking: () => void;
   onNavigate?: (page: PageId) => void;
 }
 
-interface HeroSlide {
-  id: string;
-  image: string;
-  isPortrait: boolean;
-}
-
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const { getPhoto } = useVenuePhotos();
-  const { therapists } = useTherapists();
+  const { heroSlides } = useVenuePhotos();
 
-  const slides = useMemo<HeroSlide[]>(() => {
-    const channel = therapists.find((t) => t.id === 'channel');
-    const channelPhotos = channel ? normalizeTherapistPhotos(channel) : [];
-
-    const bakedSlides: HeroSlide[] = [
-      { id: 'hero-1', image: getPhoto('room-1', VENUE_IMAGES['room-1']), isPortrait: false },
-      { id: 'hero-2', image: getPhoto('room-1-ensuite', VENUE_IMAGES['room-1-ensuite']), isPortrait: false },
-      { id: 'hero-3', image: getPhoto('pool-lapa', VENUE_IMAGES['pool-lapa']), isPortrait: false },
-      { id: 'hero-4', image: getPhoto('room-4-footscrub', VENUE_IMAGES['room-4-footscrub']), isPortrait: false },
-      { id: 'hero-5', image: HERO_FEATURED_IMAGES[0], isPortrait: true },
-      { id: 'hero-6', image: HERO_FEATURED_IMAGES[1], isPortrait: true },
-      { id: 'hero-7', image: HERO_FEATURED_IMAGES[2], isPortrait: true },
-    ];
-
-    if (channelPhotos[2] || channel?.image) {
-      bakedSlides.push({
-        id: 'hero-8',
-        image: channelPhotos[2] || channel!.image,
-        isPortrait: true,
-      });
-    }
-
-    return bakedSlides;
-  }, [therapists, getPhoto]);
-
-  const safeIndex = slides.length > 0 ? currentSlideIndex % slides.length : 0;
+  const safeIndex = heroSlides.length > 0 ? currentSlideIndex % heroSlides.length : 0;
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (heroSlides.length <= 1) return;
     const interval = setInterval(() => {
-      setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
+      setCurrentSlideIndex((prev) => (prev + 1) % heroSlides.length);
     }, 5500);
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [heroSlides.length]);
 
   const handleNext = () => {
-    if (slides.length <= 1) return;
-    setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
+    if (heroSlides.length <= 1) return;
+    setCurrentSlideIndex((prev) => (prev + 1) % heroSlides.length);
   };
 
   const handlePrev = () => {
-    if (slides.length <= 1) return;
-    setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    if (heroSlides.length <= 1) return;
+    setCurrentSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   };
 
   return (
@@ -75,7 +41,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     >
       {/* Background Moving Carousel */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {slides.map((slide, idx) => {
+        {heroSlides.map((slide, idx) => {
           const isCurrent = idx === safeIndex;
           const animClass =
             idx % 3 === 0
@@ -93,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             >
               <img
                 src={slide.image}
-                alt="The Pearl Sanctuary"
+                alt="The Pearl Wellness Spa"
                 referrerPolicy="no-referrer"
                 className={`w-full h-full object-cover ${
                   slide.isPortrait ? 'object-top' : 'object-center'
@@ -108,18 +74,15 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <div className="absolute inset-0 z-20 bg-gradient-to-b from-[#0E1622]/80 via-[#0E1622]/55 to-[#0E1622]/95" />
       </div>
 
-      {/* Central Discrete Luxury Statement */}
+      {/* Central Discrete Luxury Statement — Just "The Pearl" */}
       <div className="relative z-30 max-w-3xl mx-auto text-center flex flex-col items-center my-auto py-8">
         <div className="mb-5">
           <PearlLogo size="xl" showText={false} />
         </div>
 
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-[0.16em] uppercase leading-tight">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-[0.16em] uppercase leading-tight mb-5">
           THE PEARL
         </h1>
-        <p className="font-serif italic text-lg sm:text-2xl text-[#E5C55C] tracking-widest mt-1.5 mb-5">
-          A Private Sanctuary
-        </p>
 
         <div className="flex items-center justify-center gap-3 w-full max-w-xs my-1">
           <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]/80" />
@@ -165,28 +128,30 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Minimal Carousel Controls — No Labels or Venue Names */}
-      {slides.length > 1 && (
+      {/* Minimal Carousel Controls */}
+      {heroSlides.length > 1 && (
         <div className="relative z-30 max-w-6xl w-full mx-auto flex items-center justify-end gap-2.5 pt-4 border-t border-white/10 text-xs text-slate-300">
-          <span className="text-[11px] text-slate-400 tabular-nums mr-1">
-            {safeIndex + 1} / {slides.length}
-          </span>
-          <button
-            type="button"
-            onClick={handlePrev}
-            aria-label="Previous slide"
-            className="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next slide"
-            className="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2.5 ml-auto">
+            <span className="text-[11px] text-slate-400 tabular-nums mr-1">
+              {safeIndex + 1} / {heroSlides.length}
+            </span>
+            <button
+              type="button"
+              onClick={handlePrev}
+              aria-label="Previous slide"
+              className="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              aria-label="Next slide"
+              className="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       )}
     </section>

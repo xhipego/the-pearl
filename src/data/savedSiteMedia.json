@@ -1,0 +1,83 @@
+{
+  "heroSlides": [
+    {
+      "id": "hero-1",
+      "image": "./images/saved/hero_1_1e10ca3b69.jpg",
+      "isPortrait": false,
+      "label": "Hero Slide 1"
+    },
+    {
+      "id": "hero-2",
+      "image": "./images/saved/hero_2_d94148b652.jpg",
+      "isPortrait": false,
+      "label": "Hero Slide 2"
+    },
+    {
+      "id": "hero-3",
+      "image": "./images/saved/hero_3_d6bfd3d796.jpg",
+      "isPortrait": true,
+      "label": "Hero Slide 3"
+    },
+    {
+      "id": "hero-4",
+      "image": "./images/saved/hero_4_eac96bb2f3.jpg",
+      "isPortrait": true,
+      "label": "Hero Slide 4"
+    },
+    {
+      "id": "hero-5",
+      "image": "./images/saved/hero_5_1577c50600.jpg",
+      "isPortrait": false,
+      "label": "Hero Slide 5"
+    },
+    {
+      "id": "hero-6",
+      "image": "./images/saved/hero_6_6c127fa8d4.jpg",
+      "isPortrait": false,
+      "label": "Hero Slide 6"
+    },
+    {
+      "id": "hero-7",
+      "image": "./images/saved/hero_7_97faecf230.jpg",
+      "isPortrait": false,
+      "label": "Hero Slide 7"
+    }
+  ],
+  "groupPhotos": [
+    "./images/saved/group_1_d6bfd3d796.jpg",
+    null,
+    "./images/saved/group_3_eac96bb2f3.jpg"
+  ],
+  "experiencePhotos": {
+    "double-massages": "./images/saved/exp_double-massages_18c21b8445.jpg",
+    "pool-sessions": "./images/saved/exp_pool-sessions_b2736ed52f.jpg"
+  },
+  "venuePhotos": {
+    "room-1": "./images/saved/venue_room-1_97faecf230.jpg",
+    "room-1-ensuite": "./images/saved/venue_room-1-ensuite_1577c50600.jpg"
+  },
+  "therapistPhotos": {
+    "bliss": [
+      null,
+      "./images/saved/bliss_2_0f5236962c.jpg",
+      "./images/saved/bliss_3_86be7fde08.jpg",
+      "./images/saved/bliss_4_f864cb093d.jpg",
+      "./images/saved/bliss_5_66418050a5.jpg"
+    ],
+    "channel": [
+      "./images/saved/channel_1_b5cd36f5d1.jpg",
+      "./images/saved/channel_2_ab0888c259.jpg",
+      "./images/saved/channel_3_cbb5fd380f.jpg",
+      null,
+      "./images/saved/channel_5_900e12470d.jpg"
+    ],
+    "kylie": [
+      null,
+      "./images/saved/kylie_2_77058159eb.jpg",
+      "./images/saved/kylie_3_454ec2402e.jpg",
+      "./images/saved/kylie_4_e2a1af569b.jpg",
+      "./images/saved/kylie_5_d8fc0b24f8.jpg"
+    ]
+  },
+  "updatedAt": "2026-11-18T13:54:00.000Z"
+}

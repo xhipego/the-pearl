@@ -28,7 +28,7 @@ export const TREATMENT_MENU: TreatmentMenuItem[] = [
       { time: '60 min', minutes: 60, price: 750 },
       { time: '90 min', minutes: 90, price: 1050 },
     ],
-    description: 'Firm, slow, focused pressure for chronic tightness, gym workouts, heavy lifting, and sports recovery. Our premier treatment for gentlemen.',
+    description: 'Firm, slow, focused pressure for chronic tightness, gym workouts, heavy lifting, and sports recovery. Our signature restorative treatment.',
     whatsAppMsg: "Hi, I'd like to book a Deep Tissue massage. Which times are available?",
   },
   {
@@ -215,10 +215,10 @@ export const SIGNATURE_PACKAGES: PackageItem[] = [
   {
     title: 'Deep Tissue Muscle Recovery',
     rateInfo: 'From R750 (60 min) / R1,050 (90 min)',
-    badge: 'Most Booked by Men',
+    badge: 'Most Booked',
     highlight: true,
     description:
-      'Firm, concentrated pressure designed for gentlemen with chronic desk stiffness, heavy gym training, driving fatigue, or physically demanding site work. Your therapist uses knuckles, forearms, and thumbs to release locked muscle fibers and restore mobility.',
+      'Firm, concentrated pressure designed for guests with chronic desk stiffness, heavy gym training, driving fatigue, or physically demanding work. Your therapist uses knuckles, forearms, and thumbs to release locked muscle fibers and restore mobility.',
     features: [
       'Focused trigger-point release on back, neck & legs',
       'Customized pressure levels to match your tolerance',
@@ -287,9 +287,9 @@ export const POLICY_STATEMENT = {
 };
 
 export const CONTACT_INFO = {
-  name: "The Pearl Men's Day Spa",
-  subtitle: "Men's Day Spa",
-  tagline: 'Private Sanctuary for Discerning Gentlemen',
+  name: 'The Pearl Wellness Spa',
+  subtitle: 'Private Sanctuary',
+  tagline: 'A Private, Understated Sanctuary',
   phone1: '0635519026',
   phone1Formatted: '063 551 9026',
   whatsappNumber: '27635519026',

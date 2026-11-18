@@ -31,7 +31,7 @@ export const About: React.FC = () => {
             <div className="h-[1px] flex-1 bg-[#D4AF37]/40" />
           </div>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-2xl mx-auto font-light">
-            Designed as a tranquil private retreat, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> offers discerning gentlemen understated indulgence, unhurried attention, and deep relaxation.
+            Designed as a tranquil private retreat, <strong className="text-[#1B2B42] font-semibold">The Pearl Wellness Spa</strong> offers discerning guests understated indulgence, unhurried attention, and deep relaxation.
           </p>
         </div>
 
