@@ -2,10 +2,7 @@ import React, { createContext, useContext, useState, useMemo } from 'react';
 import { Therapist } from '../types';
 import { THERAPISTS as INITIAL_THERAPISTS } from '../data/therapists';
 import { THERAPIST_IMAGES, DEFAULT_GROUP_PHOTOS } from '../data/therapistImages';
-import savedSiteMediaRaw from '../data/savedSiteMedia.json';
-import { PersistedSiteMedia } from '../utils/mediaStorage';
-
-const BAKED_MEDIA = savedSiteMediaRaw as PersistedSiteMedia;
+import { BAKED_MEDIA } from '../data/savedSiteMedia';
 
 export function normalizeTherapistPhotos(therapist: any): string[] {
   if (!therapist) return [];

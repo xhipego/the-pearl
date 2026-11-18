@@ -3,15 +3,12 @@ import { VENUE_PHOTO_SLOTS, VenuePhotoSlot } from '../data/venuePhotoSlots';
 import { VENUE_IMAGES, HERO_FEATURED_IMAGES } from '../data/venueImages';
 import { EXPERIENCE_ITEMS } from '../data/experiencesData';
 import { channelPhoto3 } from '../data/therapistImages';
-import savedSiteMediaRaw from '../data/savedSiteMedia.json';
+import { BAKED_MEDIA } from '../data/savedSiteMedia';
 import { VenueSnippet } from '../types';
 import {
-  PersistedSiteMedia,
   HeroSlideConfig,
   CustomVenueSlotConfig,
 } from '../utils/mediaStorage';
-
-const BAKED_MEDIA = savedSiteMediaRaw as PersistedSiteMedia;
 
 const DEFAULT_HERO_SLIDES: HeroSlideConfig[] = [
   { id: 'hero-1', image: VENUE_IMAGES['room-1'], isPortrait: false, label: 'Hero Slide 1' },
