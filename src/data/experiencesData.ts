@@ -1,4 +1,4 @@
-import sensualMassageDefault from '../assets/images/aromatherapy_treatment_1791283056501.jpg';
+import sensualMassageDefault from '../assets/images/sensual_massage_client_1795104793896.jpg';
 import doubleMassagesDefault from '../assets/images/couples_massage_suite_1791284102314.jpg';
 import bachelorPartiesDefault from '../assets/images/bachelor_parties_real.jpeg';
 import poolSessionsDefault from '../assets/venue/venue_pool_lapa.jpg';

@@ -33,9 +33,11 @@ const INITIAL_CUSTOM_SLOTS: CustomVenueSlotConfig[] = Array.isArray(BAKED_MEDIA.
   ? BAKED_MEDIA.customVenueSlots
   : [];
 
+const REMOVED_VENUE_SLOT_IDS = new Set(['secure-parking', 'custom-suite']);
+
 const INITIAL_ENABLED_SLOT_IDS: string[] =
   Array.isArray(BAKED_MEDIA.enabledSlotIds) && BAKED_MEDIA.enabledSlotIds.length > 0
-    ? BAKED_MEDIA.enabledSlotIds
+    ? BAKED_MEDIA.enabledSlotIds.filter((id) => !REMOVED_VENUE_SLOT_IDS.has(id))
     : VENUE_PHOTO_SLOTS.map((s) => s.id);
 
 export interface VenuePhotoContextType {
@@ -80,7 +82,10 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setCustomVenueSlots(saved.customVenueSlots);
       }
       if (Array.isArray(saved.enabledSlotIds) && saved.enabledSlotIds.length > 0) {
-        setEnabledSlotIds(saved.enabledSlotIds);
+        const filtered = saved.enabledSlotIds.filter((id) => !REMOVED_VENUE_SLOT_IDS.has(id));
+        if (filtered.length > 0) {
+          setEnabledSlotIds(filtered);
+        }
       }
     });
     return () => {

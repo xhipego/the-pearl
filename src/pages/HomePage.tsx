@@ -392,19 +392,19 @@ export const HomePage: React.FC<HomePageProps> = ({
           className="bg-white border border-[#E4DDD1] rounded-2xl p-7 sm:p-11 shadow-xs space-y-4"
         >
           <p className="text-[11px] tracking-[0.24em] uppercase text-[#9A7440] font-semibold">
-            Welgelegen &middot; Polokwane
+            Polokwane
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#121C2B] tracking-tight">
             About The Pearl Polokwane
           </h2>
           <p className="text-sm sm:text-base text-[#121C2B] leading-relaxed font-normal">
-            The Pearl is a private men&rsquo;s day spa in Welgelegen, Polokwane, open daily from 08:00 to 22:00.
+            The Pearl is a private men&rsquo;s day spa in Polokwane, open daily from 08:00 to 22:00.
           </p>
           <p className="text-sm text-[#5A626A] leading-relaxed font-light">
             We built The Pearl for men who want a proper massage in a quiet, private space, without a busy reception or shared rooms. Every visit happens in your own en-suite treatment suite, so you can arrive, unwind and leave on your own terms.
           </p>
           <p className="text-sm text-[#5A626A] leading-relaxed font-light">
-            Whether you are searching for a luxury men&rsquo;s day spa in Polokwane, a restorative deep tissue massage, full-body sensual or erotic massage, double massages, or private courtyard pool sessions and bachelor party bookings in Welgelegen, Limpopo, every session is tailored around calm discretion, clean facilities, and gated off-street parking.
+            Whether you are searching for a luxury men&rsquo;s day spa in Polokwane, a restorative deep tissue massage, full-body sensual or erotic massage, double massages, or private courtyard pool sessions and bachelor party bookings in Polokwane, Limpopo, every session is tailored around calm discretion, clean facilities, and gated off-street parking.
           </p>
         </article>
 
