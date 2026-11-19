@@ -115,7 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Operating Hours Bar */}
         <div className="py-6 border-b border-white/5 text-[11px] text-slate-400 text-center space-y-1.5">
           <p className="text-slate-300">
-            Open Monday – Sunday, 10:00 – 20:00 &middot; Private by Appointment &middot; Strictly 18+
+            Open Monday – Sunday, 08:00 – 22:00 &middot; Private by Appointment &middot; Strictly 18+
           </p>
         </div>
 

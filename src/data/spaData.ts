@@ -302,7 +302,7 @@ export const CONTACT_INFO = {
   province: '',
   website: 'www.thepearlspa.co.za',
   googleMapsUrl: 'https://wa.me/27635519026',
-  operatingHours: 'Monday – Sunday: 10:00 – 20:00 (Open 7 Days a Week)',
+  operatingHours: 'Monday – Sunday: 08:00 – 22:00 (Open 7 Days a Week)',
 };
 
 export const VENUE_SNIPPETS: VenueSnippet[] = [

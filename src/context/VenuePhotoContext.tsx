@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { VENUE_PHOTO_SLOTS, VenuePhotoSlot } from '../data/venuePhotoSlots';
 import { VENUE_IMAGES, HERO_FEATURED_IMAGES } from '../data/venueImages';
 import { EXPERIENCE_ITEMS } from '../data/experiencesData';
@@ -8,7 +8,10 @@ import { VenueSnippet } from '../types';
 import {
   HeroSlideConfig,
   CustomVenueSlotConfig,
+  loadPersistedMedia,
 } from '../utils/mediaStorage';
+
+const VENUE_EDIT_CUTOFF_ISO = '2026-11-19T00:00:00.000Z';
 
 const DEFAULT_HERO_SLIDES: HeroSlideConfig[] = [
   { id: 'hero-1', image: VENUE_IMAGES['room-1'], isPortrait: false, label: 'Hero Slide 1' },
@@ -20,6 +23,20 @@ const DEFAULT_HERO_SLIDES: HeroSlideConfig[] = [
   { id: 'hero-7', image: HERO_FEATURED_IMAGES[2], isPortrait: true, label: 'Hero Slide 7' },
   { id: 'hero-8', image: channelPhoto3, isPortrait: true, label: 'Hero Slide 8' },
 ];
+
+const INITIAL_VENUE_PHOTOS: Record<string, string> =
+  BAKED_MEDIA.venuePhotos && typeof BAKED_MEDIA.venuePhotos === 'object'
+    ? BAKED_MEDIA.venuePhotos
+    : {};
+
+const INITIAL_CUSTOM_SLOTS: CustomVenueSlotConfig[] = Array.isArray(BAKED_MEDIA.customVenueSlots)
+  ? BAKED_MEDIA.customVenueSlots
+  : [];
+
+const INITIAL_ENABLED_SLOT_IDS: string[] =
+  Array.isArray(BAKED_MEDIA.enabledSlotIds) && BAKED_MEDIA.enabledSlotIds.length > 0
+    ? BAKED_MEDIA.enabledSlotIds
+    : VENUE_PHOTO_SLOTS.map((s) => s.id);
 
 export interface VenuePhotoContextType {
   getPhoto: (slotId: string, fallbackDefault?: string) => string;
@@ -44,19 +61,32 @@ export const VenuePhotoProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       ? BAKED_MEDIA.experiencePhotos
       : {}
   );
-  const [venuePhotos] = useState<Record<string, string>>(
-    BAKED_MEDIA.venuePhotos && typeof BAKED_MEDIA.venuePhotos === 'object'
-      ? BAKED_MEDIA.venuePhotos
-      : {}
-  );
-  const [customVenueSlots] = useState<CustomVenueSlotConfig[]>(
-    Array.isArray(BAKED_MEDIA.customVenueSlots) ? BAKED_MEDIA.customVenueSlots : []
-  );
-  const [enabledSlotIds] = useState<string[]>(
-    Array.isArray(BAKED_MEDIA.enabledSlotIds) && BAKED_MEDIA.enabledSlotIds.length > 0
-      ? BAKED_MEDIA.enabledSlotIds
-      : VENUE_PHOTO_SLOTS.map((s) => s.id)
-  );
+  const [venuePhotos, setVenuePhotos] = useState<Record<string, string>>(INITIAL_VENUE_PHOTOS);
+  const [customVenueSlots, setCustomVenueSlots] =
+    useState<CustomVenueSlotConfig[]>(INITIAL_CUSTOM_SLOTS);
+  const [enabledSlotIds, setEnabledSlotIds] = useState<string[]>(INITIAL_ENABLED_SLOT_IDS);
+
+  // Preserve any venue photo updates saved during this session alongside bundled GitHub photos
+  useEffect(() => {
+    let mounted = true;
+    loadPersistedMedia().then((saved) => {
+      if (!mounted || !saved || !saved.updatedAt || saved.updatedAt < VENUE_EDIT_CUTOFF_ISO) {
+        return;
+      }
+      if (saved.venuePhotos && typeof saved.venuePhotos === 'object') {
+        setVenuePhotos({ ...INITIAL_VENUE_PHOTOS, ...saved.venuePhotos });
+      }
+      if (Array.isArray(saved.customVenueSlots)) {
+        setCustomVenueSlots(saved.customVenueSlots);
+      }
+      if (Array.isArray(saved.enabledSlotIds) && saved.enabledSlotIds.length > 0) {
+        setEnabledSlotIds(saved.enabledSlotIds);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const allSlots = useMemo<VenuePhotoSlot[]>(() => {
     const convertedCustom: VenuePhotoSlot[] = customVenueSlots.map((cs, i) => ({

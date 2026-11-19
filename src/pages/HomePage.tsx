@@ -121,7 +121,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <button
               onClick={() => onNavigate('venue')}
-              className="self-start sm:self-auto inline-flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-[#121C2B] hover:text-[#9A7440] transition-colors cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-[#121C2B] hover:text-[#9A7440] transition-colors cursor-pointer whitespace-nowrap self-start sm:self-auto"
             >
               <span>Explore Full Venue</span>
               <ArrowRight className="w-4 h-4" />
@@ -380,11 +380,33 @@ export const HomePage: React.FC<HomePageProps> = ({
               <p className="text-[11px] uppercase tracking-[0.2em] text-[#9A7440] font-semibold">Confidential</p>
               <h3 className="font-serif text-xl font-normal text-[#121C2B]">Strict discretion</h3>
               <p className="text-xs sm:text-sm text-[#5A626A] leading-relaxed font-light">
-                No public registries or shared records. Open daily from 10:00 until 20:00.
+                No public registries or shared records. Open daily from 08:00 until 22:00.
               </p>
             </div>
           </div>
         </div>
+
+        {/* 7. About The Pearl Polokwane (Local Search & AI Crawler SEO Section) */}
+        <article
+          id="about-the-pearl-polokwane"
+          className="bg-white border border-[#E4DDD1] rounded-2xl p-7 sm:p-11 shadow-xs space-y-4"
+        >
+          <p className="text-[11px] tracking-[0.24em] uppercase text-[#9A7440] font-semibold">
+            Welgelegen &middot; Polokwane
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#121C2B] tracking-tight">
+            About The Pearl Polokwane
+          </h2>
+          <p className="text-sm sm:text-base text-[#121C2B] leading-relaxed font-normal">
+            The Pearl is a private men&rsquo;s day spa in Welgelegen, Polokwane, open daily from 08:00 to 22:00.
+          </p>
+          <p className="text-sm text-[#5A626A] leading-relaxed font-light">
+            We built The Pearl for men who want a proper massage in a quiet, private space, without a busy reception or shared rooms. Every visit happens in your own en-suite treatment suite, so you can arrive, unwind and leave on your own terms.
+          </p>
+          <p className="text-sm text-[#5A626A] leading-relaxed font-light">
+            Whether you are searching for a luxury men&rsquo;s day spa in Polokwane, a restorative deep tissue massage, full-body sensual or erotic massage, double massages, or private courtyard pool sessions and bachelor party bookings in Welgelegen, Limpopo, every session is tailored around calm discretion, clean facilities, and gated off-street parking.
+          </p>
+        </article>
 
         <div className="bg-white border border-[#E4DDD1] rounded-2xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
           <div>

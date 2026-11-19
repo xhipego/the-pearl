@@ -80,8 +80,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           <PearlLogo size="xl" showText={false} />
         </div>
 
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-[0.16em] uppercase leading-tight mb-5">
-          THE PEARL
+        <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-[0.14em] uppercase leading-tight mb-5 max-w-4xl">
+          The Pearl Spa Polokwane
         </h1>
 
         <div className="flex items-center justify-center gap-3 w-full max-w-xs my-1">
@@ -96,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-300">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-[#D4AF37]" /> Daily 10:00 – 20:00
+            <Clock className="w-3.5 h-3.5 text-[#D4AF37]" /> Daily 08:00 – 22:00
           </span>
           <span aria-hidden="true" className="text-[#D4AF37]/70">&middot;</span>
           <span className="flex items-center gap-1.5">

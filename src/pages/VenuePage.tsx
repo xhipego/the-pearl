@@ -72,6 +72,9 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
 
       {/* Editorial Bento Gallery — Compact & Zero White Gaps */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 space-y-6">
+        <p className="text-xs text-[#6B7280] font-light">
+          Tap any image to view fullscreen
+        </p>
 
         {/* Pure Photography Grid — No Descriptions & Zero White Gaps */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:auto-rows-[220px] lg:auto-rows-[245px]">
@@ -111,7 +114,7 @@ export const VenuePage: React.FC<VenuePageProps> = ({ onNavigate, onOpenBooking 
             </span>
             <span aria-hidden="true" className="text-[#D4AF37]">&middot;</span>
             <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-[#D4AF37]" /> Open Daily 10:00 – 20:00
+              <Clock className="w-3.5 h-3.5 text-[#D4AF37]" /> Open Daily 08:00 – 22:00
             </span>
           </div>
 
